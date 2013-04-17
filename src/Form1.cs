@@ -15,5 +15,18 @@ namespace MarketSimulator
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dataRetriever = new YahooDataRetriever();
+                dataGridView1.DataSource = dataRetriever.Retrieve(textBoxSymbol.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
