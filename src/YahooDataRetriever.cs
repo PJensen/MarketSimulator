@@ -24,14 +24,28 @@ namespace MarketSimulator
         /// </summary>
         /// <param name="symbol"></param>
         /// <returns></returns>
-        public DataTable Retrieve(string symbol)
+        public List<MarketData> Retrieve(string symbol)
         {
             var tmpDataFile = Path.GetTempFileName();
 
             using (var webClient = new WebClient())
                 webClient.DownloadFile(string.Format(yahooDataURI, symbol), tmpDataFile);
 
-            return CSVParser.Parse(File.OpenText(tmpDataFile));
+            var table = CSVParser.Parse(File.OpenText(tmpDataFile), true);
+
+            var retVal = new List<MarketData>();
+
+            for (var i = 0; i < table.Rows.Count; i++)
+                retVal.Add(new MarketData()
+                               {
+                                   Date = DateTime.Parse(table.Rows[i]["Date"].ToString()),
+                                   Open = double.Parse(table.Rows[i]["Open"].ToString()),
+                                   High = double.Parse(table.Rows[i]["High"].ToString()),
+                                   Low = double.Parse(table.Rows[i]["Low"].ToString()),
+                                   Close = double.Parse(table.Rows[i]["Close"].ToString()),
+                                   Volume = long.Parse(table.Rows[i]["Volume"].ToString())
+                               });
+            return retVal;
         }
     }
 }

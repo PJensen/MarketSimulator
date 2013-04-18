@@ -32,5 +32,17 @@ namespace MarketSimulator.Properties {
                 return ((string)(this["YahooURI"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("APPL")]
+        public string Security {
+            get {
+                return ((string)(this["Security"]));
+            }
+            set {
+                this["Security"] = value;
+            }
+        }
     }
 }

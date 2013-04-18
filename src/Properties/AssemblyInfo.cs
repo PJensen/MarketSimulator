@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MarketSimulator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Harvard Management Company")]
+[assembly: AssemblyCompany("Tom & Pete")]
 [assembly: AssemblyProduct("MarketSimulator")]
-[assembly: AssemblyCopyright("Copyright © Harvard Management Company 2013")]
+[assembly: AssemblyCopyright("Copyleft © Tom & Pete 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

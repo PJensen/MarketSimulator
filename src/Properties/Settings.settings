@@ -5,5 +5,8 @@
     <Setting Name="YahooURI" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://ichart.finance.yahoo.com/table.csv?s={0}&amp;d=3&amp;e=17&amp;f=2013&amp;g=d&amp;a=0&amp;b=29&amp;c=1993&amp;ignore=.csv</Value>
     </Setting>
+    <Setting Name="Security" Type="System.String" Scope="User">
+      <Value Profile="(Default)">APPL</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
