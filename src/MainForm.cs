@@ -20,7 +20,7 @@ namespace MarketSimulator
         /// <summary>
         /// MarketData
         /// </summary>
-        public DataTable MarketData { get; private set; }
+        public List<MarketData> MarketData { get; private set; }
 
         /// <summary>
         /// 
@@ -30,6 +30,9 @@ namespace MarketSimulator
         private void Form1_Load(object sender, EventArgs e)
         {
             toolStripTextBoxSecurity.Text = Properties.Settings.Default.Security;
+            MarketData = new YahooDataRetriever().Retrieve(toolStripTextBoxSecurity.Text)
+                ;
+            MarketData.Reverse();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -71,18 +74,23 @@ namespace MarketSimulator
 
         private void rSIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var table = new YahooDataRetriever().Retrieve(toolStripTextBoxSecurity.Text);
-
-            foreach (var marketData in table)
-            {
-                chart1.Series[0].Points.AddXY(marketData.Date, marketData.AsLine);
-
-            }
+            timer1.Enabled = true;
+            timer1.Start();
         }
+
+        public long tick = 0;
 
         private void chart1_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            tick++;
+
+            chart1.Series[0].Points.AddXY(MarketData[(int)tick].Date, MarketData[(int)tick].AsLine);
+        }
+
     }
 }

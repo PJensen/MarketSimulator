@@ -64,6 +64,7 @@
     <Compile Include="EntryPoint.cs" />
     <Compile Include="IMarketDataRetriever.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeedSettings.cs" />
     <Compile Include="StrategyResult.cs" />
     <Compile Include="Util\CSVParser.cs" />
     <Compile Include="Util\CSVStream.cs" />

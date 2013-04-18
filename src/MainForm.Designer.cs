@@ -89,6 +89,7 @@
             this.asCandleStickBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.toolStripTextBoxSecurity = new System.Windows.Forms.ToolStripTextBox();
             this.asCandleStickBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.marketDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.marketDataBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip1.SuspendLayout();
@@ -594,6 +595,10 @@
             this.asCandleStickBindingSource1.DataMember = "AsCandleStick";
             this.asCandleStickBindingSource1.DataSource = this.marketDataBindingSource1;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // marketDataBindingSource
             // 
             this.marketDataBindingSource.DataSource = typeof(MarketSimulator.MarketData);
@@ -704,6 +709,7 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSecurity;
         private System.Windows.Forms.BindingSource marketDataBindingSource1;
         private System.Windows.Forms.BindingSource asCandleStickBindingSource1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
