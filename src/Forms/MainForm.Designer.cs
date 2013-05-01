@@ -1,6 +1,4 @@
-﻿using MarketSimulator.Core;
-
-namespace MarketSimulator
+﻿namespace MarketSimulator.Forms
 {
     partial class MainForm
     {
@@ -59,6 +57,7 @@ namespace MarketSimulator
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workingDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +67,7 @@ namespace MarketSimulator
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.marketDataBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -90,19 +90,19 @@ namespace MarketSimulator
             this.toolStripTextBoxSecurity = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.asCandleStickBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.marketDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.asCandleStickBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.marketDataBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.asCandleStickBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.marketDataBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
-            this.marketDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.marketDataBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.workingDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -114,11 +114,10 @@ namespace MarketSimulator
             this.toolStrip1.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource2)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -159,7 +158,6 @@ namespace MarketSimulator
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.newToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.newToolStripMenuItem.Text = "&New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
@@ -307,7 +305,7 @@ namespace MarketSimulator
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.customizeToolStripMenuItem.Text = "&Customize";
             // 
             // optionsToolStripMenuItem
@@ -315,8 +313,15 @@ namespace MarketSimulator
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.workingDirectoryToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // workingDirectoryToolStripMenuItem
+            // 
+            this.workingDirectoryToolStripMenuItem.Name = "workingDirectoryToolStripMenuItem";
+            this.workingDirectoryToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.workingDirectoryToolStripMenuItem.Text = "Working Directory";
+            this.workingDirectoryToolStripMenuItem.Click += new System.EventHandler(this.workingDirectoryToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -398,7 +403,7 @@ namespace MarketSimulator
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             series1.XValueMember = "Date";
@@ -410,7 +415,10 @@ namespace MarketSimulator
             this.chart1.Size = new System.Drawing.Size(1014, 367);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
+            // 
+            // marketDataBindingSource2
+            // 
+            this.marketDataBindingSource2.DataSource = typeof(Core.MarketData);
             // 
             // splitContainer2
             // 
@@ -473,7 +481,6 @@ namespace MarketSimulator
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(658, 164);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Balance
             // 
@@ -524,7 +531,8 @@ namespace MarketSimulator
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
-            this.toolStripTextBoxSecurity});
+            this.toolStripTextBoxSecurity,
+            this.toolStripComboBox1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 196);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1014, 25);
@@ -545,8 +553,7 @@ namespace MarketSimulator
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(84, 22);
-            this.toolStripDropDownButton1.Text = "Run Strategy";
-            this.toolStripDropDownButton1.Click += new System.EventHandler(this.toolStripDropDownButton1_Click);
+            this.toolStripDropDownButton1.Text = "Run CurrentStrategy";
             // 
             // vIXThresholdToolStripMenuItem
             // 
@@ -603,10 +610,18 @@ namespace MarketSimulator
             this.asCandleStickBindingSource.DataMember = "AsCandleStick";
             this.asCandleStickBindingSource.DataSource = this.marketDataBindingSource;
             // 
+            // marketDataBindingSource
+            // 
+            this.marketDataBindingSource.DataSource = typeof(Core.MarketData);
+            // 
             // asCandleStickBindingSource1
             // 
             this.asCandleStickBindingSource1.DataMember = "AsCandleStick";
             this.asCandleStickBindingSource1.DataSource = this.marketDataBindingSource1;
+            // 
+            // marketDataBindingSource1
+            // 
+            this.marketDataBindingSource1.DataSource = typeof(Core.MarketData);
             // 
             // timer1
             // 
@@ -617,24 +632,10 @@ namespace MarketSimulator
             this.asCandleStickBindingSource2.DataMember = "AsCandleStick";
             this.asCandleStickBindingSource2.DataSource = this.marketDataBindingSource2;
             // 
-            // marketDataBindingSource2
+            // toolStripComboBox1
             // 
-            this.marketDataBindingSource2.DataSource = typeof(MarketSimulator.Core.MarketData);
-            // 
-            // marketDataBindingSource
-            // 
-            this.marketDataBindingSource.DataSource = typeof(MarketSimulator.Core.MarketData);
-            // 
-            // marketDataBindingSource1
-            // 
-            this.marketDataBindingSource1.DataSource = typeof(MarketSimulator.Core.MarketData);
-            // 
-            // workingDirectoryToolStripMenuItem
-            // 
-            this.workingDirectoryToolStripMenuItem.Name = "workingDirectoryToolStripMenuItem";
-            this.workingDirectoryToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.workingDirectoryToolStripMenuItem.Text = "Working Directory";
-            this.workingDirectoryToolStripMenuItem.Click += new System.EventHandler(this.workingDirectoryToolStripMenuItem_Click);
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 25);
             // 
             // MainForm
             // 
@@ -657,6 +658,7 @@ namespace MarketSimulator
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource2)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -670,11 +672,10 @@ namespace MarketSimulator
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.marketDataBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.asCandleStickBindingSource2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -744,6 +745,7 @@ namespace MarketSimulator
         private System.Windows.Forms.BindingSource marketDataBindingSource2;
         private System.Windows.Forms.BindingSource asCandleStickBindingSource2;
         private System.Windows.Forms.ToolStripMenuItem workingDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
     }
 }
 

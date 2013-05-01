@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MarketSimulator.Core;
+using MarketSimulator.Strategies;
 
 namespace MarketSimulator.Forms
 {
@@ -13,15 +14,17 @@ namespace MarketSimulator.Forms
         /// <summary>
         /// MainForm
         /// </summary>
-        public MainForm()
+        public MainForm(MarketSimulator marketSimulator)
         {
             InitializeComponent();
+
+            MarketSimulator = marketSimulator;
         }
 
         /// <summary>
-        /// MarketData
+        /// MarketSimulator
         /// </summary>
-        public List<MarketData> MarketData { get; private set; }
+        private MarketSimulator MarketSimulator { get; set; }
 
         /// <summary>
         /// 
@@ -35,8 +38,8 @@ namespace MarketSimulator.Forms
                 toolStripTextBoxSecurity.AutoCompleteCustomSource.Add(previousSecurity);
 
             toolStripTextBoxSecurity.Text = Properties.Settings.Default.Security;
-            MarketData = R.Convert(new YahooDataRetriever().Retrieve(toolStripTextBoxSecurity.Text));
-            MarketData.Reverse();
+            MarketSimulator.MarketData = R.Convert(new YahooDataRetriever().Retrieve(toolStripTextBoxSecurity.Text));
+            MarketSimulator.MarketData.Reverse();
         }
 
         /// <summary>
@@ -90,12 +93,14 @@ namespace MarketSimulator.Forms
         private void timer1_Tick(object sender, EventArgs e)
         {
             tick++;
-            chart1.Series[0].Points.AddXY(MarketData[(int)tick].Date, MarketData[(int)tick].AsLine);
+
+            chart1.Series[0].Points.AddXY(MarketSimulator.MarketData[tick].Date,
+                MarketSimulator.MarketData[(int)tick].AsLine);
         }
 
         /// <summary>
         /// tick
         /// </summary>
-        public long tick = 0;
+        public int tick = 0;
     }
 }

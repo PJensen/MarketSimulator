@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MarketSimulator.Forms;
 
 namespace MarketSimulator
 {
+    /// <summary>
+    /// EntryPoint
+    /// </summary>
     static class EntryPoint
     {
         /// <summary>
@@ -15,7 +19,7 @@ namespace MarketSimulator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new MainForm(MarketSimulator.Instance));
         }
     }
 }
