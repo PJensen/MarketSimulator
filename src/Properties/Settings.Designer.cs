@@ -44,5 +44,31 @@ namespace MarketSimulator.Properties {
                 this["Security"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WorkingDirectory {
+            get {
+                return ((string)(this["WorkingDirectory"]));
+            }
+            set {
+                this["WorkingDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>AAPL</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection PreviousSecurities {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["PreviousSecurities"]));
+            }
+            set {
+                this["PreviousSecurities"] = value;
+            }
+        }
     }
 }

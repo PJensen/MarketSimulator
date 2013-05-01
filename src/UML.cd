@@ -4,7 +4,7 @@
     <Position X="2" Y="3" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>YahooDataRetriever.cs</FileName>
+      <FileName>MarketDataRetriever\YahooDataRetriever.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
