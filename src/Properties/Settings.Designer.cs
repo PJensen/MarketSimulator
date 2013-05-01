@@ -70,5 +70,14 @@ namespace MarketSimulator.Properties {
                 this["PreviousSecurities"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        public double StartingBalance {
+            get {
+                return ((double)(this["StartingBalance"]));
+            }
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using MarketSimulator.Core;
 using MarketSimulator.Strategies;
 
@@ -19,6 +21,39 @@ namespace MarketSimulator.Forms
             InitializeComponent();
 
             MarketSimulator = marketSimulator;
+            MarketSimulator.CurrentStrategy = new RSIStrategy();
+            MarketSimulator.CurrentStrategy.BuyEvent += new EventHandler<MarketTickEventArgs>(CurrentStrategy_BuyEvent);
+            MarketSimulator.CurrentStrategy.sellEvent += new EventHandler<MarketTickEventArgs>(CurrentStrategy_sellEvent);
+            MarketTick += MarketSimulator.CurrentStrategy.MarketTick;
+            MarketTick += MainForm_MarketTick;
+            
+        }
+
+        void CurrentStrategy_sellEvent(object sender, MarketTickEventArgs e)
+        {
+            richTextBox1.Text += string.Format("Sold {0} at {1}, Balance: {2}\n", MarketSimulator.Instance.Shares, e.marketData.Close, MarketSimulator.Instance.Balance);
+        }
+
+        void CurrentStrategy_BuyEvent(object sender, MarketTickEventArgs e)
+        {
+            richTextBox1.Text += string.Format("Bought one at {0}, Balance: {1}\n", e.marketData.Close, MarketSimulator.Instance.Balance);
+        }
+
+        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void MainForm_MarketTick(object sender, MarketTickEventArgs e)
+        {
+            toolStripLabelCurrentPrice.Text =
+                string.Format("Balance:{0} Shares:{1}",
+                MarketSimulator.Balance, MarketSimulator.Shares);
+
+            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[tick].Date, MarketSimulator.Balance);
+            propertyGrid1.SelectedObject = MarketSimulator.Instance.CurrentStrategy;
         }
 
         /// <summary>
@@ -40,6 +75,8 @@ namespace MarketSimulator.Forms
             toolStripTextBoxSecurity.Text = Properties.Settings.Default.Security;
             MarketSimulator.MarketData = R.Convert(new YahooDataRetriever().Retrieve(toolStripTextBoxSecurity.Text));
             MarketSimulator.MarketData.Reverse();
+
+            
         }
 
         /// <summary>
@@ -82,7 +119,7 @@ namespace MarketSimulator.Forms
         {
             if (!Properties.Settings.Default.PreviousSecurities.Contains(toolStripTextBoxSecurity.Text))
                 Properties.Settings.Default.PreviousSecurities.Add(toolStripTextBoxSecurity.Text);
-            timer1.Start();
+            timerMain.Start();
         }
 
         /// <summary>
@@ -95,8 +132,43 @@ namespace MarketSimulator.Forms
             tick++;
 
             chart1.Series[0].Points.AddXY(MarketSimulator.MarketData[tick].Date,
-                MarketSimulator.MarketData[(int)tick].AsLine);
+                                          MarketSimulator.MarketData[(int)tick].AsLine);
+
+            toolStripLabelCurrentPrice.Text =
+                MarketSimulator.MarketData[tick].Close.ToString(CultureInfo.InvariantCulture);
+
+            if ((int)MarketSimulator.MarketData[tick].High > toolStripProgressBarPriceMax.Maximum)
+                toolStripProgressBarPriceMax.Maximum = (int)MarketSimulator.MarketData[tick].High;
+
+            if ((int)MarketSimulator.MarketData[tick].Low < toolStripProgressBarPriceMax.Minimum)
+                toolStripProgressBarPriceMax.Minimum = (int)MarketSimulator.MarketData[tick].Low;
+
+            toolStripProgressBarPriceMax.Value = (int)MarketSimulator.MarketData[tick].Close;
+
+            var tmpMarketTickEventArgs = new MarketTickEventArgs { marketData = MarketSimulator.MarketData[tick] };
+            try
+            {
+
+                chart1.DataManipulator.FinancialFormula(FinancialFormula.RelativeStrengthIndex, chart1.Series["Series1"],
+                    chart1.Series["RelativeStrengthIndex"]);
+
+                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[tick - 11].YValues[0];
+
+
+            }
+            catch
+            {
+            }
+
+            if (MarketTick != null)
+                MarketTick(this, tmpMarketTickEventArgs);
         }
+
+        /// <summary>
+        /// MarketTick
+        /// </summary>
+        private event EventHandler<MarketTickEventArgs> MarketTick;
+
 
         /// <summary>
         /// tick

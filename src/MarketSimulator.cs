@@ -29,6 +29,7 @@ namespace MarketSimulator
         /// </summary>
         private MarketSimulator()
         {
+            Balance = cash = Properties.Settings.Default.StartingBalance;
             MarketData = new List<MarketData>();
             CurrentStrategy = default(StrategyBase);
         }
@@ -55,6 +56,12 @@ namespace MarketSimulator
 
         #endregion
 
+        public int Shares { get; set; }
+        public double Balance { get; set; }
+        public int Tick { get; set; }
+        public int numberOfTrade { get; set; }
+        public int numberOfWinningTrade { get; set; }
+        public double cash { get; set; }
         /// <summary>
         /// CurrentStrategy
         /// </summary>

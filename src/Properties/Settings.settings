@@ -17,5 +17,8 @@
   &lt;string&gt;AAPL&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
+    <Setting Name="StartingBalance" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">10000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
