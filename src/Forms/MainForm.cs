@@ -21,25 +21,53 @@ namespace MarketSimulator.Forms
             InitializeComponent();
 
             MarketSimulator = marketSimulator;
-            MarketSimulator.CurrentStrategy = new RSIStrategy();
-            MarketSimulator.CurrentStrategy.BuyEvent += new EventHandler<MarketTickEventArgs>(CurrentStrategy_BuyEvent);
-            MarketSimulator.CurrentStrategy.sellEvent += new EventHandler<MarketTickEventArgs>(CurrentStrategy_sellEvent);
+            MarketSimulator.CurrentStrategy = new PeteStrategy();
             MarketTick += MarketSimulator.CurrentStrategy.MarketTick;
             MarketTick += MainForm_MarketTick;
-            
+            MarketSimulator.CurrentStrategy.BuyEvent += CurrentStrategy_BuyEvent;
+            MarketSimulator.CurrentStrategy.SellEvent += CurrentStrategy_SellEvent;
+
         }
 
-        void CurrentStrategy_sellEvent(object sender, MarketTickEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void CurrentStrategy_SellEvent(object sender, Events.SellEventArgs e)
         {
-            richTextBox1.Text += string.Format("Sold {0} at {1}, Balance: {2}\n", MarketSimulator.Instance.Shares, e.marketData.Close, MarketSimulator.Instance.Balance);
+            MarketSimulator.OnSellEvent(e);
+
+            if (e.Cancel)
+                return;
+
+            richTextBox1.Text += "Sold " + e.Shares + Environment.NewLine;
+
+            dataGridViewPositions.Rows.Add("SELL", e.Shares, e.MarketData.Close, e.MarketData.Close * e.Shares);
+            dataGridViewPositions.FirstDisplayedScrollingRowIndex =
+                dataGridViewPositions.Rows.Count - 1;
         }
 
-        void CurrentStrategy_BuyEvent(object sender, MarketTickEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void CurrentStrategy_BuyEvent(object sender, Events.BuyEventArgs e)
         {
-            richTextBox1.Text += string.Format("Bought one at {0}, Balance: {1}\n", e.marketData.Close, MarketSimulator.Instance.Balance);
+            MarketSimulator.OnBuyEvent(e);
+
+            if (e.Cancel)
+                return;
+
+            richTextBox1.Text += "Bought " + e.Shares + Environment.NewLine;
+
+            dataGridViewPositions.Rows.Add("BUY", e.Shares, e.MarketData.Close, e.MarketData.Close * e.Shares);
+            dataGridViewPositions.FirstDisplayedScrollingRowIndex =
+                dataGridViewPositions.Rows.Count - 1;
         }
 
-        
+
 
         /// <summary>
         /// 
@@ -49,11 +77,13 @@ namespace MarketSimulator.Forms
         void MainForm_MarketTick(object sender, MarketTickEventArgs e)
         {
             toolStripLabelCurrentPrice.Text =
-                string.Format("Balance:{0} Shares:{1}",
-                MarketSimulator.Balance, MarketSimulator.Shares);
+                string.Format("Cash:{0} Shares:{1}, Paper Value: {2}",
+                MarketSimulator.Cash, MarketSimulator.Shares, MarketSimulator.PaperValue);
 
-            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[tick].Date, MarketSimulator.Balance);
-            propertyGrid1.SelectedObject = MarketSimulator.Instance.CurrentStrategy;
+            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[tick].Date, MarketSimulator.PaperValue);
+
+            propertyGrid1.SelectedObject = MarketSimulator.Instance;
+            MarketSimulator.OnTickEvent(e);
         }
 
         /// <summary>
@@ -75,8 +105,6 @@ namespace MarketSimulator.Forms
             toolStripTextBoxSecurity.Text = Properties.Settings.Default.Security;
             MarketSimulator.MarketData = R.Convert(new YahooDataRetriever().Retrieve(toolStripTextBoxSecurity.Text));
             MarketSimulator.MarketData.Reverse();
-
-            
         }
 
         /// <summary>
@@ -134,6 +162,9 @@ namespace MarketSimulator.Forms
             chart1.Series[0].Points.AddXY(MarketSimulator.MarketData[tick].Date,
                                           MarketSimulator.MarketData[(int)tick].AsLine);
 
+            chart1.Series["Cash"].Points.AddXY(MarketSimulator.MarketData[tick].Date,
+                                               MarketSimulator.Cash);
+
             toolStripLabelCurrentPrice.Text =
                 MarketSimulator.MarketData[tick].Close.ToString(CultureInfo.InvariantCulture);
 
@@ -153,6 +184,7 @@ namespace MarketSimulator.Forms
                     chart1.Series["RelativeStrengthIndex"]);
 
                 tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[tick - 11].YValues[0];
+
 
 
             }

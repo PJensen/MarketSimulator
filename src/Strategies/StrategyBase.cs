@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms.DataVisualization.Charting;
+using MarketSimulator.Core;
+using MarketSimulator.Events;
 
 namespace MarketSimulator.Strategies
 {
@@ -11,22 +13,34 @@ namespace MarketSimulator.Strategies
     /// </summary>
     public abstract class StrategyBase : IStrategy
     {
-        
-
         /// <summary>
-        /// StrategyBase
+        /// Creates a new StrategyBase
         /// </summary>
-        /// <param name="dataManipulator"></param>
-        protected StrategyBase()
+        /// <param name="name">The name of the strategy</param>
+        /// <param name="buySignal">The buy signal</param>
+        /// <param name="sellSignal">The sell signal</param>
+        protected StrategyBase(string name, BuySignal buySignal, SellSignal sellSignal)
         {
+            Name = name;
+            SellSignal = sellSignal;
+            BuySignal = buySignal;
         }
 
         /// <summary>
-        /// 
+        /// MarketTick
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public abstract void MarketTick(object sender, MarketTickEventArgs e);
+        /// <param name="sender">event sender</param>
+        /// <param name="e">market tick event args</param>
+        public void MarketTick(object sender, MarketTickEventArgs e)
+        {
+            var sellEventArgs = SellSignal(e);
+            var buyEventArgs = BuySignal(e);
+
+            if (sellEventArgs != null && SellEvent != null)
+                SellEvent(this, sellEventArgs);
+            else if (buyEventArgs != null && BuyEvent != null)
+                BuyEvent(this, buyEventArgs);
+        }
 
         /// <summary>
         /// Name of the strategy
@@ -34,26 +48,23 @@ namespace MarketSimulator.Strategies
         public string Name { get; set; }
 
         /// <summary>
-        /// BuyEvent
+        /// BuySignal
         /// </summary>
-        public event EventHandler<MarketTickEventArgs> BuyEvent;
+        public BuySignal BuySignal { get; set; }
 
         /// <summary>
-        /// 
+        /// SellSignal
         /// </summary>
-        /// <param name="e"></param>
-        protected void OnBuyEvent(MarketTickEventArgs e)
-        {
-            if (BuyEvent != null)
-                BuyEvent(this, e);
-        }
+        public SellSignal SellSignal { get; set; }
 
-        public event EventHandler<MarketTickEventArgs> sellEvent;
+        /// <summary>
+        /// BuyEvent
+        /// </summary>
+        public event EventHandler<BuyEventArgs> BuyEvent;
 
-        public void OnSellEvent(MarketTickEventArgs e)
-        {
-            EventHandler<MarketTickEventArgs> handler = sellEvent;
-            if (handler != null) handler(this, e);
-        }
+        /// <summary>
+        /// SellEvent
+        /// </summary>
+        public event EventHandler<SellEventArgs> SellEvent;
     }
 }
