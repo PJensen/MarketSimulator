@@ -60,8 +60,7 @@ namespace MarketSimulator
         public int Shares { get; set; }
         public double Balance { get; set; }
         public int Tick { get; set; }
-        public int numberOfTrade { get; set; }
-        public int numberOfWinningTrade { get; set; }
+        public int NumberOfTrades { get; set; }
 
         public double PXLast { get; set; }
 
@@ -74,8 +73,10 @@ namespace MarketSimulator
 
         public void OnTickEvent(MarketTickEventArgs eventArgs)
         {
+            
             PXLast = eventArgs.marketData.Close;
             Instance.Balance = Instance.Cash; // +(eventArgs.marketData.Close) * Instance.Shares;
+            Tick++;
         }
 
         /// <summary>
@@ -95,6 +96,7 @@ namespace MarketSimulator
 
             Instance.Cash -= totalValue;
             Instance.Shares += eventArgs.Shares;
+            NumberOfTrades++;
         }
 
         /// <summary>
@@ -114,6 +116,7 @@ namespace MarketSimulator
 
             Instance.Shares -= eventArgs.Shares;
             Instance.Cash += eventArgs.Shares * eventArgs.MarketData.Close;
+            NumberOfTrades++;
         }
 
         /// <summary>
