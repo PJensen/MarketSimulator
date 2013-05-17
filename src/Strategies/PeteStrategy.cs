@@ -27,7 +27,7 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         private static SellEventArgs SellCondition(MarketTickEventArgs eventArgs)
         {
-            if (eventArgs.RSI > 90)
+            if (eventArgs.RSI > 70)
             {
                 return new SellEventArgs(eventArgs.marketData, MarketSimulator.Instance.Shares);
             }
@@ -44,7 +44,7 @@ namespace MarketSimulator.Strategies
         {
             BuyEventArgs buyEventArgs = null;
 
-            if (eventArgs.RSI < 20)
+            if (eventArgs.RSI < 30)
             {
                 buyEventArgs = new BuyEventArgs(eventArgs.marketData, (int)eventArgs.RSI);
             }

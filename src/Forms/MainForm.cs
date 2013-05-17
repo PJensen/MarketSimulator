@@ -67,8 +67,6 @@ namespace MarketSimulator.Forms
                 dataGridViewPositions.Rows.Count - 1;
         }
 
-
-
         /// <summary>
         /// 
         /// </summary>
@@ -80,7 +78,7 @@ namespace MarketSimulator.Forms
                 string.Format("Cash:{0} Shares:{1}, Paper Value: {2}",
                 MarketSimulator.Cash, MarketSimulator.Shares, MarketSimulator.PaperValue);
 
-            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[tick].Date, MarketSimulator.PaperValue);
+            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[tick].Date, MarketSimulator.PaperValue + MarketSimulator.Cash);
 
             propertyGrid1.SelectedObject = MarketSimulator.Instance;
             MarketSimulator.OnTickEvent(e);
@@ -206,5 +204,10 @@ namespace MarketSimulator.Forms
         /// tick
         /// </summary>
         public int tick = 0;
+
+        private void toolStripButtonFF_Click(object sender, EventArgs e)
+        {
+            // tick += 40;
+        }
     }
 }
