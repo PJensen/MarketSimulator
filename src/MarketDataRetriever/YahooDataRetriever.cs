@@ -48,6 +48,9 @@ namespace MarketSimulator
                 }
             }
 
+            if (fail)
+                return default(DataTable);
+
             return CSVParser.Parse(File.OpenText(dataFileDest), true);
         }
     }

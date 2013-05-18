@@ -62,6 +62,9 @@ namespace MarketSimulator
         {
             var retVal = new List<MarketData>();
 
+            if (table == null)
+                return retVal;
+
             for (var i = 0; i < table.Rows.Count; i++)
             {
                 retVal.Add(new MarketData()
