@@ -78,7 +78,7 @@ namespace MarketSimulator.Forms
                 string.Format("Cash:{0} Shares:{1}, Paper Value: {2}",
                 MarketSimulator.Cash, MarketSimulator.Shares, MarketSimulator.PaperValue);
 
-            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[tick].Date, MarketSimulator.PaperValue + MarketSimulator.Cash);
+            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, MarketSimulator.PaperValue + MarketSimulator.Cash);
 
             propertyGrid1.SelectedObject = MarketSimulator.Instance;
             MarketSimulator.OnTickEvent(e);
@@ -149,6 +149,16 @@ namespace MarketSimulator.Forms
             timerMain.Start();
         }
 
+        private void Start()
+        {
+            timerMain.Enabled = true;
+        }
+
+        private void Stop()
+        {
+            timerMain.Enabled = false;
+        }
+
         /// <summary>
         /// timer1_Tick
         /// </summary>
@@ -156,33 +166,40 @@ namespace MarketSimulator.Forms
         /// <param name="e">event</param>
         private void timer1_Tick(object sender, EventArgs e)
         {
-            tick++;
+            Tick++;
 
-            chart1.Series[0].Points.AddXY(MarketSimulator.MarketData[tick].Date,
-                                          MarketSimulator.MarketData[(int)tick].AsLine);
+            if (Tick > MarketSimulator.MarketData.Count)
+            {
+                Stop();
 
-            chart1.Series["Cash"].Points.AddXY(MarketSimulator.MarketData[tick].Date,
+                return;
+            }
+
+            chart1.Series[0].Points.AddXY(MarketSimulator.MarketData[Tick].Date,
+                                          MarketSimulator.MarketData[(int)Tick].AsLine);
+
+            chart1.Series["Cash"].Points.AddXY(MarketSimulator.MarketData[Tick].Date,
                                                MarketSimulator.Cash);
 
             toolStripLabelCurrentPrice.Text =
-                MarketSimulator.MarketData[tick].Close.ToString(CultureInfo.InvariantCulture);
+                MarketSimulator.MarketData[Tick].Close.ToString(CultureInfo.InvariantCulture);
 
-            if ((int)MarketSimulator.MarketData[tick].High > toolStripProgressBarPriceMax.Maximum)
-                toolStripProgressBarPriceMax.Maximum = (int)MarketSimulator.MarketData[tick].High;
+            if ((int)MarketSimulator.MarketData[Tick].High > toolStripProgressBarPriceMax.Maximum)
+                toolStripProgressBarPriceMax.Maximum = (int)MarketSimulator.MarketData[Tick].High;
 
-            if ((int)MarketSimulator.MarketData[tick].Low < toolStripProgressBarPriceMax.Minimum)
-                toolStripProgressBarPriceMax.Minimum = (int)MarketSimulator.MarketData[tick].Low;
+            if ((int)MarketSimulator.MarketData[Tick].Low < toolStripProgressBarPriceMax.Minimum)
+                toolStripProgressBarPriceMax.Minimum = (int)MarketSimulator.MarketData[Tick].Low;
 
-            toolStripProgressBarPriceMax.Value = (int)MarketSimulator.MarketData[tick].Close;
+            toolStripProgressBarPriceMax.Value = (int)MarketSimulator.MarketData[Tick].Close;
 
-            var tmpMarketTickEventArgs = new MarketTickEventArgs { marketData = MarketSimulator.MarketData[tick] };
+            var tmpMarketTickEventArgs = new MarketTickEventArgs { marketData = MarketSimulator.MarketData[Tick] };
             try
             {
 
                 chart1.DataManipulator.FinancialFormula(FinancialFormula.RelativeStrengthIndex, chart1.Series["Series1"],
                     chart1.Series["RelativeStrengthIndex"]);
 
-                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[tick - 11].YValues[0];
+                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[Tick - 11].YValues[0];
 
 
 
@@ -200,15 +217,23 @@ namespace MarketSimulator.Forms
         /// </summary>
         private event EventHandler<MarketTickEventArgs> MarketTick;
 
+        /// <summary>
+        /// Tick
+        /// </summary>
+        public int Tick
+        {
+            get { return MarketSimulator.Tick; }
+            set { MarketSimulator.Tick = value; }
+        }
 
         /// <summary>
-        /// tick
+        /// exitToolStripMenuItem_Click
         /// </summary>
-        public int tick = 0;
-
-        private void toolStripButtonFF_Click(object sender, EventArgs e)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // tick += 40;
+            Close();
         }
     }
 }
