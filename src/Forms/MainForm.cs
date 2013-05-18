@@ -44,8 +44,7 @@ namespace MarketSimulator.Forms
             richTextBox1.Text += "Sold " + e.Shares + Environment.NewLine;
 
             dataGridViewPositions.Rows.Add("SELL", e.Shares, e.MarketData.Close, e.MarketData.Close * e.Shares);
-            dataGridViewPositions.FirstDisplayedScrollingRowIndex =
-                dataGridViewPositions.Rows.Count - 1;
+            ScrollPositionsForward();
         }
 
         /// <summary>
@@ -63,6 +62,15 @@ namespace MarketSimulator.Forms
             richTextBox1.Text += "Bought " + e.Shares + Environment.NewLine;
 
             dataGridViewPositions.Rows.Add("BUY", e.Shares, e.MarketData.Close, e.MarketData.Close * e.Shares);
+
+            ScrollPositionsForward();
+        }
+        
+        /// <summary>
+        /// ScrollPositionsForward
+        /// </summary>
+        private void ScrollPositionsForward()
+        {
             dataGridViewPositions.FirstDisplayedScrollingRowIndex =
                 dataGridViewPositions.Rows.Count - 1;
         }
