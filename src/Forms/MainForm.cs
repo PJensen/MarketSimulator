@@ -100,10 +100,11 @@ namespace MarketSimulator.Forms
             foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
                 toolStripTextBoxSecurity.AutoCompleteCustomSource.Add(previousSecurity);
 
-            toolStripTextBoxSecurity.Text = Properties.Settings.Default.Security;
-            MarketSimulator.MarketData = R.Convert(new YahooDataRetriever().Retrieve(toolStripTextBoxSecurity.Text));
-            MarketSimulator.MarketData.Reverse();
+            var message = string.Empty;
+            var fail = MarketSimulator.Instance.LoadMarketData(Properties.Settings.Default.Security, out message);
+            toolStripTextBoxSecurity.Text = fail ? message : Properties.Settings.Default.Security;
         }
+
 
         /// <summary>
         /// workingDirectoryToolStripMenuItem_Click

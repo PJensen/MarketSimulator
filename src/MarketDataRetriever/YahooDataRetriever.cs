@@ -25,17 +25,26 @@ namespace MarketSimulator
         /// </summary>
         /// <param name="symbol"></param>
         /// <returns></returns>
-        public DataTable Retrieve(string symbol)
+        public DataTable Retrieve(string symbol, out string message, out bool fail)
         {
-            var tmpDataFile = Path.GetTempFileName();
+            fail = false;
+            message = "Ok";
+
             var dataFileDest = Path.Combine(R.WorkingDirectory, symbol);
 
             if (!File.Exists(dataFileDest))
             {
                 using (var webClient = new WebClient())
                 {
-                    webClient.DownloadFile(string.Format(yahooDataURI, symbol), tmpDataFile);
-                    File.Move(tmpDataFile, dataFileDest);
+                    try
+                    {
+                        webClient.DownloadFile(string.Format(yahooDataURI, symbol), dataFileDest);
+                    }
+                    catch (Exception ex)
+                    {
+                        message = ex.Message;
+                        fail = true;
+                    }
                 }
             }
 

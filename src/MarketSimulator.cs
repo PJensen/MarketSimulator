@@ -57,6 +57,26 @@ namespace MarketSimulator
 
         #endregion
 
+        #region Market Data Loader
+
+        /// <summary>
+        /// LoadMarketData
+        /// </summary>
+        /// <param name="ticker"></param>
+        /// <returns></returns>
+        public bool LoadMarketData(string ticker, out string message)
+        {
+            bool fail;
+
+            MarketData = R.Convert(new YahooDataRetriever()
+                .Retrieve(ticker, out message, out fail));
+            MarketData.Reverse();
+           
+            return fail;
+        }
+
+        #endregion
+
         public int Shares { get; set; }
         public double Balance { get; set; }
         public int Tick { get; set; }

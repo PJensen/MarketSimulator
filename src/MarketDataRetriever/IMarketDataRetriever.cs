@@ -12,6 +12,6 @@ namespace MarketSimulator.MarketDataRetriever
         /// </summary>
         /// <param name="symbol"></param>
         /// <returns></returns>
-        DataTable Retrieve(string symbol);
+        DataTable Retrieve(string symbol, out string message, out bool fail);
     }
 }
