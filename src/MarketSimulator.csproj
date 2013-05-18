@@ -56,6 +56,18 @@
     <Compile Include="Forms\AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DataRetrieversForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DataRetrieversForm.Designer.cs">
+      <DependentUpon>DataRetrieversForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QuitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QuitDialog.Designer.cs">
+      <DependentUpon>QuitDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\WorkingDirectoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,8 +100,14 @@
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DataRetrieversForm.resx">
+      <DependentUpon>DataRetrieversForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QuitDialog.resx">
+      <DependentUpon>QuitDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\WorkingDirectoryForm.resx">
       <DependentUpon>WorkingDirectoryForm.cs</DependentUpon>

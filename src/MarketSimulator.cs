@@ -71,7 +71,7 @@ namespace MarketSimulator
             MarketData = R.Convert(new YahooDataRetriever()
                 .Retrieve(ticker, out message, out fail));
             MarketData.Reverse();
-           
+
             return fail;
         }
 
@@ -93,7 +93,7 @@ namespace MarketSimulator
 
         public void OnTickEvent(MarketTickEventArgs eventArgs)
         {
-            
+
             PXLast = eventArgs.marketData.Close;
             Instance.Balance = Instance.Cash; // +(eventArgs.marketData.Close) * Instance.Shares;
             Tick++;
@@ -148,5 +148,6 @@ namespace MarketSimulator
         /// MarketData
         /// </summary>
         public List<MarketData> MarketData { get; set; }
+
     }
 }

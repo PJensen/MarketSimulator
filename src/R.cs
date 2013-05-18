@@ -20,6 +20,19 @@ namespace MarketSimulator
         private static readonly Action Save = Properties.Settings.Default.Save;
 
         /// <summary>
+        /// ExitConfirmation
+        /// </summary>
+        public static bool ExitConfirmation
+        {
+            get { return Properties.Settings.Default.ExitConfirmation; }
+            set
+            {
+                Properties.Settings.Default.ExitConfirmation = value;
+                Save();
+            }
+        }
+
+        /// <summary>
         /// CurrentDirectory
         /// </summary>
         public static string CurrentDirectory
