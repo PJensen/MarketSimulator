@@ -78,6 +78,7 @@
     <Compile Include="MarketSimulator.cs" />
     <Compile Include="Events\MarketTickEventargs.cs" />
     <Compile Include="Core\Signals.cs" />
+    <Compile Include="Strategies\ElderImpulseStrategy.cs" />
     <Compile Include="Strategies\IStrategy.cs" />
     <Compile Include="Core\MarketData.cs" />
     <Compile Include="Forms\MainForm.cs">

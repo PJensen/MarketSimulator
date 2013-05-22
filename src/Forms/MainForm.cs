@@ -21,7 +21,7 @@ namespace MarketSimulator.Forms
             InitializeComponent();
 
             MarketSimulator = marketSimulator;
-            MarketSimulator.CurrentStrategy = new PeteStrategy();
+            MarketSimulator.CurrentStrategy = new ElderImpulseStrategy();
             MarketTick += MarketSimulator.CurrentStrategy.MarketTick;
             MarketTick += MainForm_MarketTick;
             MarketSimulator.CurrentStrategy.BuyEvent += CurrentStrategy_BuyEvent;
@@ -249,27 +249,40 @@ namespace MarketSimulator.Forms
             toolStripProgressBarPriceMax.Value = (int)MarketSimulator.MarketData[Tick].Close;
 
             var tmpMarketTickEventArgs = new MarketTickEventArgs { marketData = MarketSimulator.MarketData[Tick] };
-            try
-            {
 
-                chart1.DataManipulator.FinancialFormula(FinancialFormula.RelativeStrengthIndex, chart1.Series["Series1"],
+            if (TickOffset > 14)
+            {
+                chart1.DataManipulator.FinancialFormula(FinancialFormula.RelativeStrengthIndex, "14", chart1.Series["Series1"],
                     chart1.Series["RelativeStrengthIndex"]);
+                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[RSIOffset].YValues[0];
                 RSIOffset++;
-                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[RSIOffset - 1].YValues[0];
-
-
-
-
             }
-            catch
+
+            if (TickOffset > 13)
             {
+                chart1.DataManipulator.FinancialFormula(FinancialFormula.ExponentialMovingAverage, "13", chart1.Series["Series1"], chart1.Series["EMA13"]);
+                tmpMarketTickEventArgs.EMA13 = chart1.Series["EMA13"].Points[EMA13Offset].YValues[0];
+                EMA13Offset++;
             }
+
+            if (TickOffset > 26)
+            {
+                chart1.DataManipulator.FinancialFormula(FinancialFormula.MovingAverageConvergenceDivergence, "12,26", chart1.Series["Series1"], chart1.Series["MACD"]);
+                tmpMarketTickEventArgs.MACDHistogram = chart1.Series["MACD"].Points[MACDOffset].YValues[0];
+                MACDOffset++;
+            }
+
+            TickOffset++;
 
             if (MarketTick != null)
                 MarketTick(this, tmpMarketTickEventArgs);
         }
 
         int RSIOffset = 0;
+        int MACDOffset = 0;
+        int EMA13Offset = 0;
+
+        int TickOffset = 0;
 
         /// <summary>
         /// MarketTick
@@ -325,6 +338,11 @@ namespace MarketSimulator.Forms
             {
                 R.ExitConfirmation = !@checked;
             }
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

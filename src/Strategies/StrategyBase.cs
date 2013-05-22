@@ -37,7 +37,7 @@ namespace MarketSimulator.Strategies
         /// </summary>
         /// <param name="sender">event sender</param>
         /// <param name="e">market Tick event args</param>
-        public void MarketTick(object sender, MarketTickEventArgs e)
+        public virtual void MarketTick(object sender, MarketTickEventArgs e)
         {
             var sellEventArgs = SellSignal(e);
             var buyEventArgs = BuySignal(e);
