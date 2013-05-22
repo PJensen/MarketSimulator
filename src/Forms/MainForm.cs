@@ -43,7 +43,31 @@ namespace MarketSimulator.Forms
 
             richTextBox1.Text += "Sold " + e.Shares + Environment.NewLine;
 
-            dataGridViewPositions.Rows.Add("SELL", e.Shares, e.MarketData.Close, e.MarketData.Close * e.Shares);
+
+            var tradeValuation = e.MarketData.Close * e.Shares;
+
+            dataGridViewPositions.Rows.Add("SELL", e.Shares, e.MarketData.Close, tradeValuation);
+
+            var tradePoint = chart1.Series["Trade"].Points.Count;
+
+            chart1.Series["Trade"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, e.MarketData.Close);
+            chart1.Series["Trade"].Points[tradePoint].MarkerStyle = MarkerStyle.Square;
+            chart1.Series["Trade"].Points[tradePoint].Tag = MarketSimulator.Balance;
+            chart1.Series["Trade"].Points[tradePoint].MarkerSize = (int)Math.Log(e.Shares);
+
+            chart1.Series["Trade"].Points[tradePoint].Color = MarketSimulator.MadeMoney()
+                ? System.Drawing.Color.Green : System.Drawing.Color.Red;
+
+            if (MarketSimulator.Shares <= 0)
+            {
+                tradePoint = chart1.Series["Trade"].Points.Count;
+                chart1.Series["Trade"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, new object[] { DBNull.Value });
+                chart1.Series["Trade"].Points[tradePoint].IsEmpty = true;
+            }
+
+            if (MarketSimulator.Shares <= 0)
+                MarketSimulator.ActiveTradeString.Clear();
+
             ScrollPositionsForward();
         }
 
@@ -61,9 +85,32 @@ namespace MarketSimulator.Forms
 
             richTextBox1.Text += "Bought " + e.Shares + Environment.NewLine;
 
-            dataGridViewPositions.Rows.Add("BUY", e.Shares, e.MarketData.Close, e.MarketData.Close * e.Shares);
+            var tradeValuation = e.MarketData.Close * e.Shares;
+
+            dataGridViewPositions.Rows.Add("BUY", e.Shares, e.MarketData.Close, tradeValuation);
+
+            var tradePoint = chart1.Series["Trade"].Points.Count;
+
+            chart1.Series["Trade"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, e.MarketData.Close);
+
+            chart1.Series["Trade"].Points[tradePoint].MarkerStyle = MarkerStyle.Diamond;
+            chart1.Series["Trade"].Points[tradePoint].Color = System.Drawing.Color.Orange;
+            chart1.Series["Trade"].Points[tradePoint].MarkerSize = (int)Math.Log(e.Shares);
+            chart1.Series["Trade"].Points[tradePoint].Tag = MarketSimulator.Balance;
+
+
+
+
 
             ScrollPositionsForward();
+        }
+
+        double SlopeAt(DataPointCollection points, int index)
+        {
+            if (points.Count <= 0)
+                return double.NaN;
+
+            return points[index].YValues[0] / points[index - 1].YValues[0];
         }
 
         /// <summary>
@@ -189,6 +236,7 @@ namespace MarketSimulator.Forms
             chart1.Series["Cash"].Points.AddXY(MarketSimulator.MarketData[Tick].Date,
                                                MarketSimulator.Cash);
 
+
             toolStripLabelCurrentPrice.Text =
                 MarketSimulator.MarketData[Tick].Close.ToString(CultureInfo.InvariantCulture);
 
@@ -208,7 +256,7 @@ namespace MarketSimulator.Forms
                     chart1.Series["RelativeStrengthIndex"]);
                 RSIOffset++;
                 tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[RSIOffset - 1].YValues[0];
-                
+
 
 
 

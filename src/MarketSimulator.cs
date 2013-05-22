@@ -31,8 +31,10 @@ namespace MarketSimulator
         private MarketSimulator()
         {
             Balance = Cash = Properties.Settings.Default.StartingBalance;
+            BalanceHistory = new List<double>();
             MarketData = new List<MarketData>();
             CurrentStrategy = default(StrategyBase);
+            ActiveTradeString = new TradeString();
         }
 
         /// <summary>
@@ -117,7 +119,15 @@ namespace MarketSimulator
             Instance.Cash -= totalValue;
             Instance.Shares += eventArgs.Shares;
             NumberOfTrades++;
+
+            BalanceHistory.Add(Instance.Cash);
+            ActiveTradeString.BuyLine.Add(eventArgs);
         }
+
+        /// <summary>
+        /// BuyTally
+        /// </summary>
+        public List<double> BalanceHistory { get; set; }
 
         /// <summary>
         /// 
@@ -137,6 +147,44 @@ namespace MarketSimulator
             Instance.Shares -= eventArgs.Shares;
             Instance.Cash += eventArgs.Shares * eventArgs.MarketData.Close;
             NumberOfTrades++;
+
+            BalanceHistory.Add(Instance.Cash);
+            ActiveTradeString.SellLine.Add(eventArgs);
+        }
+
+        /// <summary>
+        /// ActiveTradeString
+        /// </summary>
+        public TradeString ActiveTradeString { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="points"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public bool MadeMoney()
+        {
+          //  if (!ActiveTradeString.IsValid)
+          //      return false;
+
+            // sum all purchases
+            var marketValue = 0d;
+            foreach (var e in ActiveTradeString.BuyLine)
+                marketValue += e.MarketData.Close * e.Shares;
+
+            // sum all sales.
+            var saleValue = 0d;
+            foreach (var e in ActiveTradeString.SellLine)
+                saleValue += e.MarketData.Close * e.Shares;
+
+            // compute remainder
+            var remainder = Shares * PXLast;
+
+            // subtract remainder
+            var mktTotal = (saleValue - marketValue) - remainder;
+
+            return mktTotal > 0;
         }
 
         /// <summary>
