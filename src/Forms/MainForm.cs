@@ -206,8 +206,9 @@ namespace MarketSimulator.Forms
 
                 chart1.DataManipulator.FinancialFormula(FinancialFormula.RelativeStrengthIndex, chart1.Series["Series1"],
                     chart1.Series["RelativeStrengthIndex"]);
-
-                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[Tick - 11].YValues[0];
+                RSIOffset++;
+                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[RSIOffset - 1].YValues[0];
+                
 
 
 
@@ -219,6 +220,8 @@ namespace MarketSimulator.Forms
             if (MarketTick != null)
                 MarketTick(this, tmpMarketTickEventArgs);
         }
+
+        int RSIOffset = 0;
 
         /// <summary>
         /// MarketTick

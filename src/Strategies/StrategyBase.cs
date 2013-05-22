@@ -14,16 +14,22 @@ namespace MarketSimulator.Strategies
     public abstract class StrategyBase : IStrategy
     {
         /// <summary>
+        /// FinancialFormulae
+        /// </summary>
+        public FinancialFormula FinancialFormulae { get; protected set; }
+
+        /// <summary>
         /// Creates a new StrategyBase
         /// </summary>
         /// <param name="name">The name of the strategy</param>
         /// <param name="buySignal">The buy signal</param>
         /// <param name="sellSignal">The sell signal</param>
-        protected StrategyBase(string name, BuySignal buySignal, SellSignal sellSignal)
+        protected StrategyBase(string name, BuySignal buySignal, SellSignal sellSignal, FinancialFormula financialFormulae)
         {
             Name = name;
             SellSignal = sellSignal;
             BuySignal = buySignal;
+            FinancialFormulae = financialFormulae;
         }
 
         /// <summary>

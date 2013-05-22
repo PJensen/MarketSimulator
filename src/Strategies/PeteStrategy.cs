@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MarketSimulator.Core;
 using MarketSimulator.Events;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MarketSimulator.Strategies
 {
@@ -16,7 +17,7 @@ namespace MarketSimulator.Strategies
         /// 
         /// </summary>
         public PeteStrategy()
-            : base("PeteStrategy", BuyCondition, SellCondition)
+            : base("PeteStrategy", BuyCondition, SellCondition, FinancialFormula.RelativeStrengthIndex)
         {
         }
 
@@ -43,6 +44,8 @@ namespace MarketSimulator.Strategies
         private static BuyEventArgs BuyCondition(MarketTickEventArgs eventArgs)
         {
             BuyEventArgs buyEventArgs = null;
+
+
 
             if (eventArgs.RSI < 30)
             {
