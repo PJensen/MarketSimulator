@@ -30,9 +30,9 @@ namespace MarketSimulator.Strategies
 
             if (!bought && eventArgs.EMA13 > previous13EMA && eventArgs.MACDHistogram > previousMACD) 
             {
-                var shares = (int)(MarketSimulator.Instance.Balance / eventArgs.marketData.Close);
+                var shares = (int)(MarketSimulator.Instance.Balance / eventArgs.MarketData.Close);
                 bought = true;
-                return new BuyEventArgs(eventArgs.marketData, shares);
+                return new BuyEventArgs(eventArgs.MarketData, shares);
             } else 
                 return null;
         }
@@ -46,7 +46,7 @@ namespace MarketSimulator.Strategies
             if (eventArgs.EMA13 < previous13EMA && eventArgs.MACDHistogram < previousMACD)
             {
                 bought = false;
-                return new SellEventArgs(eventArgs.marketData, MarketSimulator.Instance.Shares);
+                return new SellEventArgs(eventArgs.MarketData, MarketSimulator.Instance.Shares);
             } 
             else
                 return null;

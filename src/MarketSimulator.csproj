@@ -47,10 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\TradeFlags.cs" />
     <Compile Include="Core\TradeString.cs" />
+    <Compile Include="Core\TradeType.cs" />
     <Compile Include="Events\BuyEventArgs.cs" />
     <Compile Include="Events\MarketEventArgs.cs" />
     <Compile Include="Events\SellEventArgs.cs" />
+    <Compile Include="Events\TradeEventArgs.cs" />
     <Compile Include="Forms\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +81,7 @@
     <Compile Include="MarketSimulator.cs" />
     <Compile Include="Events\MarketTickEventargs.cs" />
     <Compile Include="Core\Signals.cs" />
+    <Compile Include="Strategies\CoreStrategy.cs" />
     <Compile Include="Strategies\ElderImpulseStrategy.cs" />
     <Compile Include="Strategies\IStrategy.cs" />
     <Compile Include="Core\MarketData.cs" />
@@ -122,6 +126,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="Properties\DataSources\MarketData.datasource" />
@@ -138,6 +143,474 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Signals\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bin_closed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bin_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bomb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_arrow_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_arrow_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_arrow_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_arrow_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_feed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_picture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_pink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_purple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_toggle_minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_toggle_plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calculator_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_bar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_bar_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_bar_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_bar_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_bar_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_bar_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_curve_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_line_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_line_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_line_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_line_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_line_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_pie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_pie_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_pie_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_pie_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_pie_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chart_pie_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cog_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coins.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coins_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coins_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\compress.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\date.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\date_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\date_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\date_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\feed_magnify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\market_simulator.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_magnify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_picture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resultset_first.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resultset_last.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resultset_next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resultset_previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_compressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_uncompressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_multiple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_relationship.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_row_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_row_insert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_sort.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\textfield.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\textfield_rename.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\timeline_marker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench_orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -248,7 +248,7 @@ namespace MarketSimulator.Forms
 
             toolStripProgressBarPriceMax.Value = (int)MarketSimulator.MarketData[Tick].Close;
 
-            var tmpMarketTickEventArgs = new MarketTickEventArgs { marketData = MarketSimulator.MarketData[Tick] };
+            var tmpMarketTickEventArgs = new MarketTickEventArgs(MarketSimulator.MarketData[Tick]);
 
             if (TickOffset > 14)
             {

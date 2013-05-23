@@ -30,7 +30,7 @@ namespace MarketSimulator.Strategies
         {
             if (eventArgs.RSI > 90)
             {
-                return new SellEventArgs(eventArgs.marketData, MarketSimulator.Instance.Shares);
+                return new SellEventArgs(eventArgs.MarketData, MarketSimulator.Instance.Shares);
             }
 
             return null;
@@ -49,7 +49,7 @@ namespace MarketSimulator.Strategies
 
             if (eventArgs.RSI < 20)
             {
-                buyEventArgs = new BuyEventArgs(eventArgs.marketData, (int)eventArgs.RSI);
+                buyEventArgs = new BuyEventArgs(eventArgs.MarketData, (int)eventArgs.RSI);
             }
 
             if (buyEventArgs != null && buyEventArgs.Shares == 0)

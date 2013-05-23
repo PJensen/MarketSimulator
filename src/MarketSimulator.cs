@@ -96,7 +96,7 @@ namespace MarketSimulator
         public void OnTickEvent(MarketTickEventArgs eventArgs)
         {
 
-            PXLast = eventArgs.marketData.Close;
+            PXLast = eventArgs.MarketData.Close;
             Instance.Balance = Instance.Cash; // +(eventArgs.marketData.Close) * Instance.Shares;
             Tick++;
         }

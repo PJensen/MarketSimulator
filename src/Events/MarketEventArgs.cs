@@ -23,10 +23,5 @@ namespace MarketSimulator.Events
         /// MarketData
         /// </summary>
         public MarketData MarketData { get; protected set; }
-
-        /// <summary>
-        /// Cancel
-        /// </summary>
-        public bool Cancel { get; set; }
     }
 }

@@ -9,22 +9,14 @@ namespace MarketSimulator.Events
     /// <summary>
     /// BuyEventArgs
     /// </summary>
-    public class SellEventArgs : MarketEventArgs
+    public class SellEventArgs : TradeEventArgs
     {
         /// <summary>
-        /// Createa  new BuyEventArgs with the specified quantity
+        /// Create a new SellEventArgs with the specified quantity
         /// </summary>
         /// <param name="marketData">The market data</param>
         /// <param name="shares">The number of shares to purchase</param>
-        public SellEventArgs(MarketData marketData, int shares)
-            : base(marketData)
-        {
-            Shares = shares;
-        }
-
-        /// <summary>
-        /// Shares
-        /// </summary>
-        public int Shares { get; set; }
+        public SellEventArgs(MarketData marketData, int shares, double stop = 0d, double limit = 0d, TradeFlags flags = Core.TradeFlags.Market)
+            : base(TradeType.Sell, marketData, shares, stop, limit, flags) { }
     }
 }
