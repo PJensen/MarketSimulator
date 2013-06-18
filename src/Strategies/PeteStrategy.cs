@@ -8,6 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MarketSimulator.Strategies
 {
+#if __
     /// <summary>
     /// PeteStrategy
     /// </summary>
@@ -58,4 +59,5 @@ namespace MarketSimulator.Strategies
             return buyEventArgs;
         }
     }
+#endif
 }

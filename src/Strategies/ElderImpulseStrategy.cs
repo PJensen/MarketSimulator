@@ -8,6 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MarketSimulator.Strategies
 {
+#if __
     class ElderImpulseStrategy : StrategyBase
     {
         public ElderImpulseStrategy()
@@ -65,4 +66,5 @@ namespace MarketSimulator.Strategies
 
         }
     }
+#endif
 }

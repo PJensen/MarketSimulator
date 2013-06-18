@@ -14,54 +14,74 @@ namespace MarketSimulator.Strategies
     public abstract class StrategyBase : IStrategy
     {
         /// <summary>
-        /// FinancialFormulae
-        /// </summary>
-        public FinancialFormula FinancialFormulae { get; protected set; }
-
-        /// <summary>
         /// Creates a new StrategyBase
         /// </summary>
         /// <param name="name">The name of the strategy</param>
         /// <param name="buySignal">The buy signal</param>
         /// <param name="sellSignal">The sell signal</param>
-        protected StrategyBase(string name, BuySignal buySignal, SellSignal sellSignal, FinancialFormula financialFormulae)
+        public StrategyBase(string name)
         {
             Name = name;
-            SellSignal = sellSignal;
-            BuySignal = buySignal;
-            FinancialFormulae = financialFormulae;
         }
+
+        /// <summary>
+        /// BuySignal; the details of the buy signal are filled in by the concrete
+        /// implementations.
+        /// </summary>
+        /// <param name="eventArgs">incoming market tick event arguments</param>
+        /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
+        public abstract BuyEventArgs BuySignal(MarketTickEventArgs eventArgs);
+
+        /// <summary>
+        /// SellSignal; the details of the sell signal are filled in by the concrete
+        /// implementations.
+        /// </summary>
+        /// <param name="eventArgs">incoming market tick event arguments</param>
+        /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
+        public abstract SellEventArgs SellSignal(MarketTickEventArgs eventArgs);
 
         /// <summary>
         /// MarketTick
         /// </summary>
         /// <param name="sender">event sender</param>
-        /// <param name="e">market Tick event args</param>
+        /// <param name="e">market Tick event arguments</param>
         public virtual void MarketTick(object sender, MarketTickEventArgs e)
         {
-            var sellEventArgs = SellSignal(e);
-            var buyEventArgs = BuySignal(e);
+            // TODO: Determine if strategies should be prevented from buying AND selling in the same tick.
+            // if not; determine precedence; for now it's sell first (for liquidity) and purchase 2nd.
 
-            if (sellEventArgs != null && SellEvent != null)
-                SellEvent(this, sellEventArgs);
-            else if (buyEventArgs != null && BuyEvent != null)
-                BuyEvent(this, buyEventArgs);
+            OnSellEvent(SellSignal(e));
+            OnBuyEvent(BuySignal(e));
         }
 
         /// <summary>
-        /// Name of the strategy
+        /// Name of the trading strategy
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// BuySignal
+        /// Buy Event Invocator
         /// </summary>
-        public BuySignal BuySignal { get; set; }
+        /// <param name="e">The buy event arguments</param>
+        protected void OnBuyEvent(BuyEventArgs e)
+        {
+            if (BuyEvent != null && e != null)
+            {
+                BuyEvent(this, e);
+            }
+        }
 
         /// <summary>
-        /// SellSignal
+        /// Sell Event Invocator
         /// </summary>
-        public SellSignal SellSignal { get; set; }
+        /// <param name="e">The sell event argument</param>
+        protected void OnSellEvent(SellEventArgs e)
+        {
+            if (SellEvent != null && e != null)
+            {
+                SellEvent(this, e);
+            }
+        }
 
         /// <summary>
         /// BuyEvent

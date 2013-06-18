@@ -1,4 +1,6 @@
 ﻿using MarketSimulator.Core;
+using MarketSimulator.Events;
+
 namespace MarketSimulator.Strategies
 {
     /// <summary>
@@ -12,13 +14,19 @@ namespace MarketSimulator.Strategies
         string Name { get; set; }
 
         /// <summary>
-        /// 
+        /// BuySignal; the details of the buy signal are filled in by the concrete
+        /// implementations.
         /// </summary>
-        BuySignal BuySignal { get; set; }
+        /// <param name="eventArgs">incoming market tick event arguments</param>
+        /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
+        BuyEventArgs BuySignal(MarketTickEventArgs eventArgs);
 
         /// <summary>
-        /// 
+        /// SellSignal; the details of the sell signal are filled in by the concrete
+        /// implementations.
         /// </summary>
-        SellSignal SellSignal { get; set; }
+        /// <param name="eventArgs">incoming market tick event arguments</param>
+        /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
+        SellEventArgs SellSignal(MarketTickEventArgs eventArgs);
     }
 }
