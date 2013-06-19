@@ -238,6 +238,19 @@
   <metadata name="statusStripMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>132, 17</value>
   </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>581, 17</value>
+  </metadata>
+  <data name="toolStripLabel1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADASURBVDhPpYw7CsJAFEWzgnzNbMBtuAUbSWNjE4PY
+        pUkjiFWaIFjYupOAVQoXkDLgHrKAXB8jWDi38GFxmOHMPeMB+AsqNVCpgUoNVGqgEhfTC8DZjGhMizpd
+        0J1ApaUxvoQFTmmHw+yJKqGfOMJSp72Ek4SDhFuUcYd93LKtIz5UyUrCm4QD8qjAJhzZzhGWMr7jOIeE
+        OwknrEMfWSBP7tYRljy6Sviw9yzo7bn03+cXjtBCpQYqNVCpgcrfgfcC4GHkcTNGQ4IAAAAASUVORK5C
+        YII=
+</value>
+  </data>
   <metadata name="timerMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>268, 17</value>
   </metadata>

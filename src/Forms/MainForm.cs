@@ -19,6 +19,63 @@ namespace MarketSimulator.Forms
         public MainForm()
         {
             InitializeComponent();
+
+            toolStripTextBoxTicker.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            toolStripTextBoxTicker.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            toolStripTextBoxTicker.AutoCompleteCustomSource = new AutoCompleteStringCollection();
+
+            marketSimulatorComponent.marketSimulatorWorker.ProgressChanged += marketSimulatorWorker_ProgressChanged;
+            marketSimulatorComponent.marketSimulatorWorker.RunWorkerCompleted += marketSimulatorWorker_RunWorkerCompleted;
+        }
+
+        /// <summary>
+        /// toolStripButtonGo_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButtonGo_Click(object sender, EventArgs e)
+        {
+            string tmpInitMessage = string.Empty;
+
+            if (marketSimulatorComponent.Initialize(toolStripTextBoxTicker.Text, out tmpInitMessage))
+            {
+                marketSimulatorComponent.marketSimulatorWorker.RunWorkerAsync();
+            }
+            else 
+            {
+                toolStripStatusLabelWorker.Text = tmpInitMessage;
+            }
+        }
+
+        /// <summary>
+        /// marketSimulatorWorker_RunWorkerCompleted changes the text of the status bar.
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">run worker completed event arguments</param>
+        void marketSimulatorWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            string tmpStatusMessage = "Completed!";
+
+            if (e.Cancelled)
+            {
+                tmpStatusMessage = "Cancelled!";
+            }
+            else if (e.Error != null)
+            {
+                tmpStatusMessage = e.Error.Message;
+            }
+
+            toolStripStatusLabelWorker.Text = tmpStatusMessage;
+        }
+
+        /// <summary>
+        /// marketSimulatorWorker_ProgressChanged event wired to the progress bar
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
+        void marketSimulatorWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            toolStripProgressBarMain.Value = e.ProgressPercentage;
         }
 
         /// <summary>
@@ -28,9 +85,9 @@ namespace MarketSimulator.Forms
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
-           // toolStripTextBoxSecurity.AutoCompleteCustomSource = new AutoCompleteStringCollection();
-         //   foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
-            //    toolStripTextBoxSecurity.AutoCompleteCustomSource.Add(previousSecurity);
+            // load auto complete ticker source from previous runs.
+            foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
+                toolStripTextBoxTicker.AutoCompleteCustomSource.Add(previousSecurity);
 
             var fail = false;
             var message = string.Empty;
@@ -92,9 +149,6 @@ namespace MarketSimulator.Forms
         {
             timerMain.Enabled = false;
         }
-
-
-
 
         /// <summary>
         /// exitToolStripMenuItem_Click

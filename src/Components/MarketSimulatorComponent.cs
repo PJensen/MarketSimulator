@@ -128,6 +128,8 @@ namespace MarketSimulator.Components
         /// <returns></returns>
         public bool Initialize(string ticker, out string message)
         {
+            Ticker = ticker;
+
             return Initialized = LoadMarketData(out message);
         }
 
