@@ -1,5 +1,6 @@
 ﻿using MarketSimulator.Core;
 using MarketSimulator.Events;
+using MarketSimulator.Interfaces;
 using MarketSimulator.Strategies;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace MarketSimulator
     /// <summary>
     /// StrategyExecutionSandbox
     /// </summary>
-    public class StrategyExecutionSandbox
+    public class StrategyExecutionSandbox : IStrategyEventReciever
     {
         /// <summary>
         /// Creates a new StrategyExecutionSandbox
@@ -22,6 +23,7 @@ namespace MarketSimulator
             Balance = Cash = Properties.Settings.Default.StartingBalance;
             BalanceHistory = new List<double>();
             ActiveTradeString = new TradeString();
+            
         }
 
         #region Public Facing Methods
@@ -160,5 +162,14 @@ namespace MarketSimulator
         public List<double> BalanceHistory { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// The name of the strategy
+        /// </summary>
+        public string Name 
+        {
+            get { return Strategy.Name; }
+            set { Strategy.Name = value; }
+        }
     }
 }

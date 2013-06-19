@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Interfaces\ITradeEventListener.cs" />
     <Compile Include="Interfaces\IMarketSignalEventSource.cs" />
+    <Compile Include="Interfaces\IStrategyEventReciever.cs" />
     <Compile Include="MarketSimulator.cs" />
     <Compile Include="Events\MarketTickEventargs.cs" />
     <Compile Include="Core\Signals.cs" />

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="MarketSimulator.YahooDataRetriever">
-    <Position X="0.5" Y="3" Width="1.75" />
+    <Position X="0.5" Y="2.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MarketDataRetriever\YahooDataRetriever.cs</FileName>
@@ -18,7 +18,7 @@
   <Class Name="MarketSimulator.MarketTickEventArgs">
     <Position X="2.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Events\MarketTickEventargs.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -43,5 +43,51 @@
       <FileName>Events\BuyEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="MarketSimulator.StrategyExecutionSandbox">
+    <Position X="17.75" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAQAAAAAAAAAAigAAEQAQQAAAAEgAgAAABAAQAA=</HashCode>
+      <FileName>StrategyExecutionSandbox.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MarketSimulator.StrategyExecutor">
+    <Position X="14.25" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAEABAAAAAAACAAAAAEAAAAAAAAAAQAIAAIAAQAA=</HashCode>
+      <FileName>StrategyExecutor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sandboxes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Interface Name="MarketSimulator.Interfaces.IMarketDataRetriever">
+    <Position X="15.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IMarketDataRetriever.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarketSimulator.Interfaces.IMarketSignalEventSource">
+    <Position X="11" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IMarketSignalEventSource.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarketSimulator.Interfaces.IStrategy">
+    <Position X="12.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarketSimulator.Interfaces.ITradeEventListener">
+    <Position X="13.75" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAEAAA=</HashCode>
+      <FileName>Interfaces\ITradeEventListener.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

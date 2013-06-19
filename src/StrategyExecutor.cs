@@ -64,7 +64,7 @@ namespace MarketSimulator
         /// <summary>
         /// MarketTickEvent
         /// </summary>
-        protected event EventHandler<MarketTickEventArgs> MarketTickEvent;
+        //protected event EventHandler<MarketTickEventArgs> MarketTickEvent;
 
         /// <summary>
         /// The last price that ticked in the simulator
