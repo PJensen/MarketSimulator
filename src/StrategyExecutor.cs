@@ -15,8 +15,9 @@ namespace MarketSimulator
         /// <summary>
         /// StrategyExecutor
         /// </summary>
-        public StrategyExecutor()
+        public StrategyExecutor(string ticker)
         {
+            Ticker = ticker;
             MarketData = new List<MarketData>();
         }
 
@@ -24,19 +25,56 @@ namespace MarketSimulator
         /// Add a strategy to the strategy executor
         /// </summary>
         /// <param name="strategy">the strategy to add</param>
-        public void Add(StrategyBase strategy)
+        public bool AddStrategy(StrategyBase strategy)
         {
             // sanity check to make sure another strategy with the same name is not already there.
             if (Sandboxes.FirstOrDefault(s => s.Strategy.Name == strategy.Name) != null)
-                return;
+                return false;
 
             Sandboxes.Add(new StrategyExecutionSandbox(this, strategy));
+
+            return true;
+        }
+
+        /// <summary>
+        /// LoadMarketData
+        /// </summary>
+        /// <param name="ticker"></param>
+        /// <returns></returns>
+        public bool LoadMarketData(out string message)
+        {
+            bool fail;
+
+            MarketData = R.Convert(new YahooDataRetriever().Retrieve(Ticker, out message, out fail));
+            MarketData.Reverse();
+
+            return fail;
+        }
+
+        /// <summary>
+        /// OnTickEvent
+        /// </summary>
+        /// <param name="eventArgs">market tick event arguments</param>
+        public void OnTickEvent(MarketTickEventArgs eventArgs)
+        {
+            PXLast = eventArgs.MarketData.Close;
+            Tick++;
         }
 
         /// <summary>
         /// The last price that ticked in the simulator
         /// </summary>
         public double PXLast { get; set; }
+
+        /// <summary>
+        /// Ticker
+        /// </summary>
+        public string Ticker { get; private set; }
+
+        /// <summary>
+        /// Tick; the same for all strategies being executed
+        /// </summary>
+        public int Tick { get; private set; }
 
         /// <summary>
         /// The common backing store for all market data.

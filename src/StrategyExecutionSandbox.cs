@@ -1,4 +1,5 @@
 ﻿using MarketSimulator.Core;
+using MarketSimulator.Events;
 using MarketSimulator.Strategies;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,86 @@ namespace MarketSimulator
         {
             Strategy = strategy;
             Balance = Cash = Properties.Settings.Default.StartingBalance;
+            BalanceHistory = new List<double>();
+            ActiveTradeString = new TradeString();
         }
+
+        #region Public Facing Methods
+
+        /// <summary>
+        /// OnBuyEvent
+        /// </summary>
+        /// <param name="eventArgs">eventArgs</param>
+        public void OnBuyEvent(BuyEventArgs eventArgs)
+        {
+            var totalValue = eventArgs.Shares * eventArgs.MarketData.Close;
+
+            if (totalValue >= Cash)
+            {
+                eventArgs.Cancel = true;
+
+                return;
+            }
+
+            Cash -= totalValue;
+            Shares += eventArgs.Shares;
+            NumberOfTrades++;
+
+            BalanceHistory.Add(Cash);
+            ActiveTradeString.BuyLine.Add(eventArgs);
+        }
+
+        /// <summary>
+        /// OnSellEvent
+        /// </summary>
+        /// <param name="eventArgs">eventArgs</param>
+        public void OnSellEvent(SellEventArgs eventArgs)
+        {
+            if (eventArgs.Shares <= 0)
+            {
+                eventArgs.Cancel = true;
+                return;
+            }
+
+            if (eventArgs.Shares > Shares)
+                eventArgs.Shares = Shares;
+
+            Shares -= eventArgs.Shares;
+            Cash += eventArgs.Shares * eventArgs.MarketData.Close;
+            NumberOfTrades++;
+
+            BalanceHistory.Add(Cash);
+            ActiveTradeString.SellLine.Add(eventArgs);
+        }
+
+        /// <summary>
+        /// Determines if this execution strategy has made money -- yet.
+        /// </summary>
+        /// <returns><value>true</value> if the strategy has made money</returns>
+        public bool MadeMoney()
+        {
+            // sum all purchases
+            var marketValue = 0d;
+            foreach (var e in ActiveTradeString.BuyLine)
+                marketValue += e.MarketData.Close * e.Shares;
+
+            // sum all sales.
+            var saleValue = 0d;
+            foreach (var e in ActiveTradeString.SellLine)
+                saleValue += e.MarketData.Close * e.Shares;
+
+            // compute remainder
+            var remainder = Shares * StrategyExecutor.PXLast;
+
+            // subtract remainder
+            var mktTotal = (saleValue - marketValue) - remainder;
+
+            return mktTotal > 0;
+        }
+
+        #endregion
+
+        #region Public Facing Properties
 
         /// <summary>
         /// The number of shares currently owned by this strategy
@@ -75,28 +155,10 @@ namespace MarketSimulator
         public List<MarketData> MarketData { get { return StrategyExecutor.MarketData; } }
 
         /// <summary>
-        /// Determines if this execution strategy has made money -- yet.
+        /// BuyTally
         /// </summary>
-        /// <returns><value>true</value> if the strategy has made money</returns>
-        public bool MadeMoney()
-        {
-            // sum all purchases
-            var marketValue = 0d;
-            foreach (var e in ActiveTradeString.BuyLine)
-                marketValue += e.MarketData.Close * e.Shares;
+        public List<double> BalanceHistory { get; set; }
 
-            // sum all sales.
-            var saleValue = 0d;
-            foreach (var e in ActiveTradeString.SellLine)
-                saleValue += e.MarketData.Close * e.Shares;
-
-            // compute remainder
-            var remainder = Shares * StrategyExecutor.PXLast;
-
-            // subtract remainder
-            var mktTotal = (saleValue - marketValue) - remainder;
-
-            return mktTotal > 0;
-        }
+        #endregion
     }
 }
