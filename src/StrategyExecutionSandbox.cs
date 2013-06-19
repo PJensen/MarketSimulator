@@ -17,13 +17,12 @@ namespace MarketSimulator
         /// <summary>
         /// Creates a new StrategyExecutionSandbox
         /// </summary>
-        public StrategyExecutionSandbox(StrategyExecutor strategyExecutor, StrategyBase strategy)
+        public StrategyExecutionSandbox(IStrategyExecutor strategyExecutor, StrategyBase strategy)
         {
             Strategy = strategy;
             Balance = Cash = Properties.Settings.Default.StartingBalance;
             BalanceHistory = new List<double>();
             ActiveTradeString = new TradeString();
-            
         }
 
         #region Public Facing Methods
