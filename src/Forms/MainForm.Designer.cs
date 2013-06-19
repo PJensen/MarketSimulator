@@ -441,7 +441,6 @@
             // timerMain
             // 
             this.timerMain.Interval = 1;
-            this.timerMain.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // toolStrip1
             // 
@@ -717,7 +716,6 @@
             this.chart1.Size = new System.Drawing.Size(1014, 351);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // Balance
             // 

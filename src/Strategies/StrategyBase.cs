@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketSimulator.Core;
 using MarketSimulator.Events;
+using MarketSimulator.Interfaces;
 
 namespace MarketSimulator.Strategies
 {

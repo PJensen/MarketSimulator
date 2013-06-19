@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MarketSimulator.Core;
+using System.Windows.Forms;
 
 namespace MarketSimulator
 {
@@ -63,6 +64,21 @@ namespace MarketSimulator
             {
                 Properties.Settings.Default.PreviousSecurities = value;
                 Save();
+            }
+        }
+
+        /// <summary>
+        /// GUI Utility
+        /// </summary>
+        public static class GUI
+        {
+            /// <summary>
+            /// ScrollDataGridForward
+            /// </summary>
+            /// <param name="dataGridViewPositions"></param>
+            public static void ScrollDataGridForward(DataGridView dataGridViewPositions)
+            {
+                dataGridViewPositions.FirstDisplayedScrollingRowIndex = dataGridViewPositions.Rows.Count - 1;
             }
         }
 
