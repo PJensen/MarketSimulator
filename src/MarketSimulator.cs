@@ -28,7 +28,7 @@ namespace MarketSimulator
         /// <summary>
         /// MarketSimulator
         /// </summary>
-        private MarketSimulator() { }
+        private MarketSimulator() {  }
 
         /// <summary>
         /// Instance
@@ -51,5 +51,7 @@ namespace MarketSimulator
         }
 
         #endregion
+
+
     }
 }
