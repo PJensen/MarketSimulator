@@ -28,13 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.simulationWorker = new System.ComponentModel.BackgroundWorker();
+            this.marketSimulatorWorker = new System.ComponentModel.BackgroundWorker();
+            // 
+            // marketSimulatorWorker
+            // 
+            this.marketSimulatorWorker.WorkerReportsProgress = true;
+            this.marketSimulatorWorker.WorkerSupportsCancellation = true;
+            this.marketSimulatorWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.marketSimulatorWorker_DoWork);
+            this.marketSimulatorWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.marketSimulatorWorker_ProgressChanged);
+            this.marketSimulatorWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.marketSimulatorWorker_RunWorkerCompleted);
 
         }
 
         #endregion
 
-        public System.ComponentModel.BackgroundWorker simulationWorker;
+        public System.ComponentModel.BackgroundWorker marketSimulatorWorker;
 
     }
 }

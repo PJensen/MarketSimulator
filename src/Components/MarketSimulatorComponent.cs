@@ -1,4 +1,5 @@
 ﻿using MarketSimulator.Core;
+using MarketSimulator.Exceptions;
 using MarketSimulator.Interfaces;
 using MarketSimulator.Strategies;
 using System;
@@ -95,6 +96,11 @@ namespace MarketSimulator.Components
         public int Tick { get; private set; }
 
         /// <summary>
+        /// CurrentProgress
+        /// </summary>
+        public int CurrentProgress { get; private set; }
+
+        /// <summary>
         /// The common backing store for all market data.
         /// </summary>
         public List<MarketData> MarketData { get; set; }
@@ -110,6 +116,11 @@ namespace MarketSimulator.Components
         public bool Initialized { get; private set; }
 
         /// <summary>
+        /// WorkComplete
+        /// </summary>
+        public bool WorkComplete { get; private set; }
+
+        /// <summary>
         /// Initializes the market simulator with a given ticker
         /// </summary>
         /// <param name="ticker">the ticker to initialize mkt sim with</param>
@@ -119,5 +130,64 @@ namespace MarketSimulator.Components
         {
             return Initialized = LoadMarketData(out message);
         }
+
+        #region Worker
+
+        /// <summary>
+        /// marketSimulatorWorker_DoWork
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
+        private void marketSimulatorWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            WorkComplete = false;
+
+            if (!Initialized)
+            {
+                throw new MarketSimulatorException("The market simulator component has not been initialized.");
+            }
+            else if (Sandboxes.Count <= 0)
+            {
+                throw new MarketSimulatorException("There are no strategies registered.");
+            }
+
+            var currentMarketTick = 0;
+            var totalMarketTicks = MarketData.Count;
+
+            // step through all market data ...
+            foreach (var marketData in MarketData)
+            {
+                // for all sandboxes
+                foreach (var strategySandbox in Sandboxes)
+                {
+                    // triggering various strategy events within those sandboxes.
+                    strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(marketData));
+                }
+
+                marketSimulatorWorker.ReportProgress((currentMarketTick++ / totalMarketTicks) * 100);
+            }
+        }
+
+        /// <summary>
+        /// marketSimulatorWorker_ProgressChanged
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
+        private void marketSimulatorWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            CurrentProgress = e.ProgressPercentage;
+        }
+
+        /// <summary>
+        /// marketSimulatorWorker_RunWorkerCompleted
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
+        private void marketSimulatorWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            WorkComplete = true;
+        }
+
+        #endregion
     }
 }
