@@ -32,22 +32,48 @@ namespace MarketSimulator.Forms
         }
 
         /// <summary>
+        /// LockGUI
+        /// </summary>
+        public void LockGUI()
+        {
+            toolStripTextBoxTicker.ReadOnly = true;
+        }
+
+        /// <summary>
+        /// UnLockGUI
+        /// </summary>
+        public void UnLockGUI()
+        {
+            toolStripTextBoxTicker.ReadOnly = false;
+        }
+
+        /// <summary>
         /// toolStripButtonGo_Click
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void toolStripButtonGo_Click(object sender, EventArgs e)
         {
+            var tmpCursor = Cursor;
+            Cursor = Cursors.WaitCursor;
             string tmpInitMessage = string.Empty;
 
-            if (marketSimulatorComponent.Initialize(toolStripTextBoxTicker.Text, out tmpInitMessage))
+            if (marketSimulatorComponent.marketSimulatorWorker.IsBusy)
             {
+                toolStripStatusLabelWorker.Text = "Busy!";
+            }
+            else if (marketSimulatorComponent.Initialize(toolStripTextBoxTicker.Text, out tmpInitMessage))
+            {
+                LockGUI();
+
                 marketSimulatorComponent.marketSimulatorWorker.RunWorkerAsync();
             }
             else 
             {
                 toolStripStatusLabelWorker.Text = tmpInitMessage;
             }
+
+            Cursor = tmpCursor;
         }
 
         /// <summary>
@@ -67,6 +93,12 @@ namespace MarketSimulator.Forms
             {
                 tmpStatusMessage = e.Error.Message;
             }
+            else 
+            {
+                toolStripProgressBarMain.Value = 100;
+            }
+
+            UnLockGUI();
 
             toolStripStatusLabelWorker.Text = tmpStatusMessage;
         }
@@ -78,7 +110,10 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         void marketSimulatorWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            toolStripProgressBarMain.Value = e.ProgressPercentage;
+            if (toolStripProgressBarMain.Value != null)
+            {
+                toolStripProgressBarMain.Value = e.ProgressPercentage;
+            }
         }
 
         /// <summary>

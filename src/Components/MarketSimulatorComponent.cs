@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MarketSimulator.Components
 {
@@ -163,7 +164,6 @@ namespace MarketSimulator.Components
             }
 
             var currentMarketTick = 0;
-            var totalMarketTicks = MarketData.Count;
 
             // step through all market data ...
             foreach (var marketData in MarketData)
@@ -175,7 +175,17 @@ namespace MarketSimulator.Components
                     strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(marketData));
                 }
 
-                marketSimulatorWorker.ReportProgress((currentMarketTick++ / totalMarketTicks) * 100);
+                if (marketSimulatorWorker.WorkerReportsProgress)
+                {
+                    marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / MarketData.Count) * 100.00));
+                }
+
+                if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
+                {
+                    marketSimulatorWorker.CancelAsync();
+                }
+
+                currentMarketTick++;
             }
         }
 
