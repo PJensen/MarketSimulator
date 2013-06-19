@@ -26,6 +26,9 @@ namespace MarketSimulator.Forms
 
             marketSimulatorComponent.marketSimulatorWorker.ProgressChanged += marketSimulatorWorker_ProgressChanged;
             marketSimulatorComponent.marketSimulatorWorker.RunWorkerCompleted += marketSimulatorWorker_RunWorkerCompleted;
+
+            // add the various / competing strategies here
+            marketSimulatorComponent.AddStrategy(new Issue12Strategy());
         }
 
         /// <summary>
@@ -85,6 +88,9 @@ namespace MarketSimulator.Forms
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // set text value to whatever was previously loaded or just APPL
+            toolStripTextBoxTicker.Text = Properties.Settings.Default.Security ?? "AAPL";
+
             // load auto complete ticker source from previous runs.
             foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
                 toolStripTextBoxTicker.AutoCompleteCustomSource.Add(previousSecurity);

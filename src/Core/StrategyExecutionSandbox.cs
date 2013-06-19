@@ -23,6 +23,10 @@ namespace MarketSimulator.Core
             Balance = Cash = Properties.Settings.Default.StartingBalance;
             BalanceHistory = new List<double>();
             ActiveTradeString = new TradeString();
+
+            // outer event wiring
+            strategy.SellEvent += OnSellEvent;
+            strategy.BuyEvent += OnBuyEvent;
         }
 
         #region Public Facing Methods
@@ -31,7 +35,7 @@ namespace MarketSimulator.Core
         /// OnBuyEvent
         /// </summary>
         /// <param name="eventArgs">eventArgs</param>
-        public void OnBuyEvent(BuyEventArgs eventArgs)
+        public void OnBuyEvent(object sender, BuyEventArgs eventArgs)
         {
             var totalValue = eventArgs.Shares * eventArgs.MarketData.Close;
 
@@ -54,7 +58,7 @@ namespace MarketSimulator.Core
         /// OnSellEvent
         /// </summary>
         /// <param name="eventArgs">eventArgs</param>
-        public void OnSellEvent(SellEventArgs eventArgs)
+        public void OnSellEvent(object sender, SellEventArgs eventArgs)
         {
             if (eventArgs.Shares <= 0)
             {

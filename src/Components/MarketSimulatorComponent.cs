@@ -41,6 +41,11 @@ namespace MarketSimulator.Components
         /// <param name="strategy">the strategy to add</param>
         public bool AddStrategy(StrategyBase strategy)
         {
+            if (Sandboxes == null)
+            {
+                Sandboxes = new List<StrategyExecutionSandbox>();
+            }
+
             // sanity check to make sure another strategy with the same name is not already there.
             if (Sandboxes.FirstOrDefault(s => s.Strategy.Name == strategy.Name) != null)
                 return false;
@@ -130,7 +135,7 @@ namespace MarketSimulator.Components
         {
             Ticker = ticker;
 
-            return Initialized = LoadMarketData(out message);
+            return Initialized = !LoadMarketData(out message);
         }
 
         #region Worker
@@ -148,9 +153,13 @@ namespace MarketSimulator.Components
             {
                 throw new MarketSimulatorException("The market simulator component has not been initialized.");
             }
-            else if (Sandboxes.Count <= 0)
+            else if (Sandboxes == null || Sandboxes.Count <= 0)
             {
-                throw new MarketSimulatorException("There are no strategies registered.");
+                throw new MarketSimulatorException("Market simulator sandboxes was null or empty.");
+            }
+            else if (MarketData == null || MarketData.Count <= 0)
+            {
+                throw new MarketSimulatorException("MarketData was null or empty!");
             }
 
             var currentMarketTick = 0;

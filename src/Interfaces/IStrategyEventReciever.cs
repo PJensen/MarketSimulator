@@ -5,8 +5,8 @@ namespace MarketSimulator.Interfaces
 {
     interface IStrategyEventReciever
     {
-        void OnBuyEvent(BuyEventArgs eventArgs);
-        void OnSellEvent(SellEventArgs eventArgs);
+        void OnBuyEvent(object sender, BuyEventArgs eventArgs);
+        void OnSellEvent(object sender, SellEventArgs eventArgs);
         StrategyBase Strategy { get; }
     }
 }
