@@ -16,7 +16,7 @@ namespace MarketSimulator.Forms
         /// <summary>
         /// MainForm
         /// </summary>
-        public MainForm(MarketSimulator marketSimulator)
+        public MainForm()
         {
             InitializeComponent();
         }

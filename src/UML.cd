@@ -43,23 +43,13 @@
       <FileName>Events\BuyEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MarketSimulator.StrategyExecutionSandbox">
+  <Class Name="MarketSimulator.Core.StrategyExecutionSandbox">
     <Position X="17.75" Y="3.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAQAAQAAAAAAAAAAigAAEQAQQAAAAEgAgAAABAAQAA=</HashCode>
-      <FileName>StrategyExecutionSandbox.cs</FileName>
+      <FileName>Core\StrategyExecutionSandbox.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="MarketSimulator.StrategyExecutor">
-    <Position X="14.25" Y="3.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAQAEABAAAAAAACAAAAAEAAAAAAAAAAQAIAAIAAQAA=</HashCode>
-      <FileName>StrategyExecutor.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Sandboxes" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Interface Name="MarketSimulator.Interfaces.IMarketDataRetriever">
     <Position X="15.25" Y="8" Width="1.5" />

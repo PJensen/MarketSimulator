@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\IMarketSimulatorComponent.cs" />
     <Compile Include="Core\TradeFlags.cs" />
     <Compile Include="Core\TradeString.cs" />
     <Compile Include="Core\TradeType.cs" />
@@ -84,12 +85,18 @@
     <Compile Include="Forms\WorkingDirectoryForm.Designer.cs">
       <DependentUpon>WorkingDirectoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IStrategyExecutor.cs" />
     <Compile Include="Interfaces\ITradeEventListener.cs" />
     <Compile Include="Interfaces\IMarketSignalEventSource.cs" />
     <Compile Include="Interfaces\IStrategyEventReciever.cs" />
-    <Compile Include="MarketSimulator.cs" />
     <Compile Include="Events\MarketTickEventargs.cs" />
     <Compile Include="Core\Signals.cs" />
+    <Compile Include="Components\MarketSimulatorComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\MarketSimulatorComponent.Designer.cs">
+      <DependentUpon>MarketSimulatorComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Strategies\CoreStrategy.cs" />
     <Compile Include="Strategies\ElderImpulseStrategy.cs" />
     <Compile Include="Strategies\Issue12Strategy.cs" />
@@ -109,8 +116,7 @@
     <Compile Include="Strategies\RSIStrategy.cs" />
     <Compile Include="Strategies\StrategyBase.cs" />
     <Compile Include="Strategies\StrategyResult.cs" />
-    <Compile Include="StrategyExecutionSandbox.cs" />
-    <Compile Include="StrategyExecutor.cs" />
+    <Compile Include="Core\StrategyExecutionSandbox.cs" />
     <Compile Include="Util\CSVParser.cs" />
     <Compile Include="Util\CSVStream.cs" />
     <Compile Include="Util\CSVWriter.cs" />

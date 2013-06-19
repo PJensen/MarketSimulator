@@ -34,7 +34,6 @@ namespace MarketSimulator.Components
             InitializeComponent();
         }
 
-
         /// <summary>
         /// Add a strategy to the strategy executor
         /// </summary>

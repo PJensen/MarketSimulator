@@ -14,19 +14,10 @@ namespace MarketSimulator.Forms
     /// </summary>
     public partial class StrategyView : Form
     {
-        #region Public Facing Properties
-
-        /// <summary>
-        /// StrategyExecutionSandbox
-        /// </summary>
-        StrategyExecutionSandbox StrategyExecutionSandbox { get; set; }
-
-        #endregion
-
         /// <summary>
         /// StrategyView
         /// </summary>
-        public StrategyView(StrategyExecutionSandbox strategyExecutor)
+        public StrategyView()
         {
             InitializeComponent();
         }

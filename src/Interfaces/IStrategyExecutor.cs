@@ -10,7 +10,7 @@ namespace MarketSimulator.Interfaces
     /// <summary>
     /// IStrategyExecutor
     /// </summary>
-    interface IStrategyExecutor
+    public interface IStrategyExecutor
     {
         bool AddStrategy(StrategyBase strategy);
         bool Initialize(string ticker, out string message);

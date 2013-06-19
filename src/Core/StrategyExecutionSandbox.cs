@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MarketSimulator
+namespace MarketSimulator.Core
 {
     /// <summary>
     /// StrategyExecutionSandbox
@@ -138,7 +138,7 @@ namespace MarketSimulator
         /// <summary>
         /// The strategy executor for easy access to data at that seggrated level
         /// </summary>
-        public StrategyExecutor StrategyExecutor { get; private set; }
+        public IStrategyExecutor StrategyExecutor { get; private set; }
 
         /// <summary>
         /// The trading strategy that is being executed in this sandbox.
