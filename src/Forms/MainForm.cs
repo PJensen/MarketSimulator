@@ -21,16 +21,6 @@ namespace MarketSimulator.Forms
             InitializeComponent();
         }
 
-
-        /// <summary>
-        /// ScrollDataGridForward
-        /// </summary>
-        private void ScrollPositionsForward()
-        {
-            dataGridViewPositions.FirstDisplayedScrollingRowIndex =
-                dataGridViewPositions.Rows.Count - 1;
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -38,15 +28,15 @@ namespace MarketSimulator.Forms
         /// <param name="e"></param>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            toolStripTextBoxSecurity.AutoCompleteCustomSource = new AutoCompleteStringCollection();
-            foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
-                toolStripTextBoxSecurity.AutoCompleteCustomSource.Add(previousSecurity);
+           // toolStripTextBoxSecurity.AutoCompleteCustomSource = new AutoCompleteStringCollection();
+         //   foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
+            //    toolStripTextBoxSecurity.AutoCompleteCustomSource.Add(previousSecurity);
 
             var fail = false;
             var message = string.Empty;
 
             //var fail = MarketSimulator.Instance.LoadMarketData(Properties.Settings.Default.Security, out message);
-            toolStripTextBoxSecurity.Text = fail ? message : Properties.Settings.Default.Security;
+           // toolStripTextBoxSecurity.Text = fail ? message : Properties.Settings.Default.Security;
         }
 
 
@@ -67,7 +57,7 @@ namespace MarketSimulator.Forms
         /// <param name="e">event</param>
         private void toolStripTextBoxSecurity_TextChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Security = toolStripTextBoxSecurity.Text;
+            //Properties.Settings.Default.Security = toolStripTextBoxSecurity.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -88,8 +78,8 @@ namespace MarketSimulator.Forms
         /// <param name="e">event</param>
         private void rSIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!Properties.Settings.Default.PreviousSecurities.Contains(toolStripTextBoxSecurity.Text))
-                Properties.Settings.Default.PreviousSecurities.Add(toolStripTextBoxSecurity.Text);
+            //if (!Properties.Settings.Default.PreviousSecurities.Contains(toolStripTextBoxSecurity.Text))
+             //   Properties.Settings.Default.PreviousSecurities.Add(toolStripTextBoxSecurity.Text);
             timerMain.Start();
         }
 

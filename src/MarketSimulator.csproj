@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\IMarketSimulatorComponent.cs" />
     <Compile Include="Core\TradeFlags.cs" />
     <Compile Include="Core\TradeString.cs" />
     <Compile Include="Core\TradeType.cs" />
@@ -117,6 +116,12 @@
     <Compile Include="Strategies\StrategyBase.cs" />
     <Compile Include="Strategies\StrategyResult.cs" />
     <Compile Include="Core\StrategyExecutionSandbox.cs" />
+    <Compile Include="StrategyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StrategyControl.Designer.cs">
+      <DependentUpon>StrategyControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Util\CSVParser.cs" />
     <Compile Include="Util\CSVStream.cs" />
     <Compile Include="Util\CSVWriter.cs" />
@@ -149,6 +154,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="StrategyControl.resx">
+      <DependentUpon>StrategyControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\DataSources\MarketData.datasource" />
     <None Include="UML.cd" />

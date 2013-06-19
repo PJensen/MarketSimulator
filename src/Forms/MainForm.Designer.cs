@@ -75,6 +75,7 @@
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TradeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.marketSimulatorComponent = new MarketSimulator.Components.MarketSimulatorComponent(this.components);
             this.menuStrip1.SuspendLayout();
             this.toolStripContainerMain.SuspendLayout();
             this.SuspendLayout();
@@ -419,6 +420,12 @@
             this.Date.HeaderText = "Trade Date";
             this.Date.Name = "Date";
             // 
+            // marketSimulatorComponent
+            // 
+            this.marketSimulatorComponent.MarketData = null;
+            this.marketSimulatorComponent.PXLast = 0D;
+            this.marketSimulatorComponent.Sandboxes = null;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -489,6 +496,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TradeType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.ToolStripMenuItem dataRetrievalToolStripMenuItem;
+        private Components.MarketSimulatorComponent marketSimulatorComponent;
 
     }
 }

@@ -21,6 +21,6 @@ namespace MarketSimulator.Interfaces
         double PXLast { get; set; }
         System.Collections.Generic.List<StrategyExecutionSandbox> Sandboxes { get; set; }
         int Tick { get; }
-        string Ticker { get; }
+        string Ticker { get; set; }
     }
 }

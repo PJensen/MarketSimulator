@@ -87,7 +87,7 @@ namespace MarketSimulator.Components
         /// <summary>
         /// Ticker
         /// </summary>
-        public string Ticker { get; private set; }
+        public string Ticker { get; set; }
 
         /// <summary>
         /// Tick; the same for all strategies being executed

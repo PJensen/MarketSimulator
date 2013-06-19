@@ -28,9 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.simulationWorker = new System.ComponentModel.BackgroundWorker();
+
         }
 
         #endregion
+
+        public System.ComponentModel.BackgroundWorker simulationWorker;
+
     }
 }
