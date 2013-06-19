@@ -21,7 +21,7 @@ namespace MarketSimulator.Forms
             InitializeComponent();
 
             MarketSimulator = marketSimulator;
-            //MarketSimulator.CurrentStrategy = new ElderImpulseStrategy();
+            MarketSimulator.CurrentStrategy = new Issue12Strategy();
             MarketTick += MarketSimulator.CurrentStrategy.MarketTick;
             MarketTick += MainForm_MarketTick;
             MarketSimulator.CurrentStrategy.BuyEvent += CurrentStrategy_BuyEvent;

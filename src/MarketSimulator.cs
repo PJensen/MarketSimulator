@@ -196,6 +196,5 @@ namespace MarketSimulator
         /// MarketData
         /// </summary>
         public List<MarketData> MarketData { get; set; }
-
     }
 }
