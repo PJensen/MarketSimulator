@@ -133,5 +133,14 @@ namespace MarketSimulator.Strategies
         /// SellEvent
         /// </summary>
         public event EventHandler<SellEventArgs> SellEvent;
+
+        /// <summary>
+        /// ToString
+        /// </summary>
+        /// <returns>string representation of this strategy</returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

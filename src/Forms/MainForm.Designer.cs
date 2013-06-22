@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Strategies");
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +73,7 @@
             this.toolStripContainerMain = new System.Windows.Forms.ToolStripContainer();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.splitContainerLeftNav = new System.Windows.Forms.SplitContainer();
+            this.imageListMain = new System.Windows.Forms.ImageList(this.components);
             this.propertyGridExecSettings = new System.Windows.Forms.PropertyGrid();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
@@ -90,8 +90,7 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.marketSimulatorComponent = new MarketSimulator.Components.MarketSimulatorComponent(this.components);
-            this.treeViewMain = new System.Windows.Forms.TreeView();
-            this.imageListMain = new System.Windows.Forms.ImageList(this.components);
+            this.checkedListBoxStrategies = new System.Windows.Forms.CheckedListBox();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.toolStripContainerMain.BottomToolStripPanel.SuspendLayout();
@@ -472,7 +471,7 @@
             // 
             // splitContainerLeftNav.Panel1
             // 
-            this.splitContainerLeftNav.Panel1.Controls.Add(this.treeViewMain);
+            this.splitContainerLeftNav.Panel1.Controls.Add(this.checkedListBoxStrategies);
             // 
             // splitContainerLeftNav.Panel2
             // 
@@ -480,6 +479,27 @@
             this.splitContainerLeftNav.Size = new System.Drawing.Size(185, 450);
             this.splitContainerLeftNav.SplitterDistance = 186;
             this.splitContainerLeftNav.TabIndex = 0;
+            // 
+            // imageListMain
+            // 
+            this.imageListMain.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain.ImageStream")));
+            this.imageListMain.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListMain.Images.SetKeyName(0, "bullet_black.png");
+            this.imageListMain.Images.SetKeyName(1, "bullet_blue.png");
+            this.imageListMain.Images.SetKeyName(2, "bullet_orange.png");
+            this.imageListMain.Images.SetKeyName(3, "bullet_pink.png");
+            this.imageListMain.Images.SetKeyName(4, "bullet_red.png");
+            this.imageListMain.Images.SetKeyName(5, "bullet_purple.png");
+            this.imageListMain.Images.SetKeyName(6, "bullet_green.png");
+            this.imageListMain.Images.SetKeyName(7, "bullet_white.png");
+            this.imageListMain.Images.SetKeyName(8, "bullet_delete.png");
+            this.imageListMain.Images.SetKeyName(9, "bullet_star.png");
+            this.imageListMain.Images.SetKeyName(10, "bullet_key.png");
+            this.imageListMain.Images.SetKeyName(11, "bullet_add.png");
+            this.imageListMain.Images.SetKeyName(12, "bullet_go.png");
+            this.imageListMain.Images.SetKeyName(13, "bullet_error.png");
+            this.imageListMain.Images.SetKeyName(14, "bullet_disk.png");
+            this.imageListMain.Images.SetKeyName(15, "bullet_feed.png");
             // 
             // propertyGridExecSettings
             // 
@@ -600,44 +620,14 @@
             this.marketSimulatorComponent.Sandboxes = null;
             this.marketSimulatorComponent.SecurityMaster = null;
             // 
-            // treeViewMain
+            // checkedListBoxStrategies
             // 
-            this.treeViewMain.CheckBoxes = true;
-            this.treeViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewMain.ImageIndex = 0;
-            this.treeViewMain.ImageList = this.imageListMain;
-            this.treeViewMain.Location = new System.Drawing.Point(0, 0);
-            this.treeViewMain.Name = "treeViewMain";
-            treeNode1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            treeNode1.Name = "NodeStrategies";
-            treeNode1.Text = "Strategies";
-            this.treeViewMain.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            this.treeViewMain.SelectedImageIndex = 0;
-            this.treeViewMain.ShowNodeToolTips = true;
-            this.treeViewMain.Size = new System.Drawing.Size(185, 186);
-            this.treeViewMain.TabIndex = 0;
-            // 
-            // imageListMain
-            // 
-            this.imageListMain.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain.ImageStream")));
-            this.imageListMain.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListMain.Images.SetKeyName(0, "bullet_black.png");
-            this.imageListMain.Images.SetKeyName(1, "bullet_blue.png");
-            this.imageListMain.Images.SetKeyName(2, "bullet_orange.png");
-            this.imageListMain.Images.SetKeyName(3, "bullet_pink.png");
-            this.imageListMain.Images.SetKeyName(4, "bullet_red.png");
-            this.imageListMain.Images.SetKeyName(5, "bullet_purple.png");
-            this.imageListMain.Images.SetKeyName(6, "bullet_green.png");
-            this.imageListMain.Images.SetKeyName(7, "bullet_white.png");
-            this.imageListMain.Images.SetKeyName(8, "bullet_delete.png");
-            this.imageListMain.Images.SetKeyName(9, "bullet_star.png");
-            this.imageListMain.Images.SetKeyName(10, "bullet_key.png");
-            this.imageListMain.Images.SetKeyName(11, "bullet_add.png");
-            this.imageListMain.Images.SetKeyName(12, "bullet_go.png");
-            this.imageListMain.Images.SetKeyName(13, "bullet_error.png");
-            this.imageListMain.Images.SetKeyName(14, "bullet_disk.png");
-            this.imageListMain.Images.SetKeyName(15, "bullet_feed.png");
+            this.checkedListBoxStrategies.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxStrategies.FormattingEnabled = true;
+            this.checkedListBoxStrategies.Location = new System.Drawing.Point(0, 0);
+            this.checkedListBoxStrategies.Name = "checkedListBoxStrategies";
+            this.checkedListBoxStrategies.Size = new System.Drawing.Size(185, 186);
+            this.checkedListBoxStrategies.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -741,8 +731,8 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTicker;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.TreeView treeViewMain;
         private System.Windows.Forms.ImageList imageListMain;
+        private System.Windows.Forms.CheckedListBox checkedListBoxStrategies;
 
     }
 }

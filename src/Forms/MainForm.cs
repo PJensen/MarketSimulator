@@ -42,6 +42,9 @@ namespace MarketSimulator.Forms
             AddStrategyNode(new RandomStrategy());
             AddStrategyNode(new RandomStrategy2());
             #endregion
+
+            marketSimulatorComponent.AddStrategy(new RandomStrategy());
+            marketSimulatorComponent.AddStrategy(new RandomStrategy2());
         }
 
         /// <summary>
@@ -50,13 +53,7 @@ namespace MarketSimulator.Forms
         /// <param name="strategy"></param>
         private void AddStrategyNode(StrategyBase strategy)
         {
-            TreeNode tmpNode = new TreeNode(strategy.Name)
-            {
-                ToolTipText = strategy.Description,
-                Tag = strategy,
-            };
-
-            treeViewMain.Nodes[0].Nodes.Add(tmpNode);
+            checkedListBoxStrategies.Items.Add(strategy);
         }
 
         /// <summary>
@@ -127,21 +124,9 @@ namespace MarketSimulator.Forms
             Cursor = Cursors.WaitCursor;
             string tmpInitMessage = string.Empty;
 
-            foreach (TreeNode s in treeViewMain.Nodes)
+            foreach (var s in checkedListBoxStrategies.CheckedItems)
             {
-                if (s.Checked)
-                {
-                    if ((s.Tag ?? new object()).GetType() == typeof(StrategyBase))
-                    {
-                        var tmpStrategy = (StrategyBase)s.Tag;
-                        if (tmpStrategy == null)
-                        {
-                            continue;
-                        }
-
-                        marketSimulatorComponent.AddStrategy(tmpStrategy);
-                    }
-                }
+                marketSimulatorComponent.AddStrategy((StrategyBase)s);
             }
 
             if (marketSimulatorComponent.marketSimulatorWorker.IsBusy)
