@@ -58,6 +58,7 @@ namespace MarketSimulator.Core
                 return;
             }
 
+            GeneralLedger.Add(eventArgs);
             Cash -= totalValue;
             Shares += eventArgs.Shares;
             NumberOfTrades++;
@@ -88,6 +89,7 @@ namespace MarketSimulator.Core
                 };
             }
 
+            GeneralLedger.Add(eventArgs);
             Shares -= eventArgs.Shares;
             Cash += eventArgs.Shares * eventArgs.MarketData.Close;
             NumberOfTrades++;

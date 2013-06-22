@@ -29,19 +29,19 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
-        /// Update
+        /// Add
         /// </summary>
         /// <param name="currentPositions"></param>
-        public void Update(List<IPosition> currentPositions)
+        public void Add(List<IPosition> currentPositions)
         {
-            currentPositions.ForEach(Update);
+            currentPositions.ForEach(Add);
         }
 
         /// <summary>
-        /// Update
+        /// Add
         /// </summary>
         /// <param name="position">the position to update the general ledger with</param>
-        private void Update(IPosition position)
+        public void Add(IPosition position)
         {
             var @key = position.Symbol;
             var @value = position.Shares * position.Price;
