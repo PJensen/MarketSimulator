@@ -32,8 +32,6 @@ namespace MarketSimulator.Core
             strategy.BuyEvent += OnBuyEvent;
         }
 
-
-
         #region Constants
 
         /// <summary>

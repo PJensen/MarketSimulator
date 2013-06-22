@@ -8,7 +8,7 @@ namespace MarketSimulator.Core
     /// <summary>
     /// TradeStringCollection
     /// </summary>
-    public class TradeStringCollection : Dictionary<string, TradeString>
+    public class TradeStringCollection
     {
         /// <summary>
         /// TradeStringCollection
