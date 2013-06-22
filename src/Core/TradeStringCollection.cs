@@ -43,6 +43,6 @@ namespace MarketSimulator.Core
         /// <summary>
         /// ActiveTradeStrings
         /// </summary>
-        private Dictionary<string, TradeString> ActiveTradeStrings { get; set; }
+        private Dictionary<string, TradeString> ActiveTradeStrings = new Dictionary<string, TradeString>();
     }
 }

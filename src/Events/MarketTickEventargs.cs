@@ -17,7 +17,12 @@ namespace MarketSimulator
         /// </summary>
         /// <param name="marketData">The market data</param>
         public MarketTickEventArgs(string symbol, MarketData marketData, SecuritiesSnap securitiesData)
-            : base(securitiesData) { MarketData = marketData; }
+            : base(securitiesData) { MarketData = marketData; Symbol = symbol; }
+
+        /// <summary>
+        /// The symbol this market tick referrs to
+        /// </summary>
+        public string Symbol { get; private set; }
 
         /// <summary>
         /// MarketData

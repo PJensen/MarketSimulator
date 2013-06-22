@@ -22,34 +22,45 @@ namespace MarketSimulator.Events
         public TradeEventArgs(TradeType tradeType, IPosition position, MarketData marketData)
         {
             MarketData = marketData;
-            Position = position;
+            Shares = position.Shares;
+            Symbol = position.Symbol;
+            Price = position.Price;
             TradeType = tradeType;
+        }
+
+        /// <summary>
+        /// TradeEventArgs given a market tick and some shares
+        /// </summary>
+        /// <param name="e">market tick</param>
+        /// <param name="shares">shares</param>
+        public TradeEventArgs(TradeType tradeType, MarketTickEventArgs e, int shares)
+        {
+            TradeType = tradeType;
+            MarketData = e.MarketData;
+            Symbol = e.Symbol;
+            Shares = shares;
+            Price = e.MarketData.Close;
         }
 
         /// <summary>
         /// Shares
         /// </summary>
-        public int Shares { get { return Position.Shares; } }
+        public int Shares { get; set; }
 
         /// <summary>
         /// Symbol
         /// </summary>
-        public string Symbol { get { return Position.Symbol; } }
+        public string Symbol { get; set; }
 
         /// <summary>
         /// Price
         /// </summary>
-        public double Price { get { return Position.Price; } }
+        public double Price { get; set; }
 
         /// <summary>
         /// MarketData
         /// </summary>
         public MarketData MarketData { get; set; }
-
-        /// <summary>
-        /// Position
-        /// </summary>
-        public IPosition Position { get; set; }
 
         /// <summary>
         /// TradeType

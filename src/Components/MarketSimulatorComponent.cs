@@ -34,6 +34,7 @@ namespace MarketSimulator.Components
             container.Add(this);
 
             InitializeComponent();
+
         }
 
         /// <summary>

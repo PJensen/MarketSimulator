@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketSimulator.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,13 +18,12 @@ namespace MarketSimulator.Strategies
 
         public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            
-            throw new NotImplementedException();
+            return Buy(10);
         }
 
         public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            throw new NotImplementedException();
+            return Sell(10);
         }
     }
 }

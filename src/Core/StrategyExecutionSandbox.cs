@@ -19,11 +19,20 @@ namespace MarketSimulator.Core
         /// </summary>
         public StrategyExecutionSandbox(IStrategyExecutor strategyExecutor, StrategyBase strategy)
         {
+            if (strategyExecutor == null)
+            {
+                throw new ArgumentNullException("strategyExecutor");
+            }
+            else if (strategy == null)
+            {
+                throw new ArgumentNullException("strategy");
+            }
+
             Strategy = strategy;
             Cash = Properties.Settings.Default.StartingBalance;
+            ActiveTradeStrings = new TradeStringCollection();
             CashHistory = new List<double>();
-            GeneralLedger = new GeneralLedger();
-
+            
             CashHistory.Add(Cash);
             GeneralLedger[CashSymbol] = Cash;
 
@@ -81,12 +90,8 @@ namespace MarketSimulator.Core
 
             if (eventArgs.Shares > Shares)
             {
-                // use polymorphic copy .ctor; but re-set shares to keep 
-                // strategy from selling more shares than it has
-                eventArgs.Position = new Position(eventArgs)
-                {
-                    Shares = Shares
-                };
+                // re-set shares to keep strategy from selling more shares than it has
+                eventArgs.Shares = Shares;
             }
 
             GeneralLedger.Add(eventArgs);
@@ -185,7 +190,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Portfolio
         /// </summary>
-        public GeneralLedger GeneralLedger { get; set; }
+        public GeneralLedger GeneralLedger = new GeneralLedger();
 
         /// <summary>
         /// BuyTally

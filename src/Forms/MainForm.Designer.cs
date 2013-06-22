@@ -71,6 +71,10 @@
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStripContainerMain = new System.Windows.Forms.ToolStripContainer();
+            this.splitContainerMain = new System.Windows.Forms.SplitContainer();
+            this.splitContainerLeftNav = new System.Windows.Forms.SplitContainer();
+            this.propertyGridExecSettings = new System.Windows.Forms.PropertyGrid();
+            this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBoxTicker = new System.Windows.Forms.ToolStripTextBox();
@@ -82,17 +86,12 @@
             this.TradeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.marketSimulatorComponent = new MarketSimulator.Components.MarketSimulatorComponent(this.components);
-            this.splitContainerMain = new System.Windows.Forms.SplitContainer();
-            this.splitContainerLeftNav = new System.Windows.Forms.SplitContainer();
-            this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.propertyGridExecSettings = new System.Windows.Forms.PropertyGrid();
             this.menuStrip1.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.toolStripContainerMain.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainerMain.ContentPanel.SuspendLayout();
             this.toolStripContainerMain.TopToolStripPanel.SuspendLayout();
             this.toolStripContainerMain.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -100,6 +99,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).BeginInit();
             this.splitContainerLeftNav.Panel2.SuspendLayout();
             this.splitContainerLeftNav.SuspendLayout();
+            this.flowLayoutPanelMain.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileToolStripMenuItem
@@ -427,7 +428,6 @@
             // 
             this.toolStripContainerMain.ContentPanel.AutoScroll = true;
             this.toolStripContainerMain.ContentPanel.Controls.Add(this.splitContainerMain);
-            this.toolStripContainerMain.ContentPanel.Controls.Add(this.toolStrip1);
             this.toolStripContainerMain.ContentPanel.Size = new System.Drawing.Size(937, 500);
             this.toolStripContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainerMain.Location = new System.Drawing.Point(0, 0);
@@ -439,6 +439,54 @@
             // toolStripContainerMain.TopToolStripPanel
             // 
             this.toolStripContainerMain.TopToolStripPanel.Controls.Add(this.menuStrip1);
+            // 
+            // splitContainerMain
+            // 
+            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerMain.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerMain.Name = "splitContainerMain";
+            // 
+            // splitContainerMain.Panel1
+            // 
+            this.splitContainerMain.Panel1.Controls.Add(this.splitContainerLeftNav);
+            // 
+            // splitContainerMain.Panel2
+            // 
+            this.splitContainerMain.Panel2.Controls.Add(this.flowLayoutPanelMain);
+            this.splitContainerMain.Size = new System.Drawing.Size(937, 500);
+            this.splitContainerMain.SplitterDistance = 229;
+            this.splitContainerMain.TabIndex = 1;
+            // 
+            // splitContainerLeftNav
+            // 
+            this.splitContainerLeftNav.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerLeftNav.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerLeftNav.Name = "splitContainerLeftNav";
+            this.splitContainerLeftNav.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerLeftNav.Panel2
+            // 
+            this.splitContainerLeftNav.Panel2.Controls.Add(this.propertyGridExecSettings);
+            this.splitContainerLeftNav.Size = new System.Drawing.Size(229, 500);
+            this.splitContainerLeftNav.SplitterDistance = 185;
+            this.splitContainerLeftNav.TabIndex = 0;
+            // 
+            // propertyGridExecSettings
+            // 
+            this.propertyGridExecSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGridExecSettings.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridExecSettings.Name = "propertyGridExecSettings";
+            this.propertyGridExecSettings.Size = new System.Drawing.Size(229, 311);
+            this.propertyGridExecSettings.TabIndex = 0;
+            // 
+            // flowLayoutPanelMain
+            // 
+            this.flowLayoutPanelMain.Controls.Add(this.toolStrip1);
+            this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(704, 500);
+            this.flowLayoutPanelMain.TabIndex = 0;
             // 
             // toolStrip1
             // 
@@ -506,53 +554,7 @@
             // marketSimulatorComponent
             // 
             this.marketSimulatorComponent.Sandboxes = null;
-            // 
-            // splitContainerMain
-            // 
-            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerMain.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerMain.Name = "splitContainerMain";
-            // 
-            // splitContainerMain.Panel1
-            // 
-            this.splitContainerMain.Panel1.Controls.Add(this.splitContainerLeftNav);
-            // 
-            // splitContainerMain.Panel2
-            // 
-            this.splitContainerMain.Panel2.Controls.Add(this.flowLayoutPanelMain);
-            this.splitContainerMain.Size = new System.Drawing.Size(937, 500);
-            this.splitContainerMain.SplitterDistance = 229;
-            this.splitContainerMain.TabIndex = 1;
-            // 
-            // splitContainerLeftNav
-            // 
-            this.splitContainerLeftNav.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerLeftNav.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerLeftNav.Name = "splitContainerLeftNav";
-            this.splitContainerLeftNav.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainerLeftNav.Panel2
-            // 
-            this.splitContainerLeftNav.Panel2.Controls.Add(this.propertyGridExecSettings);
-            this.splitContainerLeftNav.Size = new System.Drawing.Size(229, 500);
-            this.splitContainerLeftNav.SplitterDistance = 185;
-            this.splitContainerLeftNav.TabIndex = 0;
-            // 
-            // flowLayoutPanelMain
-            // 
-            this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(704, 500);
-            this.flowLayoutPanelMain.TabIndex = 0;
-            // 
-            // propertyGridExecSettings
-            // 
-            this.propertyGridExecSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGridExecSettings.Location = new System.Drawing.Point(0, 0);
-            this.propertyGridExecSettings.Name = "propertyGridExecSettings";
-            this.propertyGridExecSettings.Size = new System.Drawing.Size(229, 311);
-            this.propertyGridExecSettings.TabIndex = 0;
+            this.marketSimulatorComponent.SecurityMaster = null;
             // 
             // MainForm
             // 
@@ -573,13 +575,10 @@
             this.toolStripContainerMain.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainerMain.BottomToolStripPanel.PerformLayout();
             this.toolStripContainerMain.ContentPanel.ResumeLayout(false);
-            this.toolStripContainerMain.ContentPanel.PerformLayout();
             this.toolStripContainerMain.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainerMain.TopToolStripPanel.PerformLayout();
             this.toolStripContainerMain.ResumeLayout(false);
             this.toolStripContainerMain.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
@@ -587,6 +586,10 @@
             this.splitContainerLeftNav.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).EndInit();
             this.splitContainerLeftNav.ResumeLayout(false);
+            this.flowLayoutPanelMain.ResumeLayout(false);
+            this.flowLayoutPanelMain.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }

@@ -20,5 +20,14 @@ namespace MarketSimulator.Events
         public SellEventArgs(IPosition position, MarketData marketData)
             : base(TradeType.Sell, position, marketData)
         { }
+
+        /// <summary>
+        /// BuyEventArgs
+        /// </summary>
+        /// <param name="marketTickEventArgs">the market tick event args</param>
+        /// <param name="shares">the number of shares</param>
+        public SellEventArgs(MarketTickEventArgs marketTickEventArgs, int shares)
+            : base(TradeType.Sell, marketTickEventArgs, shares)
+        { }
     }
 }
