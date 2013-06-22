@@ -71,12 +71,15 @@ namespace MarketSimulator.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10000")]
         public double StartingBalance {
             get {
                 return ((double)(this["StartingBalance"]));
+            }
+            set {
+                this["StartingBalance"] = value;
             }
         }
         
@@ -101,6 +104,30 @@ namespace MarketSimulator.Properties {
             }
             set {
                 this["EstimatedTicks"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2013-04-01")]
+        public global::System.DateTime StartDate {
+            get {
+                return ((global::System.DateTime)(this["StartDate"]));
+            }
+            set {
+                this["StartDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("06/22/2013 14:11:00")]
+        public global::System.DateTime EndDate {
+            get {
+                return ((global::System.DateTime)(this["EndDate"]));
+            }
+            set {
+                this["EndDate"] = value;
             }
         }
     }

@@ -17,7 +17,7 @@
   &lt;string&gt;AAPL&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="StartingBalance" Type="System.Double" Scope="Application">
+    <Setting Name="StartingBalance" Type="System.Double" Scope="User">
       <Value Profile="(Default)">10000</Value>
     </Setting>
     <Setting Name="ExitConfirmation" Type="System.Boolean" Scope="User">
@@ -25,6 +25,12 @@
     </Setting>
     <Setting Name="EstimatedTicks" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10000</Value>
+    </Setting>
+    <Setting Name="StartDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2013-04-01</Value>
+    </Setting>
+    <Setting Name="EndDate" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">06/22/2013 14:11:00</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -24,11 +24,51 @@ namespace MarketSimulator.Forms
             toolStripTextBoxTicker.AutoCompleteSource = AutoCompleteSource.CustomSource;
             toolStripTextBoxTicker.AutoCompleteCustomSource = new AutoCompleteStringCollection();
 
+            #region events
+
+            // marketSimulatorWorker events
             marketSimulatorComponent.marketSimulatorWorker.ProgressChanged += marketSimulatorWorker_ProgressChanged;
             marketSimulatorComponent.marketSimulatorWorker.RunWorkerCompleted += marketSimulatorWorker_RunWorkerCompleted;
 
+            // properties.settings
+            Properties.Settings.Default.SettingsSaving += Default_SettingsSaving;
+            Properties.Settings.Default.SettingsLoaded += Default_SettingsLoaded;
+
+            #endregion
+
             // add the various / competing strategies here
-            marketSimulatorComponent.AddStrategy(new Issue12Strategy());
+            marketSimulatorComponent.AddStrategy(new RandomStrategy());
+            marketSimulatorComponent.AddStrategy(new RandomStrategy());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Default_SettingsLoaded(object sender, System.Configuration.SettingsLoadedEventArgs e)
+        {
+            SetStatus("Loaded settings!");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Default_SettingsSaving(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SetStatus(string.Format("Settings saved! {0}", DateTime.Now));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        private void propertyGridExecSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            SetStatus("Changed {0} to {1}", e.ChangedItem.PropertyDescriptor.DisplayName, e.OldValue.ToString());
         }
 
         /// <summary>
@@ -37,7 +77,7 @@ namespace MarketSimulator.Forms
         public void LockGUI()
         {
             toolStripTextBoxTicker.ReadOnly = true;
-            propertyGridExecSettings.Enabled = true;
+            propertyGridExecSettings.Enabled = false;
         }
 
         /// <summary>
@@ -46,7 +86,16 @@ namespace MarketSimulator.Forms
         public void UnLockGUI()
         {
             toolStripTextBoxTicker.ReadOnly = false;
-            propertyGridExecSettings.Enabled = false;
+            propertyGridExecSettings.Enabled = true;
+        }
+
+        /// <summary>
+        /// SetStatus
+        /// </summary>
+        /// <param name="message"></param>
+        public void SetStatus(string frmt, params object[] argv)
+        {
+            toolStripStatusLabelWorker.Text = string.Format(frmt, argv);
         }
 
         /// <summary>
@@ -62,7 +111,7 @@ namespace MarketSimulator.Forms
 
             if (marketSimulatorComponent.marketSimulatorWorker.IsBusy)
             {
-                toolStripStatusLabelWorker.Text = "Busy!";
+                SetStatus("Busy!");
             }
             else if (marketSimulatorComponent.Initialize(null))
             {
@@ -70,7 +119,7 @@ namespace MarketSimulator.Forms
 
                 marketSimulatorComponent.marketSimulatorWorker.RunWorkerAsync();
             }
-            else 
+            else
             {
                 toolStripStatusLabelWorker.Text = tmpInitMessage;
             }
@@ -85,6 +134,8 @@ namespace MarketSimulator.Forms
         /// <param name="e">run worker completed event arguments</param>
         void marketSimulatorWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
+            UnLockGUI();
+
             string tmpStatusMessage = "Completed!";
 
             if (e.Cancelled)
@@ -95,14 +146,18 @@ namespace MarketSimulator.Forms
             {
                 tmpStatusMessage = e.Error.Message;
             }
-            else 
+            else
             {
                 toolStripProgressBarMain.Value = 100;
             }
 
-            UnLockGUI();
 
-            toolStripStatusLabelWorker.Text = tmpStatusMessage;
+            SetStatus(tmpStatusMessage);
+
+            TopLevel = true;
+            var multiStrategyView = new MultiStrategyView(marketSimulatorComponent) { TopLevel = false };
+            flowLayoutPanelMain.Controls.Add(multiStrategyView);
+            multiStrategyView.Show();
         }
 
         /// <summary>
@@ -119,10 +174,10 @@ namespace MarketSimulator.Forms
         }
 
         /// <summary>
-        /// 
+        /// MainForm_Load
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
         private void MainForm_Load(object sender, EventArgs e)
         {
             // set text value to whatever was previously loaded or just APPL
@@ -132,13 +187,9 @@ namespace MarketSimulator.Forms
             foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
                 toolStripTextBoxTicker.AutoCompleteCustomSource.Add(previousSecurity);
 
-            var fail = false;
-            var message = string.Empty;
-
             // Get user default settings
-            propertyGridExecSettings.SelectedObject = GlobalExecutionSettings.GetUserDefaults();
+            propertyGridExecSettings.SelectedObject = GlobalExecutionSettings.Instance;
         }
-
 
         /// <summary>
         /// workingDirectoryToolStripMenuItem_Click
@@ -151,17 +202,6 @@ namespace MarketSimulator.Forms
         }
 
         /// <summary>
-        /// toolStripTextBoxSecurity_TextChanged
-        /// </summary>
-        /// <param name="sender">event args</param>
-        /// <param name="e">event</param>
-        private void toolStripTextBoxSecurity_TextChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.Security = toolStripTextBoxSecurity.Text;
-            Properties.Settings.Default.Save();
-        }
-
-        /// <summary>
         /// aboutToolStripMenuItem_Click
         /// </summary>
         /// <param name="sender">event args</param>
@@ -169,28 +209,6 @@ namespace MarketSimulator.Forms
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutBox().ShowDialog(this);
-        }
-
-        /// <summary>
-        /// rSIToolStripMenuItem_Click
-        /// </summary>
-        /// <param name="sender">event args</param>
-        /// <param name="e">event</param>
-        private void rSIToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //if (!Properties.Settings.Default.PreviousSecurities.Contains(toolStripTextBoxSecurity.Text))
-             //   Properties.Settings.Default.PreviousSecurities.Add(toolStripTextBoxSecurity.Text);
-            timerMain.Start();
-        }
-
-        private void Start()
-        {
-            timerMain.Enabled = true;
-        }
-
-        private void Stop()
-        {
-            timerMain.Enabled = false;
         }
 
         /// <summary>

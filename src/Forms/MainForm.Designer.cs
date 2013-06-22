@@ -75,22 +75,24 @@
             this.splitContainerLeftNav = new System.Windows.Forms.SplitContainer();
             this.propertyGridExecSettings = new System.Windows.Forms.PropertyGrid();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripTextBoxTicker = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.Balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TradeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTextBoxTicker = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.marketSimulatorComponent = new MarketSimulator.Components.MarketSimulatorComponent(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.toolStripContainerMain.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainerMain.ContentPanel.SuspendLayout();
-            this.toolStripContainerMain.TopToolStripPanel.SuspendLayout();
             this.toolStripContainerMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
@@ -99,7 +101,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).BeginInit();
             this.splitContainerLeftNav.Panel2.SuspendLayout();
             this.splitContainerLeftNav.SuspendLayout();
-            this.flowLayoutPanelMain.SuspendLayout();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -275,6 +279,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -282,6 +287,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip1.Size = new System.Drawing.Size(937, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
@@ -428,17 +434,13 @@
             // 
             this.toolStripContainerMain.ContentPanel.AutoScroll = true;
             this.toolStripContainerMain.ContentPanel.Controls.Add(this.splitContainerMain);
-            this.toolStripContainerMain.ContentPanel.Size = new System.Drawing.Size(937, 500);
+            this.toolStripContainerMain.ContentPanel.Size = new System.Drawing.Size(937, 450);
             this.toolStripContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainerMain.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainerMain.Name = "toolStripContainerMain";
-            this.toolStripContainerMain.Size = new System.Drawing.Size(937, 546);
+            this.toolStripContainerMain.Size = new System.Drawing.Size(937, 497);
             this.toolStripContainerMain.TabIndex = 0;
             this.toolStripContainerMain.Text = "toolStripContainer1";
-            // 
-            // toolStripContainerMain.TopToolStripPanel
-            // 
-            this.toolStripContainerMain.TopToolStripPanel.Controls.Add(this.menuStrip1);
             // 
             // splitContainerMain
             // 
@@ -453,8 +455,8 @@
             // splitContainerMain.Panel2
             // 
             this.splitContainerMain.Panel2.Controls.Add(this.flowLayoutPanelMain);
-            this.splitContainerMain.Size = new System.Drawing.Size(937, 500);
-            this.splitContainerMain.SplitterDistance = 229;
+            this.splitContainerMain.Size = new System.Drawing.Size(937, 450);
+            this.splitContainerMain.SplitterDistance = 185;
             this.splitContainerMain.TabIndex = 1;
             // 
             // splitContainerLeftNav
@@ -467,8 +469,8 @@
             // splitContainerLeftNav.Panel2
             // 
             this.splitContainerLeftNav.Panel2.Controls.Add(this.propertyGridExecSettings);
-            this.splitContainerLeftNav.Size = new System.Drawing.Size(229, 500);
-            this.splitContainerLeftNav.SplitterDistance = 185;
+            this.splitContainerLeftNav.Size = new System.Drawing.Size(185, 450);
+            this.splitContainerLeftNav.SplitterDistance = 186;
             this.splitContainerLeftNav.TabIndex = 0;
             // 
             // propertyGridExecSettings
@@ -476,51 +478,17 @@
             this.propertyGridExecSettings.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGridExecSettings.Location = new System.Drawing.Point(0, 0);
             this.propertyGridExecSettings.Name = "propertyGridExecSettings";
-            this.propertyGridExecSettings.Size = new System.Drawing.Size(229, 311);
+            this.propertyGridExecSettings.Size = new System.Drawing.Size(185, 260);
             this.propertyGridExecSettings.TabIndex = 0;
+            this.propertyGridExecSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridExecSettings_PropertyValueChanged);
             // 
             // flowLayoutPanelMain
             // 
-            this.flowLayoutPanelMain.Controls.Add(this.toolStrip1);
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(704, 500);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(748, 450);
             this.flowLayoutPanelMain.TabIndex = 0;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripTextBoxTicker,
-            this.toolStripButtonGo});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(164, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripLabel1.Image")));
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(55, 22);
-            this.toolStripLabel1.Text = "Ticker";
-            // 
-            // toolStripTextBoxTicker
-            // 
-            this.toolStripTextBoxTicker.Name = "toolStripTextBoxTicker";
-            this.toolStripTextBoxTicker.Size = new System.Drawing.Size(50, 25);
-            // 
-            // toolStripButtonGo
-            // 
-            this.toolStripButtonGo.Image = global::MarketSimulator.Properties.Resources.chart_curve_go;
-            this.toolStripButtonGo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonGo.Name = "toolStripButtonGo";
-            this.toolStripButtonGo.Size = new System.Drawing.Size(45, 22);
-            this.toolStripButtonGo.Text = "Go!";
-            this.toolStripButtonGo.Click += new System.EventHandler(this.toolStripButtonGo_Click);
             // 
             // timerMain
             // 
@@ -551,6 +519,74 @@
             this.Date.HeaderText = "Trade Date";
             this.Date.Name = "Date";
             // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.AutoScroll = true;
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.toolStripContainerMain);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(937, 497);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(937, 546);
+            this.toolStripContainer1.TabIndex = 1;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer1.TopToolStripPanel
+            // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonGo,
+            this.toolStripSeparator6,
+            this.toolStripTextBoxTicker,
+            this.toolStripButton1,
+            this.toolStripSeparator7});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(122, 25);
+            this.toolStrip1.TabIndex = 1;
+            // 
+            // toolStripButtonGo
+            // 
+            this.toolStripButtonGo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonGo.Image = global::MarketSimulator.Properties.Resources.chart_curve_go;
+            this.toolStripButtonGo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonGo.Name = "toolStripButtonGo";
+            this.toolStripButtonGo.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonGo.Text = "toolStripButtonGo";
+            this.toolStripButtonGo.Click += new System.EventHandler(this.toolStripButtonGo_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripTextBoxTicker
+            // 
+            this.toolStripTextBoxTicker.Name = "toolStripTextBoxTicker";
+            this.toolStripTextBoxTicker.Size = new System.Drawing.Size(50, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
             // marketSimulatorComponent
             // 
             this.marketSimulatorComponent.Sandboxes = null;
@@ -561,11 +597,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(937, 546);
-            this.Controls.Add(this.toolStripContainerMain);
+            this.Controls.Add(this.toolStripContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Automated Trading Simulator";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -575,8 +612,6 @@
             this.toolStripContainerMain.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainerMain.BottomToolStripPanel.PerformLayout();
             this.toolStripContainerMain.ContentPanel.ResumeLayout(false);
-            this.toolStripContainerMain.TopToolStripPanel.ResumeLayout(false);
-            this.toolStripContainerMain.TopToolStripPanel.PerformLayout();
             this.toolStripContainerMain.ResumeLayout(false);
             this.toolStripContainerMain.PerformLayout();
             this.splitContainerMain.Panel1.ResumeLayout(false);
@@ -586,8 +621,11 @@
             this.splitContainerLeftNav.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).EndInit();
             this.splitContainerLeftNav.ResumeLayout(false);
-            this.flowLayoutPanelMain.ResumeLayout(false);
-            this.flowLayoutPanelMain.PerformLayout();
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -644,14 +682,17 @@
         private Components.MarketSimulatorComponent marketSimulatorComponent;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarMain;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelWorker;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTicker;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonGo;
         private System.Windows.Forms.SplitContainer splitContainerMain;
         private System.Windows.Forms.SplitContainer splitContainerLeftNav;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
         private System.Windows.Forms.PropertyGrid propertyGridExecSettings;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTicker;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
 
     }
 }

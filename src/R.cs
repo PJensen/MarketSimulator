@@ -16,6 +16,11 @@ namespace MarketSimulator
     public static class R
     {
         /// <summary>
+        /// random
+        /// </summary>
+        private static readonly Random random = new Random((int)DateTime.Now.Ticks);
+
+        /// <summary>
         /// Save action
         /// </summary>
         private static readonly Action Save = Properties.Settings.Default.Save;
@@ -57,7 +62,7 @@ namespace MarketSimulator
         /// <summary>
         /// EstimatedTicks; useful for building large lists with predefined capacity.
         /// </summary>
-        public static int EstimatedTicks 
+        public static int EstimatedTicks
         {
             get { return Properties.Settings.Default.EstimatedTicks; }
             set { Properties.Settings.Default.EstimatedTicks = value; Save(); }
@@ -90,6 +95,11 @@ namespace MarketSimulator
                 dataGridViewPositions.FirstDisplayedScrollingRowIndex = dataGridViewPositions.Rows.Count - 1;
             }
         }
+
+        /// <summary>
+        /// PRNG
+        /// </summary>
+        public static Random Random { get { return random; } }
 
         /// <summary>
         /// Convert
