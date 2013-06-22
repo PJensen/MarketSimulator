@@ -8,9 +8,10 @@ using System.Text;
 namespace MarketSimulator.Events
 {
     /// <summary>
-    /// TradeEventArgs
+    /// TradeEventArgs; 
+    /// <remarks>some polymorphism here; because a trade event arg may be treated like a position.</remarks>
     /// </summary>
-    public class TradeEventArgs : MarketSimulatorEventArgs
+    public class TradeEventArgs : MarketSimulatorEventArgs, IPosition
     {
         /// <summary>
         /// Creates a new TradeEventArgs
@@ -24,6 +25,21 @@ namespace MarketSimulator.Events
             Position = position;
             TradeType = tradeType;
         }
+
+        /// <summary>
+        /// Shares
+        /// </summary>
+        public int Shares { get { return Position.Shares; } }
+
+        /// <summary>
+        /// Symbol
+        /// </summary>
+        public string Symbol { get { return Position.Symbol; } }
+
+        /// <summary>
+        /// Price
+        /// </summary>
+        public double Price { get { return Position.Price; } }
 
         /// <summary>
         /// MarketData

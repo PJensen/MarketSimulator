@@ -505,9 +505,7 @@
             // 
             // marketSimulatorComponent
             // 
-            this.marketSimulatorComponent.PXLast = 0D;
             this.marketSimulatorComponent.Sandboxes = null;
-            this.marketSimulatorComponent.Ticker = null;
             // 
             // splitContainerMain
             // 

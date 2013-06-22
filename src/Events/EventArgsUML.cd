@@ -39,9 +39,10 @@
   <Class Name="MarketSimulator.Events.TradeEventArgs">
     <Position X="6.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAAAgAAAAAEAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AAAQAAAAQQAAAAAgAAAAAEAAAAAAAAAAAAAAAAAECAA=</HashCode>
       <FileName>Events\TradeEventArgs.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

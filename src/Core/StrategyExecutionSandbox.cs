@@ -50,7 +50,7 @@ namespace MarketSimulator.Core
         /// <param name="eventArgs">eventArgs</param>
         public void OnBuyEvent(object sender, BuyEventArgs eventArgs)
         {
-            var totalValue = eventArgs.Shares * eventArgs.SecuritiesData.Close;
+            var totalValue = eventArgs.Shares * eventArgs.MarketData.Close;
 
             if (totalValue >= Cash)
             {
@@ -80,10 +80,12 @@ namespace MarketSimulator.Core
             }
 
             if (eventArgs.Shares > Shares)
-                eventArgs.Shares = Shares;
+            {
+                eventArgs.Position = new Position(eventArgs.Symbol, eventArgs.Shares, eventArgs.Price); 
+            }
 
             Shares -= eventArgs.Shares;
-            Cash += eventArgs.Shares * eventArgs.SecuritiesData.Close;
+            Cash += eventArgs.Shares * eventArgs.MarketData.Close;
             NumberOfTrades++;
 
             CashHistory.Add(Cash);
@@ -99,12 +101,12 @@ namespace MarketSimulator.Core
             // sum all purchases
             var marketValue = 0d;
             foreach (var e in ActiveTradeString.BuyLine)
-                marketValue += e.SecuritiesData.Close * e.Shares;
+                marketValue += e.MarketData.Close * e.Shares;
 
             // sum all sales.
             var saleValue = 0d;
             foreach (var e in ActiveTradeString.SellLine)
-                saleValue += e.SecuritiesData.Close * e.Shares;
+                saleValue += e.MarketData.Close * e.Shares;
 
             // compute remainder
             // TODO: Fix this shit
