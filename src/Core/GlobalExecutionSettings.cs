@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketSimulator.Forms;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -71,7 +72,6 @@ namespace MarketSimulator.Core
         /// <summary>
         /// StartingBalance
         /// </summary>
-        [System.ComponentModel.DefaultValue(Properties.Settings.Default.StartingBalance)]
         [System.ComponentModel.Category(CategoryExecutionSandbox)]
         [System.ComponentModel.Description("The balance to initialize execution sandboxes with")]
         public double StartingBalance
@@ -85,15 +85,21 @@ namespace MarketSimulator.Core
         /// </summary>
         [System.ComponentModel.Category(CategoryGlobal)]
         [System.ComponentModel.Description("The securities the sandboxes have to work with")]
+        [System.ComponentModel.SettingsBindable(true)]
+        [System.ComponentModel.ReadOnly(false)]
+        [System.ComponentModel.ListBindable(true)]
         public StringCollection SecurityMaster
         {
-            get { return Properties.Settings.Default.PreviousSecurities; }
+            get 
+            {
+                return Properties.Settings.Default.PreviousSecurities;
+            }
             set
             {
                 Properties.Settings.Default.PreviousSecurities = value;
                 Save();
             }
-        }
+       } 
 
         /// <summary>
         /// Save

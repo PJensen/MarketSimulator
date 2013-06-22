@@ -54,6 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\StrategyExecutionSandboxControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StrategyExecutionSandboxControl.Designer.cs">
+      <DependentUpon>StrategyExecutionSandboxControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\GeneralLedger.cs" />
     <Compile Include="Core\GlobalSecuritiesData.cs" />
@@ -141,18 +147,15 @@
     <Compile Include="Strategies\StrategyBase.cs" />
     <Compile Include="Strategies\StrategyResult.cs" />
     <Compile Include="Core\StrategyExecutionSandbox.cs" />
-    <Compile Include="Controls\StrategyControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\StrategyControl.Designer.cs">
-      <DependentUpon>StrategyControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Util\CSVParser.cs" />
     <Compile Include="Util\CSVStream.cs" />
     <Compile Include="Util\CSVWriter.cs" />
     <Compile Include="MarketDataRetriever\YahooDataRetriever.cs" />
     <EmbeddedResource Include="Components\MarketSimulatorComponent.resx">
       <DependentUpon>MarketSimulatorComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StrategyExecutionSandboxControl.resx">
+      <DependentUpon>StrategyExecutionSandboxControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
@@ -185,9 +188,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Controls\StrategyControl.resx">
-      <DependentUpon>StrategyControl.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Events\EventArgsUML.cd" />
     <None Include="Properties\DataSources\MarketData.datasource" />
@@ -202,7 +202,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\chart_curve_go.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bin_closed.png" />
   </ItemGroup>
@@ -334,9 +336,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\chart_curve_error.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\chart_curve_go.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\chart_curve_link.png" />

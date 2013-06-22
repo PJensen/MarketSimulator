@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Strategies");
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,7 +53,7 @@
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,14 +83,16 @@
             this.TradeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTextBoxTicker = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.marketSimulatorComponent = new MarketSimulator.Components.MarketSimulatorComponent(this.components);
-            this.menuStrip1.SuspendLayout();
+            this.treeViewMain = new System.Windows.Forms.TreeView();
+            this.imageListMain = new System.Windows.Forms.ImageList(this.components);
+            this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.toolStripContainerMain.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainerMain.ContentPanel.SuspendLayout();
@@ -99,12 +102,13 @@
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).BeginInit();
+            this.splitContainerLeftNav.Panel1.SuspendLayout();
             this.splitContainerLeftNav.Panel2.SuspendLayout();
             this.splitContainerLeftNav.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.toolStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileToolStripMenuItem
@@ -276,21 +280,21 @@
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // menuStrip1
+            // menuStripMain
             // 
-            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
+            this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(937, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStripMain.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMain.Name = "menuStripMain";
+            this.menuStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStripMain.Size = new System.Drawing.Size(937, 24);
+            this.menuStripMain.TabIndex = 0;
+            this.menuStripMain.Text = "menuStrip1";
             // 
             // editToolStripMenuItem
             // 
@@ -466,6 +470,10 @@
             this.splitContainerLeftNav.Name = "splitContainerLeftNav";
             this.splitContainerLeftNav.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // splitContainerLeftNav.Panel1
+            // 
+            this.splitContainerLeftNav.Panel1.Controls.Add(this.treeViewMain);
+            // 
             // splitContainerLeftNav.Panel2
             // 
             this.splitContainerLeftNav.Panel2.Controls.Add(this.propertyGridExecSettings);
@@ -536,22 +544,22 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStrip1);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStripMain);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStripMain);
             // 
-            // toolStrip1
+            // toolStripMain
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonGo,
             this.toolStripSeparator6,
             this.toolStripTextBoxTicker,
             this.toolStripButton1,
             this.toolStripSeparator7});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(122, 25);
-            this.toolStrip1.TabIndex = 1;
+            this.toolStripMain.Location = new System.Drawing.Point(3, 24);
+            this.toolStripMain.Name = "toolStripMain";
+            this.toolStripMain.Size = new System.Drawing.Size(122, 25);
+            this.toolStripMain.TabIndex = 1;
             // 
             // toolStripButtonGo
             // 
@@ -592,6 +600,45 @@
             this.marketSimulatorComponent.Sandboxes = null;
             this.marketSimulatorComponent.SecurityMaster = null;
             // 
+            // treeViewMain
+            // 
+            this.treeViewMain.CheckBoxes = true;
+            this.treeViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewMain.ImageIndex = 0;
+            this.treeViewMain.ImageList = this.imageListMain;
+            this.treeViewMain.Location = new System.Drawing.Point(0, 0);
+            this.treeViewMain.Name = "treeViewMain";
+            treeNode1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            treeNode1.Name = "NodeStrategies";
+            treeNode1.Text = "Strategies";
+            this.treeViewMain.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.treeViewMain.SelectedImageIndex = 0;
+            this.treeViewMain.ShowNodeToolTips = true;
+            this.treeViewMain.Size = new System.Drawing.Size(185, 186);
+            this.treeViewMain.TabIndex = 0;
+            // 
+            // imageListMain
+            // 
+            this.imageListMain.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain.ImageStream")));
+            this.imageListMain.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListMain.Images.SetKeyName(0, "bullet_black.png");
+            this.imageListMain.Images.SetKeyName(1, "bullet_blue.png");
+            this.imageListMain.Images.SetKeyName(2, "bullet_orange.png");
+            this.imageListMain.Images.SetKeyName(3, "bullet_pink.png");
+            this.imageListMain.Images.SetKeyName(4, "bullet_red.png");
+            this.imageListMain.Images.SetKeyName(5, "bullet_purple.png");
+            this.imageListMain.Images.SetKeyName(6, "bullet_green.png");
+            this.imageListMain.Images.SetKeyName(7, "bullet_white.png");
+            this.imageListMain.Images.SetKeyName(8, "bullet_delete.png");
+            this.imageListMain.Images.SetKeyName(9, "bullet_star.png");
+            this.imageListMain.Images.SetKeyName(10, "bullet_key.png");
+            this.imageListMain.Images.SetKeyName(11, "bullet_add.png");
+            this.imageListMain.Images.SetKeyName(12, "bullet_go.png");
+            this.imageListMain.Images.SetKeyName(13, "bullet_error.png");
+            this.imageListMain.Images.SetKeyName(14, "bullet_disk.png");
+            this.imageListMain.Images.SetKeyName(15, "bullet_feed.png");
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -599,14 +646,14 @@
             this.ClientSize = new System.Drawing.Size(937, 546);
             this.Controls.Add(this.toolStripContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStripMain;
             this.Name = "MainForm";
             this.Text = "Automated Trading Simulator";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStripMain.ResumeLayout(false);
+            this.menuStripMain.PerformLayout();
             this.statusStripMain.ResumeLayout(false);
             this.statusStripMain.PerformLayout();
             this.toolStripContainerMain.BottomToolStripPanel.ResumeLayout(false);
@@ -618,6 +665,7 @@
             this.splitContainerMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
             this.splitContainerMain.ResumeLayout(false);
+            this.splitContainerLeftNav.Panel1.ResumeLayout(false);
             this.splitContainerLeftNav.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).EndInit();
             this.splitContainerLeftNav.ResumeLayout(false);
@@ -626,8 +674,8 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.toolStripMain.ResumeLayout(false);
+            this.toolStripMain.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -655,7 +703,7 @@
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
@@ -687,12 +735,14 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
         private System.Windows.Forms.PropertyGrid propertyGridExecSettings;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolStripMain;
         private System.Windows.Forms.ToolStripButton toolStripButtonGo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTicker;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.TreeView treeViewMain;
+        private System.Windows.Forms.ImageList imageListMain;
 
     }
 }

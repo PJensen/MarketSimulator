@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketSimulator.Core;
 using MarketSimulator.Strategies;
+using MarketSimulator.Controls;
 
 namespace MarketSimulator.Forms
 {
@@ -38,7 +39,7 @@ namespace MarketSimulator.Forms
 
             // add the various / competing strategies here
             marketSimulatorComponent.AddStrategy(new RandomStrategy());
-            marketSimulatorComponent.AddStrategy(new RandomStrategy());
+            marketSimulatorComponent.AddStrategy(new RandomStrategy2());
         }
 
         /// <summary>
@@ -151,13 +152,13 @@ namespace MarketSimulator.Forms
                 toolStripProgressBarMain.Value = 100;
             }
 
-
             SetStatus(tmpStatusMessage);
 
-            TopLevel = true;
-            var multiStrategyView = new MultiStrategyView(marketSimulatorComponent) { TopLevel = false };
-            flowLayoutPanelMain.Controls.Add(multiStrategyView);
-            multiStrategyView.Show();
+            marketSimulatorComponent.Sandboxes.Sort();
+            foreach (var sandbox in marketSimulatorComponent.Sandboxes)
+            {
+                flowLayoutPanelMain.Controls.Add(new StrategyExecutionSandboxControl(sandbox));
+            }
         }
 
         /// <summary>
