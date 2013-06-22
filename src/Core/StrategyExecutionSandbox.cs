@@ -23,13 +23,24 @@ namespace MarketSimulator.Core
             Cash = Properties.Settings.Default.StartingBalance;
             CashHistory = new List<double>();
             ActiveTradeString = new TradeString();
+            Portfolio = new Portfolio();
 
             CashHistory.Add(Cash);
+            Portfolio.Add(CashSymbol, Cash);
 
             // outer event wiring
             strategy.SellEvent += OnSellEvent;
             strategy.BuyEvent += OnBuyEvent;
         }
+
+        #region Constants
+
+        /// <summary>
+        /// CashSymbol
+        /// </summary>
+        private const string CashSymbol = "Cash";
+
+        #endregion
 
         #region Public Facing Methods
 
@@ -134,7 +145,11 @@ namespace MarketSimulator.Core
         /// <summary>
         /// The current cash position
         /// </summary>
-        public double Cash { get; set; }
+        public double Cash
+        {
+            get { return Portfolio[CashSymbol]; }
+            set { Portfolio[CashSymbol] = value; }
+        }
 
         /// <summary>
         /// The strategy executor for easy access to data at that seggrated level
@@ -155,6 +170,11 @@ namespace MarketSimulator.Core
         /// Reference to the StrategyExecutor's MarketData
         /// </summary>
         public List<MarketData> MarketData { get { return StrategyExecutor.MarketData; } }
+
+        /// <summary>
+        /// Portfolio
+        /// </summary>
+        public Portfolio Portfolio { get; set; }
 
         /// <summary>
         /// BuyTally
