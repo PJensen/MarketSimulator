@@ -20,7 +20,7 @@ namespace MarketSimulator.Events
         }
 
         /// <summary>
-        /// MarketData
+        /// SecuritiesData
         /// </summary>
         public SecuritiesSnap SecuritiesData { get; protected set; }
     }

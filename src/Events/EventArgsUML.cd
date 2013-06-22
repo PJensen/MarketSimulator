@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MarketSimulator.MarketTickEventArgs">
-    <Position X="3.25" Y="4.75" Width="2" />
+    <Position X="3.25" Y="5" Width="2" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAACAAAAAAAAAAEAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Events\MarketTickEventargs.cs</FileName>
