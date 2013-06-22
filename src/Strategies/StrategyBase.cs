@@ -96,6 +96,11 @@ namespace MarketSimulator.Strategies
         public string Name { get; set; }
 
         /// <summary>
+        /// Description
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
         /// Buy Event Invocator
         /// </summary>
         /// <param name="e">The buy event arguments</param>

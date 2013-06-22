@@ -37,9 +37,26 @@ namespace MarketSimulator.Forms
 
             #endregion
 
-            // add the various / competing strategies here
-            marketSimulatorComponent.AddStrategy(new RandomStrategy());
-            marketSimulatorComponent.AddStrategy(new RandomStrategy2());
+            #region Add known strategies
+            // eventually they'll be loaded reflectively.
+            AddStrategyNode(new RandomStrategy());
+            AddStrategyNode(new RandomStrategy2());
+            #endregion
+        }
+
+        /// <summary>
+        /// AddStrategyNode
+        /// </summary>
+        /// <param name="strategy"></param>
+        private void AddStrategyNode(StrategyBase strategy)
+        {
+            TreeNode tmpNode = new TreeNode(strategy.Name)
+            {
+                ToolTipText = strategy.Description,
+                Tag = strategy,
+            };
+
+            treeViewMain.Nodes[0].Nodes.Add(tmpNode);
         }
 
         /// <summary>
@@ -109,6 +126,23 @@ namespace MarketSimulator.Forms
             var tmpCursor = Cursor;
             Cursor = Cursors.WaitCursor;
             string tmpInitMessage = string.Empty;
+
+            foreach (TreeNode s in treeViewMain.Nodes)
+            {
+                if (s.Checked)
+                {
+                    if ((s.Tag ?? new object()).GetType() == typeof(StrategyBase))
+                    {
+                        var tmpStrategy = (StrategyBase)s.Tag;
+                        if (tmpStrategy == null)
+                        {
+                            continue;
+                        }
+
+                        marketSimulatorComponent.AddStrategy(tmpStrategy);
+                    }
+                }
+            }
 
             if (marketSimulatorComponent.marketSimulatorWorker.IsBusy)
             {
