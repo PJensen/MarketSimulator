@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketSimulator.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,34 @@ namespace MarketSimulator.Core
         public double GetWeight(string entry)
         {
             return this[entry] / Value;
+        }
+
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="currentPositions"></param>
+        public void Update(List<IPosition> currentPositions)
+        {
+            currentPositions.ForEach(Update);
+        }
+
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="position">the position to update the general ledger with</param>
+        private void Update(IPosition position)
+        {
+            var @key = position.Symbol;
+            var @value = position.Shares * position.Price;
+
+            if (!Keys.Contains(@key))
+            {
+                this.Add(@key, @value);
+            }
+            else 
+            {
+                this[@key] = @value;
+            }
         }
 
         /// <summary>
