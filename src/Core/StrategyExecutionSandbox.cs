@@ -81,7 +81,12 @@ namespace MarketSimulator.Core
 
             if (eventArgs.Shares > Shares)
             {
-                eventArgs.Position = new Position(eventArgs.Symbol, eventArgs.Shares, eventArgs.Price); 
+                // use polymorphic copy .ctor; but re-set shares to keep 
+                // strategy from selling more shares than it has
+                eventArgs.Position = new Position(eventArgs)
+                {
+                    Shares = Shares
+                };
             }
 
             Shares -= eventArgs.Shares;

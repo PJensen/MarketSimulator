@@ -18,10 +18,23 @@ namespace MarketSimulator.Core
         /// <param name="shares">the number of shares</param>
         /// <param name="price">the price</param>
         public Position(string symbol, int shares, double price)
+            : this()
         {
-            this.symbol = symbol;
-            this.shares = shares;
-            this.price = price;
+            Symbol = symbol;
+            Shares = shares;
+            Price = price;
+        }
+
+        /// <summary>
+        /// Position copy constructor
+        /// </summary>
+        /// <param name="position">position</param>
+        public Position(IPosition position)
+            : this()
+        {
+            Symbol = position.Symbol;
+            Shares = position.Shares;
+            Price = position.Price;
         }
 
         #region Public facing properties
@@ -29,24 +42,18 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Symbol
         /// </summary>
-        public string Symbol { get { return symbol; } }
+        public string Symbol { get; set; }
 
         /// <summary>
         /// Price
         /// </summary>
-        public double Price { get { return price; } }
+        public double Price { get; set; }
 
         /// <summary>
         /// Shares
         /// </summary>
-        public int Shares { get { return shares; } }
+        public int Shares { get; set; }
 
-        #endregion
-
-        #region Fields
-        readonly string symbol;
-        readonly int shares;
-        readonly double price;
         #endregion
     }
 }
