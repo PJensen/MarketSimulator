@@ -12,6 +12,8 @@ namespace MarketSimulator.Interfaces
     /// </summary>
     public interface IStrategyExecutor
     {
-
+        System.Collections.Generic.List<MarketSimulator.Core.StrategyExecutionSandbox> Sandboxes { get; set; }
+        MarketSimulator.Core.GlobalSecuritiesData SecurityMaster { get; set; }
+        int Tick { get; }
     }
 }

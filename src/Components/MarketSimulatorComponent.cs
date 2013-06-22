@@ -15,7 +15,7 @@ namespace MarketSimulator.Components
     /// <summary>
     /// MarketSimulatorComponent
     /// </summary>
-    public partial class MarketSimulatorComponent : Component, IStrategyExecutor
+    public partial class MarketSimulatorComponent : Component
     {
         /// <summary>
         /// Creates a new MarketSimulatorComponent

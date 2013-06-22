@@ -153,11 +153,32 @@ namespace MarketSimulator.Core
         /// </summary>
         public TradeStringCollection ActiveTradeStrings { get; set; }
 
+        /// <summary>
+        /// GetMarketData returns the market data for the security at the specified tick
+        /// </summary>
+        /// <param name="security">the security</param>
+        /// <param name="tick">the tick</param>
+        /// <returns>the market data associated with the tick & security</returns>
+        public MarketData GetMarketData(string security, int tick)
+        {
+            return StrategyExecutor.SecurityMaster[security][tick];
+        }
+
+        /// <summary>
+        /// return the entire securities snap at the specified interval
+        /// </summary>
+        /// <param name="security">the security to get current market data for</param>
+        /// <returns></returns>
+        public MarketData GetCurrentMarketData(string security)
+        {
+            // NOTE: Here were referring to the Tick property
+            return GetMarketData(security, Tick);
+        }
 
         /// <summary>
         /// Reference to the StrategyExecutor's MarketData
         /// </summary>
-       // public List<SecuritiesSnap> MarketData { get { StrategyExecutor.SecurityMaster; } }
+       // public List<SecuritiesSnap> MarketData { get { StrategyExecutor.Tick; } }
 
         /// <summary>
         /// Portfolio
