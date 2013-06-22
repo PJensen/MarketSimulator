@@ -13,7 +13,7 @@ namespace MarketSimulator.Core
     {
         /// <summary>
         /// GlobalExecutionSettings
-        /// Use the <see cref="GetDefaults"/> static method
+        /// Use the <see cref="GetUserDefaults"/> static method
         /// </summary>
         private GlobalExecutionSettings() { }
 
@@ -21,7 +21,7 @@ namespace MarketSimulator.Core
         /// GetDefaults
         /// </summary>
         /// <returns></returns>
-        public static GlobalExecutionSettings GetDefaults()
+        public static GlobalExecutionSettings GetUserDefaults()
         {
             return new GlobalExecutionSettings()
             {

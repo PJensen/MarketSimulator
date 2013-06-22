@@ -20,9 +20,11 @@ namespace MarketSimulator.Core
         public StrategyExecutionSandbox(IStrategyExecutor strategyExecutor, StrategyBase strategy)
         {
             Strategy = strategy;
-            Balance = Cash = Properties.Settings.Default.StartingBalance;
-            BalanceHistory = new List<double>();
+            Cash = Properties.Settings.Default.StartingBalance;
+            CashHistory = new List<double>();
             ActiveTradeString = new TradeString();
+
+            CashHistory.Add(Cash);
 
             // outer event wiring
             strategy.SellEvent += OnSellEvent;
@@ -50,7 +52,7 @@ namespace MarketSimulator.Core
             Shares += eventArgs.Shares;
             NumberOfTrades++;
 
-            BalanceHistory.Add(Cash);
+            CashHistory.Add(Cash);
             ActiveTradeString.BuyLine.Add(eventArgs);
         }
 
@@ -73,7 +75,7 @@ namespace MarketSimulator.Core
             Cash += eventArgs.Shares * eventArgs.MarketData.Close;
             NumberOfTrades++;
 
-            BalanceHistory.Add(Cash);
+            CashHistory.Add(Cash);
             ActiveTradeString.SellLine.Add(eventArgs);
         }
 
@@ -110,11 +112,6 @@ namespace MarketSimulator.Core
         /// The number of shares currently owned by this strategy
         /// </summary>
         public int Shares { get; set; }
-
-        /// <summary>
-        /// The remaining balance this strategy has in the bank
-        /// </summary>
-        public double Balance { get; set; }
 
         /// <summary>
         /// The market execution tick that this strategy is on
@@ -162,7 +159,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// BuyTally
         /// </summary>
-        public List<double> BalanceHistory { get; set; }
+        public List<double> CashHistory { get; set; }
 
         #endregion
 

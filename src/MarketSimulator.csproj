@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\TradeFlags.cs" />
     <Compile Include="Core\TradeString.cs" />
     <Compile Include="Core\TradeType.cs" />
@@ -117,10 +118,10 @@
     <Compile Include="Strategies\StrategyBase.cs" />
     <Compile Include="Strategies\StrategyResult.cs" />
     <Compile Include="Core\StrategyExecutionSandbox.cs" />
-    <Compile Include="StrategyControl.cs">
+    <Compile Include="Controls\StrategyControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StrategyControl.Designer.cs">
+    <Compile Include="Controls\StrategyControl.Designer.cs">
       <DependentUpon>StrategyControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Util\CSVParser.cs" />
@@ -158,7 +159,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="StrategyControl.resx">
+    <EmbeddedResource Include="Controls\StrategyControl.resx">
       <DependentUpon>StrategyControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />

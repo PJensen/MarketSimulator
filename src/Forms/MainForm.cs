@@ -37,6 +37,7 @@ namespace MarketSimulator.Forms
         public void LockGUI()
         {
             toolStripTextBoxTicker.ReadOnly = true;
+            propertyGridExecSettings.Enabled = true;
         }
 
         /// <summary>
@@ -45,6 +46,7 @@ namespace MarketSimulator.Forms
         public void UnLockGUI()
         {
             toolStripTextBoxTicker.ReadOnly = false;
+            propertyGridExecSettings.Enabled = false;
         }
 
         /// <summary>
@@ -110,7 +112,7 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         void marketSimulatorWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            if (toolStripProgressBarMain.Value != null)
+            if (toolStripProgressBarMain != null && toolStripProgressBarMain.Value > 0)
             {
                 toolStripProgressBarMain.Value = e.ProgressPercentage;
             }
@@ -133,8 +135,8 @@ namespace MarketSimulator.Forms
             var fail = false;
             var message = string.Empty;
 
-            //var fail = MarketSimulator.Instance.LoadMarketData(Properties.Settings.Default.Security, out message);
-           // toolStripTextBoxSecurity.Text = fail ? message : Properties.Settings.Default.Security;
+            // Get user default settings
+            propertyGridExecSettings.SelectedObject = GlobalExecutionSettings.GetUserDefaults();
         }
 
 
