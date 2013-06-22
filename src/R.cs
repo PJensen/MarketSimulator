@@ -55,6 +55,15 @@ namespace MarketSimulator
         }
 
         /// <summary>
+        /// EstimatedTicks; useful for building large lists with predefined capacity.
+        /// </summary>
+        public static int EstimatedTicks 
+        {
+            get { return Properties.Settings.Default.EstimatedTicks; }
+            set { Properties.Settings.Default.EstimatedTicks = value; Save(); }
+        }
+
+        /// <summary>
         /// PreviousSecurities
         /// </summary>
         public static StringCollection PreviousSecurities

@@ -61,14 +61,42 @@ namespace MarketSimulator.Components
         /// </summary>
         /// <param name="ticker"></param>
         /// <returns></returns>
-        public bool LoadMarketData(out string message)
+        public bool LoadMarketData(Action<string> failureAction)
         {
-            bool fail;
+            bool methodFail = false;
+            bool fail = false;
+            string message;
 
-            MarketData = R.Convert(new YahooDataRetriever().Retrieve(Ticker, out message, out fail));
-            MarketData.Reverse();
+            if (SecurityMaster == null)
+            {
+                SecurityMaster = new GlobalSecuritiesData(R.EstimatedTicks);
+            }
 
-            return fail;
+            // iterate over each security and populate the individual ticks within the security master; 
+            // WARNING: individual failures will trigger the failure callback; and, return FALSE.
+            foreach (var security in GlobalExecutionSettings.GetUserDefaults().SecurityMaster)
+            {
+                var tmpMarketData = R.Convert(new YahooDataRetriever().Retrieve(security, out message, out fail));
+                tmpMarketData.Reverse();
+
+                if (fail)
+                {
+                    if (failureAction == null)
+                    {
+                        throw new ArgumentException("failureAction should be registered");
+                    }
+
+                    failureAction(message);
+
+                    methodFail = true;
+                }
+                else
+                {
+                    SecurityMaster.Add(security, tmpMarketData);
+                }
+            }
+
+            return methodFail;
         }
 
         /// <summary>
@@ -107,9 +135,11 @@ namespace MarketSimulator.Components
         public int CurrentProgress { get; private set; }
 
         /// <summary>
-        /// The common backing store for all market data.
+        /// The common backing store for all market data; for all securities; for all ticks.
+        /// Refer to SecuritiesData for individual ticks across all constituents; and, 
+        /// MarketData for individual ticks on a per security basis.
         /// </summary>
-        public List<MarketData> MarketData { get; set; }
+        public GlobalSecuritiesData SecurityMaster { get; set; }
 
         /// <summary>
         /// Sandboxes
@@ -132,11 +162,17 @@ namespace MarketSimulator.Components
         /// <param name="ticker">the ticker to initialize mkt sim with</param>
         /// <param name="message">the result (string) of the initialization</param>
         /// <returns></returns>
-        public bool Initialize(string ticker, out string message)
+        public bool Initialize(Action<string> failureAction = null)
         {
-            Ticker = ticker;
+            // TODO: Fix this crap; not a huge fan of this 2-tier, out-paramed method;
+            // really a result of the re-write; it was cool before; that's changed since
+            // we moved to multiple securities.
 
-            return Initialized = !LoadMarketData(out message);
+            Initialized = !LoadMarketData(failureAction);
+
+            //message = Initialized ? "OK" : "Failed loading market data.";
+
+            return Initialized;
         }
 
         #region Worker
@@ -150,6 +186,8 @@ namespace MarketSimulator.Components
         {
             WorkComplete = false;
 
+            #region Init and Sanity Checking
+
             if (!Initialized)
             {
                 throw new MarketSimulatorException("The market simulator component has not been initialized.");
@@ -158,35 +196,48 @@ namespace MarketSimulator.Components
             {
                 throw new MarketSimulatorException("Market simulator sandboxes was null or empty.");
             }
-            else if (MarketData == null || MarketData.Count <= 0)
+            else if (SecurityMaster == null || SecurityMaster.Count <= 0)
             {
                 throw new MarketSimulatorException("MarketData was null or empty!");
             }
 
-            var currentMarketTick = 0;
-
-            // step through all market data ...
-            foreach (var marketData in MarketData)
+            // for all securities / constituents
+            foreach (var security in SecurityMaster.Keys)
             {
+                var refMktData = SecurityMaster[security];
+
+                if (refMktData.Count <= 0)
+                {
+                    throw new MarketSimulatorException(string.Format("Market data was empty for \"{0}\"", security));
+                }
+
                 // for all sandboxes
                 foreach (var strategySandbox in Sandboxes)
                 {
-                    // triggering various strategy events within those sandboxes.
-                    strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(marketData));
-                }
+                    var currentMarketTick = 0;
 
-                if (marketSimulatorWorker.WorkerReportsProgress)
-                {
-                    marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / MarketData.Count) * 100.00));
-                }
+                    // for all market ticks
+                    foreach (var marketData in refMktData)
+                    {
+                        // triggering various strategy events within those sandboxes.
+                        strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(marketData));
 
-                if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
-                {
-                    marketSimulatorWorker.CancelAsync();
-                }
+                        if (marketSimulatorWorker.WorkerReportsProgress)
+                        {
+                            marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / refMktData.Count) * 100.00));
+                        }
 
-                currentMarketTick++;
+                        if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
+                        {
+                            marketSimulatorWorker.CancelAsync();
+                        }
+
+                        currentMarketTick++;
+                    }
+                }
             }
+
+            #endregion
         }
 
         /// <summary>

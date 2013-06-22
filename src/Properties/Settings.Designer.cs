@@ -91,5 +91,17 @@ namespace MarketSimulator.Properties {
                 this["ExitConfirmation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        public int EstimatedTicks {
+            get {
+                return ((int)(this["EstimatedTicks"]));
+            }
+            set {
+                this["EstimatedTicks"] = value;
+            }
+        }
     }
 }

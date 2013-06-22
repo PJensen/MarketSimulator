@@ -64,7 +64,7 @@ namespace MarketSimulator.Forms
             {
                 toolStripStatusLabelWorker.Text = "Busy!";
             }
-            else if (marketSimulatorComponent.Initialize(toolStripTextBoxTicker.Text, out tmpInitMessage))
+            else if (marketSimulatorComponent.Initialize(null))
             {
                 LockGUI();
 

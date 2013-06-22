@@ -9,12 +9,12 @@ namespace MarketSimulator.Core
     /// Portfolio; initially this was a more custom object but there was very 
     /// little benefit to doing it that way -- so a standard implementation is better; for now.
     /// </summary>
-    public class Portfolio : Dictionary<string, Double>
+    public class GeneralLedger : Dictionary<string, Double>
     {
         /// <summary>
         /// Portfolio
         /// </summary>
-        public Portfolio() 
+        public GeneralLedger() 
             : base() { }
 
         /// <summary>

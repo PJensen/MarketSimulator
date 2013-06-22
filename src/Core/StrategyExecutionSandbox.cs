@@ -23,7 +23,7 @@ namespace MarketSimulator.Core
             Cash = Properties.Settings.Default.StartingBalance;
             CashHistory = new List<double>();
             ActiveTradeString = new TradeString();
-            Portfolio = new Portfolio();
+            Portfolio = new GeneralLedger();
 
             CashHistory.Add(Cash);
             Portfolio.Add(CashSymbol, Cash);
@@ -107,10 +107,11 @@ namespace MarketSimulator.Core
                 saleValue += e.MarketData.Close * e.Shares;
 
             // compute remainder
-            var remainder = Shares * StrategyExecutor.PXLast;
+            // TODO: Fix this shit
+            //var remainder = Shares * StrategyExecutor.PXLast;
 
             // subtract remainder
-            var mktTotal = (saleValue - marketValue) - remainder;
+            var mktTotal = (saleValue - marketValue); // -remainder;
 
             return mktTotal > 0;
         }
@@ -133,14 +134,6 @@ namespace MarketSimulator.Core
         /// The number of trades that this strategy has made.
         /// </summary>
         public int NumberOfTrades { get; set; }
-
-        /// <summary>
-        /// The paper value for this execution sandbox.
-        /// </summary>
-        public double PaperValue
-        {
-            get { return StrategyExecutor.PXLast * Shares; }
-        }
 
         /// <summary>
         /// The current cash position
@@ -169,12 +162,12 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Reference to the StrategyExecutor's MarketData
         /// </summary>
-        public List<MarketData> MarketData { get { return StrategyExecutor.MarketData; } }
+        //public List<SecuritiesData> MarketData { get { StrategyExecutor.SecurityMaster; } }
 
         /// <summary>
         /// Portfolio
         /// </summary>
-        public Portfolio Portfolio { get; set; }
+        public GeneralLedger Portfolio { get; set; }
 
         /// <summary>
         /// BuyTally
