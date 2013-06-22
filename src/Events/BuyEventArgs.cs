@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MarketSimulator.Core;
+using MarketSimulator.Interfaces;
 
 namespace MarketSimulator.Events
 {
@@ -12,13 +13,12 @@ namespace MarketSimulator.Events
     public class BuyEventArgs : TradeEventArgs
     {
         /// <summary>
-        /// Create a new <see cref="BuyEventArgs"/> with the specified quantity
+        /// BuyEventArgs
         /// </summary>
-        /// <param name="marketData">The market data</param>
-        /// <param name="shares">The number of shares to purchase</param>
-        /// <param name="limit">The limit level</param>
-        /// <param name="stop">The stop level</param>
-        public BuyEventArgs(MarketData marketData, int shares, double stop = 0d, double limit = 0d, TradeFlags flags = Core.TradeFlags.Market)
-            : base(TradeType.Buy, marketData, shares, stop, limit, flags) { }
+        /// <param name="position">the position to take</param>
+        /// <param name="marketData">the market data snap</param>
+        public BuyEventArgs(IPosition position, MarketData marketData)
+            : base(TradeType.Buy, position, marketData)
+        { }
     }
 }

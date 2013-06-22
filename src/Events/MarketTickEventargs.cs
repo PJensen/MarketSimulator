@@ -10,14 +10,19 @@ namespace MarketSimulator
     /// <summary>
     /// MarketTickEventArgs
     /// </summary>
-    public class MarketTickEventArgs : MarketEventArgs
+    public class MarketTickEventArgs : MarketEventArgs, MarketSimulator.Events.ITechnicalSnap
     {      
         /// <summary>
         /// Create a new instance of <see cref="MarketTickEventArgs"/>
         /// </summary>
         /// <param name="marketData">The market data</param>
-        public MarketTickEventArgs(MarketData marketData)
-            : base(marketData) { }
+        public MarketTickEventArgs(string symbol, MarketData marketData, SecuritiesSnap securitiesData)
+            : base(securitiesData) { MarketData = marketData; }
+
+        /// <summary>
+        /// MarketData
+        /// </summary>
+        public MarketData MarketData { get; private set; }
 
         /// <summary>
         /// Relative strength index

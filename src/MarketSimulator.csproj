@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\GeneralLedger.cs" />
+    <Compile Include="Events\ITechnicalSnap.cs" />
+    <Compile Include="Events\MarketSimulatorEventArgs.cs" />
     <Compile Include="Interfaces\IMarketData.cs" />
     <Compile Include="Interfaces\IPosition.cs" />
     <Compile Include="Core\Position.cs" />
@@ -168,6 +170,7 @@
       <DependentUpon>StrategyControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Events\EventArgsUML.cd" />
     <None Include="Properties\DataSources\MarketData.datasource" />
     <None Include="UML.cd" />
     <None Include="Properties\Settings.settings">

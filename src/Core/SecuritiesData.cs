@@ -24,17 +24,28 @@ namespace MarketSimulator.Core
         public GlobalSecuritiesData(int capacity = 1024)
             : base(capacity)
         { }
+
+        /// <summary>
+        /// CanTickPast; here to be self documenting
+        /// TODO: Examine for off by 1 error; just in case
+        /// </summary>
+        /// <param name="queryTick"></param>
+        /// <returns></returns>
+        public bool CanSecurityTickPast(string security, int n)
+        {
+            return this[security].Count > n;
+        }
     }
 
     /// <summary>
     /// SecuritiesData
     /// </summary>
-    public class SecuritiesData : Dictionary<string, MarketData>
+    public class SecuritiesSnap : Dictionary<string, MarketData>
     {
         /// <summary>
         /// SecuritiesData
         /// </summary>
-        public SecuritiesData()
+        public SecuritiesSnap()
             : base()
         { }
 

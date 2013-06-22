@@ -35,7 +35,7 @@ namespace MarketSimulator.Core
 
         public double TotalPurchasedMV
         {
-            get { return BuyLine.Sum(f => f.Shares * f.MarketData.Close); }
+            get { return BuyLine.Sum(f => f.Shares * f.SecuritiesData.Close); }
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace MarketSimulator.Core
 
         public double TotalSoldMV
         {
-            get { return SellLine.Sum(f => f.Shares * f.MarketData.Close); }
+            get { return SellLine.Sum(f => f.Shares * f.SecuritiesData.Close); }
         }
 
         public List<BuyEventArgs> BuyLine { get; set; }

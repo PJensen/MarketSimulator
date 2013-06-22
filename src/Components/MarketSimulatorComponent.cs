@@ -100,31 +100,6 @@ namespace MarketSimulator.Components
         }
 
         /// <summary>
-        /// OnTickEvent
-        /// </summary>
-        /// <param name="eventArgs">market tick event arguments</param>
-        public void OnTickEvent(MarketTickEventArgs eventArgs)
-        {
-            PXLast = eventArgs.MarketData.Close;
-            Tick++;
-        }
-
-        /// <summary>
-        /// MarketTickEvent
-        /// </summary>
-        //protected event EventHandler<MarketTickEventArgs> MarketTickEvent;
-
-        /// <summary>
-        /// The last price that ticked in the simulator
-        /// </summary>
-        public double PXLast { get; set; }
-
-        /// <summary>
-        /// Ticker
-        /// </summary>
-        public string Ticker { get; set; }
-
-        /// <summary>
         /// Tick; the same for all strategies being executed
         /// </summary>
         public int Tick { get; private set; }
@@ -155,6 +130,7 @@ namespace MarketSimulator.Components
         /// WorkComplete
         /// </summary>
         public bool WorkComplete { get; private set; }
+
 
         /// <summary>
         /// Initializes the market simulator with a given ticker
@@ -201,38 +177,42 @@ namespace MarketSimulator.Components
                 throw new MarketSimulatorException("MarketData was null or empty!");
             }
 
-            // for all securities / constituents
-            foreach (var security in SecurityMaster.Keys)
+            // This is important because not all securities have the same amount of data.
+            // AAAAA   X
+            // BB      X
+            // CCCCCCCCX
+            // Thus we use an accumulator to get to (X); but; obviously events simply 
+            // stop firing if there is no data - to save time we just continue.
+            var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count);
+            var currentMarketTick = 0;
+
+            while (currentMarketTick < maximumPossibleTicks)
             {
-                var refMktData = SecurityMaster[security];
-
-                if (refMktData.Count <= 0)
-                {
-                    throw new MarketSimulatorException(string.Format("Market data was empty for \"{0}\"", security));
-                }
-
-                // for all sandboxes
                 foreach (var strategySandbox in Sandboxes)
                 {
-                    var currentMarketTick = 0;
+                    SecuritiesSnap securitiesSnap = new SecuritiesSnap();
 
-                    // for all market ticks
-                    foreach (var marketData in refMktData)
+                    foreach (var securitySymbol in SecurityMaster.Keys)
                     {
-                        // triggering various strategy events within those sandboxes.
-                        strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(marketData));
+                        if (!SecurityMaster.CanSecurityTickPast(securitySymbol, currentMarketTick))
+                        {
+                            continue;
+                        }
+
+                        var marketData = SecurityMaster[securitySymbol][currentMarketTick];
+
+                        strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(securitySymbol,
+                            marketData, securitiesSnap));
 
                         if (marketSimulatorWorker.WorkerReportsProgress)
                         {
-                            marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / refMktData.Count) * 100.00));
+                            marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / maximumPossibleTicks) * 100.00));
                         }
 
                         if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
                         {
                             marketSimulatorWorker.CancelAsync();
                         }
-
-                        currentMarketTick++;
                     }
                 }
             }
