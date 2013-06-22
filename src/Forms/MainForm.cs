@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketSimulator.Core;
 using MarketSimulator.Strategies;
+using MarketSimulator.Controls;
 
 namespace MarketSimulator.Forms
 {
@@ -16,17 +17,43 @@ namespace MarketSimulator.Forms
         /// <summary>
         /// MainForm
         /// </summary>
-        public MainForm(MarketSimulator marketSimulator)
+        public MainForm()
         {
             InitializeComponent();
 
-            MarketSimulator = marketSimulator;
-            MarketSimulator.CurrentStrategy = new Issue12Strategy();
-            MarketTick += MarketSimulator.CurrentStrategy.MarketTick;
-            MarketTick += MainForm_MarketTick;
-            MarketSimulator.CurrentStrategy.BuyEvent += CurrentStrategy_BuyEvent;
-            MarketSimulator.CurrentStrategy.SellEvent += CurrentStrategy_SellEvent;
+            toolStripTextBoxTicker.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            toolStripTextBoxTicker.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            toolStripTextBoxTicker.AutoCompleteCustomSource = new AutoCompleteStringCollection();
 
+            #region events
+
+            // marketSimulatorWorker events
+            marketSimulatorComponent.marketSimulatorWorker.ProgressChanged += marketSimulatorWorker_ProgressChanged;
+            marketSimulatorComponent.marketSimulatorWorker.RunWorkerCompleted += marketSimulatorWorker_RunWorkerCompleted;
+
+            // properties.settings
+            Properties.Settings.Default.SettingsSaving += Default_SettingsSaving;
+            Properties.Settings.Default.SettingsLoaded += Default_SettingsLoaded;
+
+            #endregion
+
+            #region Add known strategies
+            // eventually they'll be loaded reflectively.
+            AddStrategyNode(new RandomStrategy());
+            AddStrategyNode(new RandomStrategy2());
+            #endregion
+
+            marketSimulatorComponent.AddStrategy(new RandomStrategy());
+            marketSimulatorComponent.AddStrategy(new RandomStrategy2());
+        }
+
+        /// <summary>
+        /// AddStrategyNode
+        /// </summary>
+        /// <param name="strategy"></param>
+        private void AddStrategyNode(StrategyBase strategy)
+        {
+            checkedListBoxStrategies.Items.Add(strategy);
         }
 
         /// <summary>
@@ -34,132 +61,155 @@ namespace MarketSimulator.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void CurrentStrategy_SellEvent(object sender, Events.SellEventArgs e)
+        void Default_SettingsLoaded(object sender, System.Configuration.SettingsLoadedEventArgs e)
         {
-            MarketSimulator.OnSellEvent(e);
+            SetStatus("Loaded settings!");
+        }
 
-            if (e.Cancel)
-                return;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Default_SettingsSaving(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SetStatus(string.Format("Settings saved! {0}", DateTime.Now));
+        }
 
-            richTextBox1.Text += "Sold " + e.Shares + Environment.NewLine;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="e"></param>
+        private void propertyGridExecSettings_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            SetStatus("Changed {0} to {1}", e.ChangedItem.PropertyDescriptor.DisplayName, e.OldValue.ToString());
+        }
 
+        /// <summary>
+        /// LockGUI
+        /// </summary>
+        public void LockGUI()
+        {
+            toolStripTextBoxTicker.ReadOnly = true;
+            propertyGridExecSettings.Enabled = false;
+        }
 
-            var tradeValuation = e.MarketData.Close * e.Shares;
+        /// <summary>
+        /// UnLockGUI
+        /// </summary>
+        public void UnLockGUI()
+        {
+            toolStripTextBoxTicker.ReadOnly = false;
+            propertyGridExecSettings.Enabled = true;
+        }
 
-            dataGridViewPositions.Rows.Add("SELL", e.Shares, e.MarketData.Close, tradeValuation);
+        /// <summary>
+        /// SetStatus
+        /// </summary>
+        /// <param name="message"></param>
+        public void SetStatus(string frmt, params object[] argv)
+        {
+            toolStripStatusLabelWorker.Text = string.Format(frmt, argv);
+        }
 
-            var tradePoint = chart1.Series["Trade"].Points.Count;
+        /// <summary>
+        /// toolStripButtonGo_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButtonGo_Click(object sender, EventArgs e)
+        {
+            var tmpCursor = Cursor;
+            Cursor = Cursors.WaitCursor;
+            string tmpInitMessage = string.Empty;
 
-            chart1.Series["Trade"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, e.MarketData.Close);
-            chart1.Series["Trade"].Points[tradePoint].MarkerStyle = MarkerStyle.Square;
-            chart1.Series["Trade"].Points[tradePoint].Tag = MarketSimulator.Balance;
-            chart1.Series["Trade"].Points[tradePoint].MarkerSize = (int)Math.Log(e.Shares);
-
-            chart1.Series["Trade"].Points[tradePoint].Color = MarketSimulator.MadeMoney()
-                ? System.Drawing.Color.Green : System.Drawing.Color.Red;
-
-            if (MarketSimulator.Shares <= 0)
+            foreach (var s in checkedListBoxStrategies.CheckedItems)
             {
-                tradePoint = chart1.Series["Trade"].Points.Count;
-                chart1.Series["Trade"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, new object[] { DBNull.Value });
-                chart1.Series["Trade"].Points[tradePoint].IsEmpty = true;
+                marketSimulatorComponent.AddStrategy((StrategyBase)s);
             }
 
-            if (MarketSimulator.Shares <= 0)
-                MarketSimulator.ActiveTradeString.Clear();
+            if (marketSimulatorComponent.marketSimulatorWorker.IsBusy)
+            {
+                SetStatus("Busy!");
+            }
+            else if (marketSimulatorComponent.Initialize(null))
+            {
+                LockGUI();
 
-            ScrollPositionsForward();
+                marketSimulatorComponent.marketSimulatorWorker.RunWorkerAsync();
+            }
+            else
+            {
+                toolStripStatusLabelWorker.Text = tmpInitMessage;
+            }
+
+            Cursor = tmpCursor;
         }
 
         /// <summary>
-        /// 
+        /// marketSimulatorWorker_RunWorkerCompleted changes the text of the status bar.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void CurrentStrategy_BuyEvent(object sender, Events.BuyEventArgs e)
+        /// <param name="sender">event sender</param>
+        /// <param name="e">run worker completed event arguments</param>
+        void marketSimulatorWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            MarketSimulator.OnBuyEvent(e);
+            UnLockGUI();
 
-            if (e.Cancel)
-                return;
+            string tmpStatusMessage = "Completed!";
 
-            richTextBox1.Text += "Bought " + e.Shares + Environment.NewLine;
+            if (e.Cancelled)
+            {
+                tmpStatusMessage = "Cancelled!";
+            }
+            else if (e.Error != null)
+            {
+                tmpStatusMessage = e.Error.Message;
+            }
+            else
+            {
+                toolStripProgressBarMain.Value = 100;
+            }
 
-            var tradeValuation = e.MarketData.Close * e.Shares;
+            SetStatus(tmpStatusMessage);
 
-            dataGridViewPositions.Rows.Add("BUY", e.Shares, e.MarketData.Close, tradeValuation);
-
-            var tradePoint = chart1.Series["Trade"].Points.Count;
-
-            chart1.Series["Trade"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, e.MarketData.Close);
-
-            chart1.Series["Trade"].Points[tradePoint].MarkerStyle = MarkerStyle.Diamond;
-            chart1.Series["Trade"].Points[tradePoint].Color = System.Drawing.Color.Orange;
-            chart1.Series["Trade"].Points[tradePoint].MarkerSize = (int)Math.Log(e.Shares);
-            chart1.Series["Trade"].Points[tradePoint].Tag = MarketSimulator.Balance;
-
-
-
-
-
-            ScrollPositionsForward();
+            marketSimulatorComponent.Sandboxes.Sort();
+            foreach (var sandbox in marketSimulatorComponent.Sandboxes)
+            {
+                flowLayoutPanelMain.Controls.Add(new StrategyExecutionSandboxControl(sandbox));
+            }
         }
 
-        double SlopeAt(DataPointCollection points, int index)
+        /// <summary>
+        /// marketSimulatorWorker_ProgressChanged event wired to the progress bar
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
+        void marketSimulatorWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            if (points.Count <= 0)
-                return double.NaN;
-
-            return points[index].YValues[0] / points[index - 1].YValues[0];
+            if (toolStripProgressBarMain != null && toolStripProgressBarMain.Value > 0)
+            {
+                toolStripProgressBarMain.Value = e.ProgressPercentage;
+            }
         }
 
         /// <summary>
-        /// ScrollPositionsForward
+        /// MainForm_Load
         /// </summary>
-        private void ScrollPositionsForward()
-        {
-            dataGridViewPositions.FirstDisplayedScrollingRowIndex =
-                dataGridViewPositions.Rows.Count - 1;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void MainForm_MarketTick(object sender, MarketTickEventArgs e)
-        {
-            toolStripLabelCurrentPrice.Text =
-                string.Format("Cash:{0} Shares:{1}, Paper Value: {2}",
-                MarketSimulator.Cash, MarketSimulator.Shares, MarketSimulator.PaperValue);
-
-            chart1.Series["NAV"].Points.AddXY(MarketSimulator.MarketData[Tick].Date, MarketSimulator.PaperValue + MarketSimulator.Cash);
-
-            propertyGrid1.SelectedObject = MarketSimulator.Instance;
-            MarketSimulator.OnTickEvent(e);
-        }
-
-        /// <summary>
-        /// MarketSimulator
-        /// </summary>
-        private MarketSimulator MarketSimulator { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
         private void MainForm_Load(object sender, EventArgs e)
         {
-            toolStripTextBoxSecurity.AutoCompleteCustomSource = new AutoCompleteStringCollection();
+            // set text value to whatever was previously loaded or just APPL
+            toolStripTextBoxTicker.Text = Properties.Settings.Default.Security ?? "AAPL";
+
+            // load auto complete ticker source from previous runs.
             foreach (var previousSecurity in Properties.Settings.Default.PreviousSecurities)
-                toolStripTextBoxSecurity.AutoCompleteCustomSource.Add(previousSecurity);
+                toolStripTextBoxTicker.AutoCompleteCustomSource.Add(previousSecurity);
 
-            var message = string.Empty;
-            var fail = MarketSimulator.Instance.LoadMarketData(Properties.Settings.Default.Security, out message);
-            toolStripTextBoxSecurity.Text = fail ? message : Properties.Settings.Default.Security;
+            // Get user default settings
+            propertyGridExecSettings.SelectedObject = GlobalExecutionSettings.Instance;
         }
-
 
         /// <summary>
         /// workingDirectoryToolStripMenuItem_Click
@@ -172,17 +222,6 @@ namespace MarketSimulator.Forms
         }
 
         /// <summary>
-        /// toolStripTextBoxSecurity_TextChanged
-        /// </summary>
-        /// <param name="sender">event args</param>
-        /// <param name="e">event</param>
-        private void toolStripTextBoxSecurity_TextChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.Security = toolStripTextBoxSecurity.Text;
-            Properties.Settings.Default.Save();
-        }
-
-        /// <summary>
         /// aboutToolStripMenuItem_Click
         /// </summary>
         /// <param name="sender">event args</param>
@@ -190,112 +229,6 @@ namespace MarketSimulator.Forms
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new AboutBox().ShowDialog(this);
-        }
-
-        /// <summary>
-        /// rSIToolStripMenuItem_Click
-        /// </summary>
-        /// <param name="sender">event args</param>
-        /// <param name="e">event</param>
-        private void rSIToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!Properties.Settings.Default.PreviousSecurities.Contains(toolStripTextBoxSecurity.Text))
-                Properties.Settings.Default.PreviousSecurities.Add(toolStripTextBoxSecurity.Text);
-            timerMain.Start();
-        }
-
-        private void Start()
-        {
-            timerMain.Enabled = true;
-        }
-
-        private void Stop()
-        {
-            timerMain.Enabled = false;
-        }
-
-        /// <summary>
-        /// timer1_Tick
-        /// </summary>
-        /// <param name="sender">event args</param>
-        /// <param name="e">event</param>
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            Tick++;
-
-            if (Tick > MarketSimulator.MarketData.Count)
-            {
-                Stop();
-
-                return;
-            }
-
-            chart1.Series[0].Points.AddXY(MarketSimulator.MarketData[Tick].Date,
-                                          MarketSimulator.MarketData[(int)Tick].AsLine);
-
-            chart1.Series["Cash"].Points.AddXY(MarketSimulator.MarketData[Tick].Date,
-                                               MarketSimulator.Cash);
-
-
-            toolStripLabelCurrentPrice.Text =
-                MarketSimulator.MarketData[Tick].Close.ToString(CultureInfo.InvariantCulture);
-
-            if ((int)MarketSimulator.MarketData[Tick].High > toolStripProgressBarPriceMax.Maximum)
-                toolStripProgressBarPriceMax.Maximum = (int)MarketSimulator.MarketData[Tick].High;
-
-            if ((int)MarketSimulator.MarketData[Tick].Low < toolStripProgressBarPriceMax.Minimum)
-                toolStripProgressBarPriceMax.Minimum = (int)MarketSimulator.MarketData[Tick].Low;
-
-            toolStripProgressBarPriceMax.Value = (int)MarketSimulator.MarketData[Tick].Close;
-
-            var tmpMarketTickEventArgs = new MarketTickEventArgs(MarketSimulator.MarketData[Tick]);
-
-            if (TickOffset > 14)
-            {
-                chart1.DataManipulator.FinancialFormula(FinancialFormula.RelativeStrengthIndex, "14", chart1.Series["Series1"],
-                    chart1.Series["RelativeStrengthIndex"]);
-                tmpMarketTickEventArgs.RSI = chart1.Series["RelativeStrengthIndex"].Points[RSIOffset].YValues[0];
-                RSIOffset++;
-            }
-
-            if (TickOffset > 13)
-            {
-                chart1.DataManipulator.FinancialFormula(FinancialFormula.ExponentialMovingAverage, "13", chart1.Series["Series1"], chart1.Series["EMA13"]);
-                tmpMarketTickEventArgs.EMA13 = chart1.Series["EMA13"].Points[EMA13Offset].YValues[0];
-                EMA13Offset++;
-            }
-
-            if (TickOffset > 26)
-            {
-                chart1.DataManipulator.FinancialFormula(FinancialFormula.MovingAverageConvergenceDivergence, "12,26", chart1.Series["Series1"], chart1.Series["MACD"]);
-                tmpMarketTickEventArgs.MACDHistogram = chart1.Series["MACD"].Points[MACDOffset].YValues[0];
-                MACDOffset++;
-            }
-
-            TickOffset++;
-
-            if (MarketTick != null)
-                MarketTick(this, tmpMarketTickEventArgs);
-        }
-
-        int RSIOffset = 0;
-        int MACDOffset = 0;
-        int EMA13Offset = 0;
-
-        int TickOffset = 0;
-
-        /// <summary>
-        /// MarketTick
-        /// </summary>
-        private event EventHandler<MarketTickEventArgs> MarketTick;
-
-        /// <summary>
-        /// Tick
-        /// </summary>
-        public int Tick
-        {
-            get { return MarketSimulator.Tick; }
-            set { MarketSimulator.Tick = value; }
         }
 
         /// <summary>
@@ -338,11 +271,6 @@ namespace MarketSimulator.Forms
             {
                 R.ExitConfirmation = !@checked;
             }
-        }
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

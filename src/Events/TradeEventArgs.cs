@@ -1,4 +1,5 @@
 ﻿using MarketSimulator.Core;
+using MarketSimulator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,35 +8,39 @@ using System.Text;
 namespace MarketSimulator.Events
 {
     /// <summary>
-    /// TradeEventArgs
+    /// TradeEventArgs; 
+    /// <remarks>some polymorphism here; because a trade event arg may be treated like a position.</remarks>
     /// </summary>
-    public class TradeEventArgs : MarketEventArgs
+    public class TradeEventArgs : MarketSimulatorEventArgs, IPosition
     {
         /// <summary>
         /// Creates a new TradeEventArgs
         /// </summary>
         /// <param name="tradeType">the trade type</param>
-        /// <param name="marketData">market data</param>
+        /// <param name="securitiesData">market data</param>
         /// <param name="shares">shares quantity</param>
-        public TradeEventArgs(TradeType tradeType, MarketData marketData, int shares, 
-            double stop = 0d, double limit = 0d, TradeFlags flags = Core.TradeFlags.Market)
-            : base(marketData)
+        public TradeEventArgs(TradeType tradeType, IPosition position, MarketData marketData)
         {
-            TradeType = tradeType;
-            Shares = shares;
-            Cancel = default(bool);
             MarketData = marketData;
+            Shares = position.Shares;
+            Symbol = position.Symbol;
+            Price = position.Price;
+            TradeType = tradeType;
         }
 
         /// <summary>
-        /// TradeType
+        /// TradeEventArgs given a market tick and some shares
         /// </summary>
-        public TradeType TradeType { get; private set; }
-
-        /// <summary>
-        /// TradeFlags
-        /// </summary>
-        public TradeFlags TradeFlags { get; private set; }
+        /// <param name="e">market tick</param>
+        /// <param name="shares">shares</param>
+        public TradeEventArgs(TradeType tradeType, MarketTickEventArgs e, int shares)
+        {
+            TradeType = tradeType;
+            MarketData = e.MarketData;
+            Symbol = e.Symbol;
+            Shares = shares;
+            Price = e.MarketData.Close;
+        }
 
         /// <summary>
         /// Shares
@@ -43,14 +48,24 @@ namespace MarketSimulator.Events
         public int Shares { get; set; }
 
         /// <summary>
-        /// Stop
+        /// Symbol
         /// </summary>
-        public double Stop { get; set; }
+        public string Symbol { get; set; }
 
         /// <summary>
-        /// Limit
+        /// Price
         /// </summary>
-        public double Limit { get; set; }
+        public double Price { get; set; }
+
+        /// <summary>
+        /// MarketData
+        /// </summary>
+        public MarketData MarketData { get; set; }
+
+        /// <summary>
+        /// TradeType
+        /// </summary>
+        public TradeType TradeType { get; protected set; }
 
         /// <summary>
         /// Cancel

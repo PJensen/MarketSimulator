@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketSimulator.Core;
 using MarketSimulator.Events;
+using MarketSimulator.Interfaces;
 
 namespace MarketSimulator.Strategies
 {
@@ -49,15 +50,55 @@ namespace MarketSimulator.Strategies
         {
             // TODO: Determine if strategies should be prevented from buying AND selling in the same tick.
             // if not; determine precedence; for now it's sell first (for liquidity) and purchase 2nd.
-
+            currentMarketTick = e;
             OnSellEvent(SellSignal(e));
             OnBuyEvent(BuySignal(e));
         }
 
         /// <summary>
+        /// Buy some shares based on the last tick
+        /// </summary>
+        /// <param name="shares"></param>
+        /// <returns></returns>
+        protected BuyEventArgs Buy(int shares)
+        {
+            if (currentMarketTick == null)
+            {
+                throw new NullReferenceException("Expected internal state to exist after MarketTick");
+            }
+
+            return new BuyEventArgs(currentMarketTick, shares);
+        }
+
+        /// <summary>
+        /// Sell some shares based on the last tick
+        /// </summary>
+        /// <param name="shares"></param>
+        /// <returns></returns>
+        protected SellEventArgs Sell(int shares)
+        {
+            if (currentMarketTick == null)
+            {
+                throw new NullReferenceException("Expected internal state to exist after MarketTick");
+            }
+
+            return new SellEventArgs(currentMarketTick, shares);
+        }
+
+        /// <summary>
+        /// currentMarketTickState
+        /// </summary>
+        private MarketTickEventArgs currentMarketTick;
+
+        /// <summary>
         /// Name of the trading strategy
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Description
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// Buy Event Invocator
@@ -92,5 +133,14 @@ namespace MarketSimulator.Strategies
         /// SellEvent
         /// </summary>
         public event EventHandler<SellEventArgs> SellEvent;
+
+        /// <summary>
+        /// ToString
+        /// </summary>
+        /// <returns>string representation of this strategy</returns>
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

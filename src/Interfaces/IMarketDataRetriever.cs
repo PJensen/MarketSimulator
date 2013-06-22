@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace MarketSimulator.MarketDataRetriever
+namespace MarketSimulator.Interfaces
 {
     /// <summary>
     /// IMarketDataRetriever

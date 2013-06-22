@@ -9,19 +9,19 @@ namespace MarketSimulator.Events
     /// <summary>
     /// MarketEventArgs
     /// </summary>
-    public class MarketEventArgs : EventArgs
+    public class MarketEventArgs : MarketSimulatorEventArgs
     {
         /// <summary>
         /// MarketEventArgs
         /// </summary>
-        public MarketEventArgs(MarketData marketData)
+        public MarketEventArgs(SecuritiesSnap securitiesData)
         {
-            MarketData = marketData;
+            SecuritiesData = securitiesData;
         }
 
         /// <summary>
-        /// MarketData
+        /// SecuritiesData
         /// </summary>
-        public MarketData MarketData { get; protected set; }
+        public SecuritiesSnap SecuritiesData { get; protected set; }
     }
 }

@@ -19,7 +19,7 @@ namespace MarketSimulator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(MarketSimulator.Instance));
+            Application.Run(new MainForm());
         }
     }
 }

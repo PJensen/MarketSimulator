@@ -1,13 +1,19 @@
-﻿using System;
+﻿using MarketSimulator.Interfaces;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MarketSimulator.Core
 {
+
+
     /// <summary>
     /// MarketData
+    /// TODO: Think about renaming this to <c>SecurityData</c>
     /// </summary>
     [DebuggerDisplay("{Date} [{Open}, {High}, {Low}, {Close}]")]
-    public class MarketData
+    public class MarketData : IMarketData
     {
         /// <summary>
         /// ToString
