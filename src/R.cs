@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MarketSimulator.Core;
+using System.Windows.Forms;
 
 namespace MarketSimulator
 {
@@ -14,6 +15,11 @@ namespace MarketSimulator
     /// </summary>
     public static class R
     {
+        /// <summary>
+        /// random
+        /// </summary>
+        private static readonly Random random = new Random((int)DateTime.Now.Ticks);
+
         /// <summary>
         /// Save action
         /// </summary>
@@ -54,6 +60,15 @@ namespace MarketSimulator
         }
 
         /// <summary>
+        /// EstimatedTicks; useful for building large lists with predefined capacity.
+        /// </summary>
+        public static int EstimatedTicks
+        {
+            get { return Properties.Settings.Default.EstimatedTicks; }
+            set { Properties.Settings.Default.EstimatedTicks = value; Save(); }
+        }
+
+        /// <summary>
         /// PreviousSecurities
         /// </summary>
         public static StringCollection PreviousSecurities
@@ -65,6 +80,26 @@ namespace MarketSimulator
                 Save();
             }
         }
+
+        /// <summary>
+        /// GUI Utility
+        /// </summary>
+        public static class GUI
+        {
+            /// <summary>
+            /// ScrollDataGridForward
+            /// </summary>
+            /// <param name="dataGridViewPositions"></param>
+            public static void ScrollDataGridForward(DataGridView dataGridViewPositions)
+            {
+                dataGridViewPositions.FirstDisplayedScrollingRowIndex = dataGridViewPositions.Rows.Count - 1;
+            }
+        }
+
+        /// <summary>
+        /// PRNG
+        /// </summary>
+        public static Random Random { get { return random; } }
 
         /// <summary>
         /// Convert

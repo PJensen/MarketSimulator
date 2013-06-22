@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MarketSimulator.Events.BuyEventArgs">
+    <Position X="8" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\BuyEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Events.MarketEventArgs">
+    <Position X="3.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Events\MarketEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Events.MarketSimulatorEventArgs">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\MarketSimulatorEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.MarketTickEventArgs">
+    <Position X="3.25" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAACAAAAAAAAAAEAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Events\MarketTickEventargs.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MarketSimulator.Events.SellEventArgs">
+    <Position X="5.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\SellEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Events.TradeEventArgs">
+    <Position X="6.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAQQAAAAAgAAAAAEAAAAAAAAAAAAAAAAAECAA=</HashCode>
+      <FileName>Events\TradeEventArgs.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

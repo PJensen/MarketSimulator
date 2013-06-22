@@ -30,15 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,7 +52,7 @@
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,59 +63,51 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
+            this.toolStripProgressBarMain = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabelWorker = new System.Windows.Forms.ToolStripStatusLabel();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
-            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.toolStripContainerMain = new System.Windows.Forms.ToolStripContainer();
+            this.splitContainerMain = new System.Windows.Forms.SplitContainer();
+            this.splitContainerLeftNav = new System.Windows.Forms.SplitContainer();
+            this.imageListMain = new System.Windows.Forms.ImageList(this.components);
+            this.propertyGridExecSettings = new System.Windows.Forms.PropertyGrid();
+            this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.vIXThresholdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trendFollowingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.breakoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.movingAverageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rSIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripTextBoxSecurity = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripProgressBarPriceMax = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripLabelCurrentPrice = new System.Windows.Forms.ToolStripLabel();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPagePositions = new System.Windows.Forms.TabPage();
-            this.dataGridViewPositions = new System.Windows.Forms.DataGridView();
-            this.TXType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Shares = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TXPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPagePrintout = new System.Windows.Forms.TabPage();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.Balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TradeType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.menuStrip1.SuspendLayout();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.toolStripMain = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripTextBoxTicker = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.marketSimulatorComponent = new MarketSimulator.Components.MarketSimulatorComponent(this.components);
+            this.checkedListBoxStrategies = new System.Windows.Forms.CheckedListBox();
+            this.menuStripMain.SuspendLayout();
+            this.statusStripMain.SuspendLayout();
+            this.toolStripContainerMain.BottomToolStripPanel.SuspendLayout();
+            this.toolStripContainerMain.ContentPanel.SuspendLayout();
+            this.toolStripContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
+            this.splitContainerMain.Panel1.SuspendLayout();
+            this.splitContainerMain.Panel2.SuspendLayout();
+            this.splitContainerMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).BeginInit();
+            this.splitContainerLeftNav.Panel1.SuspendLayout();
+            this.splitContainerLeftNav.Panel2.SuspendLayout();
+            this.splitContainerLeftNav.SuspendLayout();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPagePositions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPositions)).BeginInit();
-            this.tabPagePrintout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.toolStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileToolStripMenuItem
@@ -296,18 +279,21 @@
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // menuStrip1
+            // menuStripMain
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
+            this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1014, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStripMain.Location = new System.Drawing.Point(0, 0);
+            this.menuStripMain.Name = "menuStripMain";
+            this.menuStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStripMain.Size = new System.Drawing.Size(937, 24);
+            this.menuStripMain.TabIndex = 0;
+            this.menuStripMain.Text = "menuStrip1";
             // 
             // editToolStripMenuItem
             // 
@@ -383,11 +369,26 @@
             // 
             // statusStripMain
             // 
-            this.statusStripMain.Location = new System.Drawing.Point(0, 616);
+            this.statusStripMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBarMain,
+            this.toolStripStatusLabelWorker});
+            this.statusStripMain.Location = new System.Drawing.Point(0, 0);
             this.statusStripMain.Name = "statusStripMain";
-            this.statusStripMain.Size = new System.Drawing.Size(1014, 22);
+            this.statusStripMain.Size = new System.Drawing.Size(937, 22);
             this.statusStripMain.TabIndex = 5;
             this.statusStripMain.Text = "statusStrip1";
+            // 
+            // toolStripProgressBarMain
+            // 
+            this.toolStripProgressBarMain.Name = "toolStripProgressBarMain";
+            this.toolStripProgressBarMain.Size = new System.Drawing.Size(200, 16);
+            // 
+            // toolStripStatusLabelWorker
+            // 
+            this.toolStripStatusLabelWorker.Name = "toolStripStatusLabelWorker";
+            this.toolStripStatusLabelWorker.Size = new System.Drawing.Size(69, 17);
+            this.toolStripStatusLabelWorker.Text = "Initialized ...";
             // 
             // BottomToolStripPanel
             // 
@@ -425,299 +426,101 @@
             // 
             this.ContentPanel.Size = new System.Drawing.Size(1014, 613);
             // 
-            // toolStripContainer1
+            // toolStripContainerMain
             // 
             // 
-            // toolStripContainer1.ContentPanel
+            // toolStripContainerMain.BottomToolStripPanel
             // 
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1014, 613);
-            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
-            this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(1014, 638);
-            this.toolStripContainer1.TabIndex = 0;
-            this.toolStripContainer1.Text = "toolStripContainer1";
+            this.toolStripContainerMain.BottomToolStripPanel.Controls.Add(this.statusStripMain);
+            // 
+            // toolStripContainerMain.ContentPanel
+            // 
+            this.toolStripContainerMain.ContentPanel.AutoScroll = true;
+            this.toolStripContainerMain.ContentPanel.Controls.Add(this.splitContainerMain);
+            this.toolStripContainerMain.ContentPanel.Size = new System.Drawing.Size(937, 450);
+            this.toolStripContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainerMain.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainerMain.Name = "toolStripContainerMain";
+            this.toolStripContainerMain.Size = new System.Drawing.Size(937, 497);
+            this.toolStripContainerMain.TabIndex = 0;
+            this.toolStripContainerMain.Text = "toolStripContainer1";
+            // 
+            // splitContainerMain
+            // 
+            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerMain.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerMain.Name = "splitContainerMain";
+            // 
+            // splitContainerMain.Panel1
+            // 
+            this.splitContainerMain.Panel1.Controls.Add(this.splitContainerLeftNav);
+            // 
+            // splitContainerMain.Panel2
+            // 
+            this.splitContainerMain.Panel2.Controls.Add(this.flowLayoutPanelMain);
+            this.splitContainerMain.Size = new System.Drawing.Size(937, 450);
+            this.splitContainerMain.SplitterDistance = 185;
+            this.splitContainerMain.TabIndex = 1;
+            // 
+            // splitContainerLeftNav
+            // 
+            this.splitContainerLeftNav.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerLeftNav.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerLeftNav.Name = "splitContainerLeftNav";
+            this.splitContainerLeftNav.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerLeftNav.Panel1
+            // 
+            this.splitContainerLeftNav.Panel1.Controls.Add(this.checkedListBoxStrategies);
+            // 
+            // splitContainerLeftNav.Panel2
+            // 
+            this.splitContainerLeftNav.Panel2.Controls.Add(this.propertyGridExecSettings);
+            this.splitContainerLeftNav.Size = new System.Drawing.Size(185, 450);
+            this.splitContainerLeftNav.SplitterDistance = 186;
+            this.splitContainerLeftNav.TabIndex = 0;
+            // 
+            // imageListMain
+            // 
+            this.imageListMain.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain.ImageStream")));
+            this.imageListMain.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListMain.Images.SetKeyName(0, "bullet_black.png");
+            this.imageListMain.Images.SetKeyName(1, "bullet_blue.png");
+            this.imageListMain.Images.SetKeyName(2, "bullet_orange.png");
+            this.imageListMain.Images.SetKeyName(3, "bullet_pink.png");
+            this.imageListMain.Images.SetKeyName(4, "bullet_red.png");
+            this.imageListMain.Images.SetKeyName(5, "bullet_purple.png");
+            this.imageListMain.Images.SetKeyName(6, "bullet_green.png");
+            this.imageListMain.Images.SetKeyName(7, "bullet_white.png");
+            this.imageListMain.Images.SetKeyName(8, "bullet_delete.png");
+            this.imageListMain.Images.SetKeyName(9, "bullet_star.png");
+            this.imageListMain.Images.SetKeyName(10, "bullet_key.png");
+            this.imageListMain.Images.SetKeyName(11, "bullet_add.png");
+            this.imageListMain.Images.SetKeyName(12, "bullet_go.png");
+            this.imageListMain.Images.SetKeyName(13, "bullet_error.png");
+            this.imageListMain.Images.SetKeyName(14, "bullet_disk.png");
+            this.imageListMain.Images.SetKeyName(15, "bullet_feed.png");
+            // 
+            // propertyGridExecSettings
+            // 
+            this.propertyGridExecSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGridExecSettings.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridExecSettings.Name = "propertyGridExecSettings";
+            this.propertyGridExecSettings.Size = new System.Drawing.Size(185, 260);
+            this.propertyGridExecSettings.TabIndex = 0;
+            this.propertyGridExecSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridExecSettings_PropertyValueChanged);
+            // 
+            // flowLayoutPanelMain
+            // 
+            this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(748, 450);
+            this.flowLayoutPanelMain.TabIndex = 0;
             // 
             // timerMain
             // 
             this.timerMain.Interval = 1;
-            this.timerMain.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripDropDownButton1,
-            this.toolStripTextBoxSecurity,
-            this.toolStripComboBox1,
-            this.toolStripSeparator6,
-            this.toolStripProgressBarPriceMax,
-            this.toolStripLabelCurrentPrice});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 212);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1014, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.vIXThresholdToolStripMenuItem,
-            this.trendFollowingToolStripMenuItem,
-            this.breakoutToolStripMenuItem,
-            this.movingAverageToolStripMenuItem,
-            this.rSIToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(127, 22);
-            this.toolStripDropDownButton1.Text = "Run CurrentStrategy";
-            // 
-            // vIXThresholdToolStripMenuItem
-            // 
-            this.vIXThresholdToolStripMenuItem.Name = "vIXThresholdToolStripMenuItem";
-            this.vIXThresholdToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.vIXThresholdToolStripMenuItem.Text = "VIX Threshold";
-            // 
-            // trendFollowingToolStripMenuItem
-            // 
-            this.trendFollowingToolStripMenuItem.Name = "trendFollowingToolStripMenuItem";
-            this.trendFollowingToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.trendFollowingToolStripMenuItem.Text = "Trend Following";
-            // 
-            // breakoutToolStripMenuItem
-            // 
-            this.breakoutToolStripMenuItem.Name = "breakoutToolStripMenuItem";
-            this.breakoutToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.breakoutToolStripMenuItem.Text = "Breakout";
-            // 
-            // movingAverageToolStripMenuItem
-            // 
-            this.movingAverageToolStripMenuItem.Name = "movingAverageToolStripMenuItem";
-            this.movingAverageToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.movingAverageToolStripMenuItem.Text = "Moving Average";
-            // 
-            // rSIToolStripMenuItem
-            // 
-            this.rSIToolStripMenuItem.Name = "rSIToolStripMenuItem";
-            this.rSIToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.rSIToolStripMenuItem.Text = "RSI";
-            this.rSIToolStripMenuItem.Click += new System.EventHandler(this.rSIToolStripMenuItem_Click);
-            // 
-            // toolStripTextBoxSecurity
-            // 
-            this.toolStripTextBoxSecurity.Name = "toolStripTextBoxSecurity";
-            this.toolStripTextBoxSecurity.Size = new System.Drawing.Size(200, 25);
-            this.toolStripTextBoxSecurity.TextChanged += new System.EventHandler(this.toolStripTextBoxSecurity_TextChanged);
-            // 
-            // toolStripComboBox1
-            // 
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 25);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripProgressBarPriceMax
-            // 
-            this.toolStripProgressBarPriceMax.Maximum = 1;
-            this.toolStripProgressBarPriceMax.Name = "toolStripProgressBarPriceMax";
-            this.toolStripProgressBarPriceMax.Size = new System.Drawing.Size(100, 22);
-            // 
-            // toolStripLabelCurrentPrice
-            // 
-            this.toolStripLabelCurrentPrice.Name = "toolStripLabelCurrentPrice";
-            this.toolStripLabelCurrentPrice.Size = new System.Drawing.Size(33, 22);
-            this.toolStripLabelCurrentPrice.Text = "Price";
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.propertyGrid1);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(1014, 212);
-            this.splitContainer2.SplitterDistance = 338;
-            this.splitContainer2.TabIndex = 1;
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(338, 212);
-            this.propertyGrid1.TabIndex = 0;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPagePositions);
-            this.tabControl1.Controls.Add(this.tabPagePrintout);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(672, 212);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPagePositions
-            // 
-            this.tabPagePositions.Controls.Add(this.dataGridViewPositions);
-            this.tabPagePositions.Location = new System.Drawing.Point(4, 22);
-            this.tabPagePositions.Name = "tabPagePositions";
-            this.tabPagePositions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePositions.Size = new System.Drawing.Size(664, 186);
-            this.tabPagePositions.TabIndex = 0;
-            this.tabPagePositions.Text = "Positions";
-            this.tabPagePositions.UseVisualStyleBackColor = true;
-            // 
-            // dataGridViewPositions
-            // 
-            this.dataGridViewPositions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewPositions.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridViewPositions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewPositions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TXType,
-            this.Shares,
-            this.TXPrice,
-            this.Cost});
-            this.dataGridViewPositions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewPositions.Location = new System.Drawing.Point(3, 3);
-            this.dataGridViewPositions.Name = "dataGridViewPositions";
-            this.dataGridViewPositions.Size = new System.Drawing.Size(658, 180);
-            this.dataGridViewPositions.TabIndex = 0;
-            // 
-            // TXType
-            // 
-            this.TXType.HeaderText = "Transaction Type";
-            this.TXType.Name = "TXType";
-            // 
-            // Shares
-            // 
-            this.Shares.HeaderText = "Shares";
-            this.Shares.Name = "Shares";
-            // 
-            // TXPrice
-            // 
-            this.TXPrice.HeaderText = "Price";
-            this.TXPrice.Name = "TXPrice";
-            // 
-            // Cost
-            // 
-            this.Cost.HeaderText = "Cost";
-            this.Cost.Name = "Cost";
-            // 
-            // tabPagePrintout
-            // 
-            this.tabPagePrintout.Controls.Add(this.richTextBox1);
-            this.tabPagePrintout.Location = new System.Drawing.Point(4, 22);
-            this.tabPagePrintout.Name = "tabPagePrintout";
-            this.tabPagePrintout.Size = new System.Drawing.Size(664, 186);
-            this.tabPagePrintout.TabIndex = 1;
-            this.tabPagePrintout.Text = "Printout";
-            this.tabPagePrintout.UseVisualStyleBackColor = true;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(664, 186);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "Started Market Simulator v.0.0.1 ...";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.chart1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Panel2.Controls.Add(this.toolStrip1);
-            this.splitContainer1.Size = new System.Drawing.Size(1014, 592);
-            this.splitContainer1.SplitterDistance = 351;
-            this.splitContainer1.TabIndex = 6;
-            // 
-            // chart1
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 0);
-            this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
-            series1.Legend = "Legend1";
-            series1.MarkerBorderWidth = 2;
-            series1.Name = "Series1";
-            series1.XValueMember = "Date";
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
-            series1.YValueMembers = "AsCandleStick";
-            series1.YValuesPerPoint = 4;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.IsVisibleInLegend = false;
-            series2.Legend = "Legend1";
-            series2.MarkerSize = 8;
-            series2.Name = "Trade";
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series3.Legend = "Legend1";
-            series3.Name = "RelativeStrengthIndex";
-            series3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.CustomProperties = "EmptyPointValue=Zero";
-            series4.Legend = "Legend1";
-            series4.Name = "NAV";
-            series4.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.MarkerColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            series5.Name = "Cash";
-            series5.ShadowOffset = 1;
-            series5.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "EMA13";
-            series7.ChartArea = "ChartArea1";
-            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series7.Legend = "Legend1";
-            series7.Name = "MACD";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
-            this.chart1.Series.Add(series4);
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
-            this.chart1.Series.Add(series7);
-            this.chart1.Size = new System.Drawing.Size(1014, 351);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // Balance
             // 
@@ -744,43 +547,126 @@
             this.Date.HeaderText = "Trade Date";
             this.Date.Name = "Date";
             // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.AutoScroll = true;
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.toolStripContainerMain);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(937, 497);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(937, 546);
+            this.toolStripContainer1.TabIndex = 1;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer1.TopToolStripPanel
+            // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.menuStripMain);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStripMain);
+            // 
+            // toolStripMain
+            // 
+            this.toolStripMain.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonGo,
+            this.toolStripSeparator6,
+            this.toolStripTextBoxTicker,
+            this.toolStripButton1,
+            this.toolStripSeparator7});
+            this.toolStripMain.Location = new System.Drawing.Point(3, 24);
+            this.toolStripMain.Name = "toolStripMain";
+            this.toolStripMain.Size = new System.Drawing.Size(122, 25);
+            this.toolStripMain.TabIndex = 1;
+            // 
+            // toolStripButtonGo
+            // 
+            this.toolStripButtonGo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonGo.Image = global::MarketSimulator.Properties.Resources.chart_curve_go;
+            this.toolStripButtonGo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonGo.Name = "toolStripButtonGo";
+            this.toolStripButtonGo.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonGo.Text = "toolStripButtonGo";
+            this.toolStripButtonGo.Click += new System.EventHandler(this.toolStripButtonGo_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripTextBoxTicker
+            // 
+            this.toolStripTextBoxTicker.Name = "toolStripTextBoxTicker";
+            this.toolStripTextBoxTicker.Size = new System.Drawing.Size(50, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // marketSimulatorComponent
+            // 
+            this.marketSimulatorComponent.Sandboxes = null;
+            this.marketSimulatorComponent.SecurityMaster = null;
+            // 
+            // checkedListBoxStrategies
+            // 
+            this.checkedListBoxStrategies.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxStrategies.FormattingEnabled = true;
+            this.checkedListBoxStrategies.Location = new System.Drawing.Point(0, 0);
+            this.checkedListBoxStrategies.Name = "checkedListBoxStrategies";
+            this.checkedListBoxStrategies.Size = new System.Drawing.Size(185, 186);
+            this.checkedListBoxStrategies.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1014, 638);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.statusStripMain);
-            this.Controls.Add(this.menuStrip1);
+            this.ClientSize = new System.Drawing.Size(937, 546);
             this.Controls.Add(this.toolStripContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStripMain;
             this.Name = "MainForm";
             this.Text = "Automated Trading Simulator";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStripMain.ResumeLayout(false);
+            this.menuStripMain.PerformLayout();
+            this.statusStripMain.ResumeLayout(false);
+            this.statusStripMain.PerformLayout();
+            this.toolStripContainerMain.BottomToolStripPanel.ResumeLayout(false);
+            this.toolStripContainerMain.BottomToolStripPanel.PerformLayout();
+            this.toolStripContainerMain.ContentPanel.ResumeLayout(false);
+            this.toolStripContainerMain.ResumeLayout(false);
+            this.toolStripContainerMain.PerformLayout();
+            this.splitContainerMain.Panel1.ResumeLayout(false);
+            this.splitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
+            this.splitContainerMain.ResumeLayout(false);
+            this.splitContainerLeftNav.Panel1.ResumeLayout(false);
+            this.splitContainerLeftNav.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerLeftNav)).EndInit();
+            this.splitContainerLeftNav.ResumeLayout(false);
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPagePositions.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPositions)).EndInit();
-            this.tabPagePrintout.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            this.toolStripMain.ResumeLayout(false);
+            this.toolStripMain.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -807,7 +693,7 @@
         private System.Windows.Forms.ToolStripMenuItem searchToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStripMain;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
@@ -823,39 +709,30 @@
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
-        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.ToolStripContainer toolStripContainerMain;
         private System.Windows.Forms.Timer timerMain;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem vIXThresholdToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem trendFollowingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem breakoutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem movingAverageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rSIToolStripMenuItem;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSecurity;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPagePositions;
-        private System.Windows.Forms.DataGridView dataGridViewPositions;
-        private System.Windows.Forms.TabPage tabPagePrintout;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Balance;
         private System.Windows.Forms.DataGridViewTextBoxColumn Price;
         private System.Windows.Forms.DataGridViewTextBoxColumn Quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn TradeType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripLabel toolStripLabelCurrentPrice;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarPriceMax;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TXType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Shares;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TXPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cost;
         private System.Windows.Forms.ToolStripMenuItem dataRetrievalToolStripMenuItem;
+        private Components.MarketSimulatorComponent marketSimulatorComponent;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarMain;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelWorker;
+        private System.Windows.Forms.SplitContainer splitContainerMain;
+        private System.Windows.Forms.SplitContainer splitContainerLeftNav;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
+        private System.Windows.Forms.PropertyGrid propertyGridExecSettings;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.ToolStrip toolStripMain;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGo;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTicker;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ImageList imageListMain;
+        private System.Windows.Forms.CheckedListBox checkedListBoxStrategies;
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketSimulator.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,20 +11,19 @@ namespace MarketSimulator.Strategies
         public Issue12Strategy()
             : base("Issue 12 Strategy") { }
 
-        public override Events.BuyEventArgs BuySignal(MarketTickEventArgs e)
+        public override void MarketTick(object sender, MarketTickEventArgs e)
         {
-            if (e.RSI < 20)
-            {
-                return new Events.BuyEventArgs(e.MarketData, 10, e.MarketData.Low, e.MarketData.High, Core.TradeFlags.StopLimit);
-            }
-
-            return null;
+            base.MarketTick(sender, e);
         }
 
-        public override Events.SellEventArgs SellSignal(MarketTickEventArgs e)
+        public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            // never sell
-            return null;
+            return Buy(10);
+        }
+
+        public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
+        {
+            return Sell(10);
         }
     }
 }

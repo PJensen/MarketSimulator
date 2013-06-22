@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using MarketSimulator.MarketDataRetriever;
+using MarketSimulator.Interfaces;
 using MarketSimulator.Util;
 
 namespace MarketSimulator
