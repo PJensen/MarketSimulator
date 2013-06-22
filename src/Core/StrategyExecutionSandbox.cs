@@ -22,7 +22,6 @@ namespace MarketSimulator.Core
             Strategy = strategy;
             Cash = Properties.Settings.Default.StartingBalance;
             CashHistory = new List<double>();
-            ActiveTradeString = new TradeString();
             GeneralLedger = new GeneralLedger();
 
             CashHistory.Add(Cash);
@@ -32,6 +31,8 @@ namespace MarketSimulator.Core
             strategy.SellEvent += OnSellEvent;
             strategy.BuyEvent += OnBuyEvent;
         }
+
+
 
         #region Constants
 
@@ -64,7 +65,7 @@ namespace MarketSimulator.Core
             NumberOfTrades++;
 
             CashHistory.Add(Cash);
-            ActiveTradeString.BuyLine.Add(eventArgs);
+            ActiveTradeStrings[eventArgs.Symbol].BuyLine.Add(eventArgs);
         }
 
         /// <summary>
@@ -94,31 +95,19 @@ namespace MarketSimulator.Core
             NumberOfTrades++;
 
             CashHistory.Add(Cash);
-            ActiveTradeString.SellLine.Add(eventArgs);
+            ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
         }
 
         /// <summary>
         /// Determines if this execution strategy has made money -- yet.
         /// </summary>
         /// <returns><value>true</value> if the strategy has made money</returns>
-        public bool MadeMoney()
+        public bool MadeMoney(string symbol)
         {
-            // sum all purchases
-            var marketValue = 0d;
-            foreach (var e in ActiveTradeString.BuyLine)
-                marketValue += e.MarketData.Close * e.Shares;
+            var activeTradeString = ActiveTradeStrings[symbol];
 
-            // sum all sales.
-            var saleValue = 0d;
-            foreach (var e in ActiveTradeString.SellLine)
-                saleValue += e.MarketData.Close * e.Shares;
-
-            // compute remainder
-            // TODO: Fix this shit
-            //var remainder = Shares * StrategyExecutor.PXLast;
-
-            // subtract remainder
-            var mktTotal = (saleValue - marketValue); // -remainder;
+            var mktTotal = (activeTradeString.TotalSoldMV - activeTradeString.TotalPurchasedMV)
+                - (activeTradeString.LastPurchasedPrice * activeTradeString.TotalSharesAfterExecution);
 
             return mktTotal > 0;
         }
@@ -164,12 +153,13 @@ namespace MarketSimulator.Core
         /// <summary>
         /// ActiveTradeString
         /// </summary>
-        public TradeString ActiveTradeString { get; set; }
+        public TradeStringCollection ActiveTradeStrings { get; set; }
+
 
         /// <summary>
         /// Reference to the StrategyExecutor's MarketData
         /// </summary>
-        //public List<SecuritiesData> MarketData { get { StrategyExecutor.SecurityMaster; } }
+       // public List<SecuritiesSnap> MarketData { get { StrategyExecutor.SecurityMaster; } }
 
         /// <summary>
         /// Portfolio

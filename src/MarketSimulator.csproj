@@ -49,12 +49,13 @@
   <ItemGroup>
     <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\GeneralLedger.cs" />
+    <Compile Include="Core\GlobalSecuritiesData.cs" />
     <Compile Include="Events\ITechnicalSnap.cs" />
     <Compile Include="Events\MarketSimulatorEventArgs.cs" />
     <Compile Include="Interfaces\IMarketData.cs" />
     <Compile Include="Interfaces\IPosition.cs" />
     <Compile Include="Core\Position.cs" />
-    <Compile Include="Core\SecuritiesData.cs" />
+    <Compile Include="Core\SecuritiesSnap.cs" />
     <Compile Include="Core\TradeFlags.cs" />
     <Compile Include="Core\TradeString.cs" />
     <Compile Include="Core\TradeType.cs" />
