@@ -12,7 +12,7 @@ namespace MarketSimulator.Core
     /// <summary>
     /// StrategyExecutionSandbox
     /// </summary>
-    public class StrategyExecutionSandbox : IStrategyEventReciever
+    public class StrategyExecutionSandbox : IStrategyEventReciever, IComparable<StrategyExecutionSandbox>
     {
         /// <summary>
         /// Creates a new StrategyExecutionSandbox
@@ -173,6 +173,16 @@ namespace MarketSimulator.Core
         {
             get { return Strategy.Name; }
             set { Strategy.Name = value; }
+        }
+
+        /// <summary>
+        /// CompareTo
+        /// </summary>
+        /// <param name="other">The other execution sandbox to compare this one to</param>
+        /// <returns>less than 1, greater than 1, or 0</returns>
+        public int CompareTo(StrategyExecutionSandbox other)
+        {
+            return Cash.CompareTo(other.Cash);
         }
     }
 }
