@@ -12,6 +12,7 @@ namespace MarketSimulator.Core
     /// Singletons are the bane of existence, except here.
     /// </remarks>
     /// </summary>
+    [System.ComponentModel.ToolboxItem(true)]
     public class GlobalExecutionSettings
     {
         #region Singleton
@@ -29,9 +30,16 @@ namespace MarketSimulator.Core
         }
         #endregion
 
+        #region Constants
+        const string CategoryExecutionSandbox = "Execution Sandbox";
+        const string CategoryGlobal = "Global";
+        #endregion
+
         /// <summary>
         /// StartDate
         /// </summary>
+        [System.ComponentModel.Category(CategoryGlobal)]
+        [System.ComponentModel.Description("The start date that for all securities")]
         public DateTime StartDate
         {
             get
@@ -48,6 +56,8 @@ namespace MarketSimulator.Core
         /// <summary>
         /// EndDate
         /// </summary>
+        [System.ComponentModel.Category(CategoryGlobal)]
+        [System.ComponentModel.Description("The end date all securities data")]
         public DateTime EndDate
         {
             get { return Properties.Settings.Default.EndDate; }
@@ -61,6 +71,9 @@ namespace MarketSimulator.Core
         /// <summary>
         /// StartingBalance
         /// </summary>
+        [System.ComponentModel.DefaultValue(Properties.Settings.Default.StartingBalance)]
+        [System.ComponentModel.Category(CategoryExecutionSandbox)]
+        [System.ComponentModel.Description("The balance to initialize execution sandboxes with")]
         public double StartingBalance
         {
             get { return Properties.Settings.Default.StartingBalance; }
@@ -70,6 +83,8 @@ namespace MarketSimulator.Core
         /// <summary>
         /// EquityPool
         /// </summary>
+        [System.ComponentModel.Category(CategoryGlobal)]
+        [System.ComponentModel.Description("The securities the sandboxes have to work with")]
         public StringCollection SecurityMaster
         {
             get { return Properties.Settings.Default.PreviousSecurities; }

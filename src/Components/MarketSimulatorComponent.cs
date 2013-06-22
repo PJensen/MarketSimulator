@@ -77,7 +77,7 @@ namespace MarketSimulator.Components
 
             // iterate over each security and populate the individual ticks within the security master; 
             // WARNING: individual failures will trigger the failure callback; and, return FALSE.
-            foreach (var security in GlobalExecutionSettings.GetUserDefaults().SecurityMaster)
+            foreach (var security in GlobalExecutionSettings.Instance.SecurityMaster)
             {
                 var tmpMarketData = R.Convert(new YahooDataRetriever().Retrieve(security, out message, out fail));
                 tmpMarketData.Reverse();
