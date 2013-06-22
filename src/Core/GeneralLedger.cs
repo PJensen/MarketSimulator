@@ -10,12 +10,17 @@ namespace MarketSimulator.Core
     /// Portfolio; initially this was a more custom object but there was very 
     /// little benefit to doing it that way -- so a standard implementation is better; for now.
     /// </summary>
-    public class GeneralLedger : Dictionary<string, Double>
+    public class GeneralLedger
     {
+        /// <summary>
+        /// backingStore
+        /// </summary>
+        private readonly Dictionary<string, Double> backingStore = new Dictionary<string, double>();
+
         /// <summary>
         /// Portfolio
         /// </summary>
-        public GeneralLedger() 
+        public GeneralLedger()
             : base() { }
 
         /// <summary>
@@ -25,7 +30,29 @@ namespace MarketSimulator.Core
         /// <returns>the weight of the entry</returns>
         public double GetWeight(string entry)
         {
-            return this[entry] / Value;
+            return backingStore[entry] / Value;
+        }
+
+        /// <summary>
+        /// indexer
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns></returns>
+        public double this[string entry]
+        {
+            get
+            {
+                if (backingStore.ContainsKey(entry))
+                    return backingStore[entry];
+                return 0.0d;
+            }
+            set
+            {
+                if (!backingStore.ContainsKey(entry))
+                    backingStore.Add(entry, value);
+                else
+                    backingStore[entry] = value;
+            }
         }
 
         /// <summary>
@@ -46,24 +73,17 @@ namespace MarketSimulator.Core
             var @key = position.Symbol;
             var @value = position.Shares * position.Price;
 
-            if (!Keys.Contains(@key))
-            {
-                this.Add(@key, @value);
-            }
-            else 
-            {
-                this[@key] = @value;
-            }
+            this[@key] = @value;
         }
 
         /// <summary>
         /// The total value of this portfolio
         /// </summary>
-        public double Value 
+        public double Value
         {
-            get 
+            get
             {
-                return this.Sum(kvp => kvp.Value);
+                return backingStore.Sum(kvp => kvp.Value);
             }
         }
     }

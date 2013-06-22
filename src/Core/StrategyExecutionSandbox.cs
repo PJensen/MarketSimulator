@@ -25,7 +25,7 @@ namespace MarketSimulator.Core
             GeneralLedger = new GeneralLedger();
 
             CashHistory.Add(Cash);
-            GeneralLedger.Add(CashSymbol, Cash);
+            GeneralLedger[CashSymbol] = Cash;
 
             // outer event wiring
             strategy.SellEvent += OnSellEvent;
