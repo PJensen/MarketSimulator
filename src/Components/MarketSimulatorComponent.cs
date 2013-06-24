@@ -180,6 +180,8 @@ namespace MarketSimulator.Components
                 throw new MarketSimulatorException("MarketData was null or empty!");
             }
 
+            #endregion
+
             // This is important because not all securities have the same amount of data.
             // AAAAA   X
             // BB      X
@@ -209,7 +211,7 @@ namespace MarketSimulator.Components
 
                         if (marketSimulatorWorker.WorkerReportsProgress)
                         {
-                            marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / maximumPossibleTicks) * 100.00));
+                            marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / maximumPossibleTicks) * 100.00), securitySymbol);
                         }
 
                         if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
@@ -221,8 +223,6 @@ namespace MarketSimulator.Components
                     }
                 }
             }
-
-            #endregion
         }
 
         /// <summary>
