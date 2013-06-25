@@ -28,8 +28,8 @@ namespace MarketSimulator.Core
                 throw new ArgumentNullException("strategy");
             }
 
-
             Initialize();
+            StrategyExecutor = strategyExecutor;
             Strategy = strategy;
 
             // outer event wiring

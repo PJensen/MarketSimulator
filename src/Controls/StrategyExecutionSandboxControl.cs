@@ -39,11 +39,13 @@ namespace MarketSimulator.Controls
         /// <param name="e">event args</param>
         private void StrategyExecutionSandboxControl_Load(object sender, EventArgs e)
         {
+            #region Sandbox cash
+
             var sandboxSeries = new Series(StrategyExecutionSandbox.Name)
             {
                 ChartType = SeriesChartType.Line,
                 YAxisType = AxisType.Secondary,
-                XAxisType = AxisType.Primary,
+                XAxisType = AxisType.Secondary,
             };
 
             foreach (var cash in StrategyExecutionSandbox.CashHistory)
@@ -52,6 +54,25 @@ namespace MarketSimulator.Controls
             }
 
             chartSandbox.Series.Add(sandboxSeries);
+
+            #endregion
+
+            foreach (var securityMaster in StrategyExecutionSandbox.StrategyExecutor.SecurityMaster)
+            {
+                var mktSeries = new Series(securityMaster.Key)
+                {
+                    ChartType = SeriesChartType.Line,
+                    YAxisType = AxisType.Secondary,
+                    XAxisType = AxisType.Secondary,
+                };
+
+                foreach (var marketData in securityMaster.Value)
+                {
+                    mktSeries.Points.Add(marketData.Close);
+                }
+
+                chartSandbox.Series.Add(mktSeries);
+            }
         }
 
         /// <summary>
