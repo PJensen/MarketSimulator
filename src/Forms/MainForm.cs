@@ -110,7 +110,7 @@ namespace MarketSimulator.Forms
         /// <param name="message"></param>
         public void SetStatus(string frmt, params object[] argv)
         {
-            toolStripStatusLabelWorker.Text = string.Format(frmt, argv);
+            toolStripStatusLabelStatus.Text = string.Format(frmt, argv);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace MarketSimulator.Forms
             }
             else
             {
-                toolStripStatusLabelWorker.Text = tmpInitMessage;
+                toolStripStatusLabelStatus.Text = tmpInitMessage;
             }
 
             Cursor = tmpCursor;
@@ -174,10 +174,13 @@ namespace MarketSimulator.Forms
             SetStatus(tmpStatusMessage);
 
             marketSimulatorComponent.Sandboxes.Sort();
+            flowLayoutPanelMain.Controls.Add(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
             foreach (var sandbox in marketSimulatorComponent.Sandboxes)
             {
                 flowLayoutPanelMain.Controls.Add(new StrategyExecutionSandboxControl(sandbox));
             }
+
+
         }
 
         /// <summary>
@@ -191,6 +194,8 @@ namespace MarketSimulator.Forms
             {
                 toolStripProgressBarMain.Value = e.ProgressPercentage;
             }
+
+            SetStatus((e.UserState ?? string.Empty).ToString());
         }
 
         /// <summary>
@@ -270,6 +275,19 @@ namespace MarketSimulator.Forms
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
                 R.ExitConfirmation = !@checked;
+            }
+        }
+
+        /// <summary>
+        /// toolStripButtonAddTicker_Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButtonAddTicker_Click(object sender, EventArgs e)
+        {
+            if (GlobalExecutionSettings.Instance.AddTicker(toolStripTextBoxTicker.Text))
+            {
+                SetStatus("Added: {0}", toolStripTextBoxTicker.Text);
             }
         }
     }

@@ -64,7 +64,7 @@
             this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBarMain = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripStatusLabelWorker = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -73,9 +73,10 @@
             this.toolStripContainerMain = new System.Windows.Forms.ToolStripContainer();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.splitContainerLeftNav = new System.Windows.Forms.SplitContainer();
-            this.imageListMain = new System.Windows.Forms.ImageList(this.components);
+            this.checkedListBoxStrategies = new System.Windows.Forms.CheckedListBox();
             this.propertyGridExecSettings = new System.Windows.Forms.PropertyGrid();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
+            this.imageListMain = new System.Windows.Forms.ImageList(this.components);
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.Balance = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -87,10 +88,9 @@
             this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTextBoxTicker = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonAddTicker = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.marketSimulatorComponent = new MarketSimulator.Components.MarketSimulatorComponent(this.components);
-            this.checkedListBoxStrategies = new System.Windows.Forms.CheckedListBox();
             this.menuStripMain.SuspendLayout();
             this.statusStripMain.SuspendLayout();
             this.toolStripContainerMain.BottomToolStripPanel.SuspendLayout();
@@ -372,7 +372,7 @@
             this.statusStripMain.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBarMain,
-            this.toolStripStatusLabelWorker});
+            this.toolStripStatusLabelStatus});
             this.statusStripMain.Location = new System.Drawing.Point(0, 0);
             this.statusStripMain.Name = "statusStripMain";
             this.statusStripMain.Size = new System.Drawing.Size(937, 22);
@@ -384,11 +384,11 @@
             this.toolStripProgressBarMain.Name = "toolStripProgressBarMain";
             this.toolStripProgressBarMain.Size = new System.Drawing.Size(200, 16);
             // 
-            // toolStripStatusLabelWorker
+            // toolStripStatusLabelStatus
             // 
-            this.toolStripStatusLabelWorker.Name = "toolStripStatusLabelWorker";
-            this.toolStripStatusLabelWorker.Size = new System.Drawing.Size(69, 17);
-            this.toolStripStatusLabelWorker.Text = "Initialized ...";
+            this.toolStripStatusLabelStatus.Name = "toolStripStatusLabelStatus";
+            this.toolStripStatusLabelStatus.Size = new System.Drawing.Size(69, 17);
+            this.toolStripStatusLabelStatus.Text = "Initialized ...";
             // 
             // BottomToolStripPanel
             // 
@@ -480,6 +480,32 @@
             this.splitContainerLeftNav.SplitterDistance = 186;
             this.splitContainerLeftNav.TabIndex = 0;
             // 
+            // checkedListBoxStrategies
+            // 
+            this.checkedListBoxStrategies.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkedListBoxStrategies.FormattingEnabled = true;
+            this.checkedListBoxStrategies.Location = new System.Drawing.Point(0, 0);
+            this.checkedListBoxStrategies.Name = "checkedListBoxStrategies";
+            this.checkedListBoxStrategies.Size = new System.Drawing.Size(185, 186);
+            this.checkedListBoxStrategies.TabIndex = 0;
+            // 
+            // propertyGridExecSettings
+            // 
+            this.propertyGridExecSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertyGridExecSettings.Location = new System.Drawing.Point(0, 0);
+            this.propertyGridExecSettings.Name = "propertyGridExecSettings";
+            this.propertyGridExecSettings.Size = new System.Drawing.Size(185, 260);
+            this.propertyGridExecSettings.TabIndex = 0;
+            this.propertyGridExecSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridExecSettings_PropertyValueChanged);
+            // 
+            // flowLayoutPanelMain
+            // 
+            this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(748, 450);
+            this.flowLayoutPanelMain.TabIndex = 0;
+            // 
             // imageListMain
             // 
             this.imageListMain.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListMain.ImageStream")));
@@ -500,23 +526,6 @@
             this.imageListMain.Images.SetKeyName(13, "bullet_error.png");
             this.imageListMain.Images.SetKeyName(14, "bullet_disk.png");
             this.imageListMain.Images.SetKeyName(15, "bullet_feed.png");
-            // 
-            // propertyGridExecSettings
-            // 
-            this.propertyGridExecSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGridExecSettings.Location = new System.Drawing.Point(0, 0);
-            this.propertyGridExecSettings.Name = "propertyGridExecSettings";
-            this.propertyGridExecSettings.Size = new System.Drawing.Size(185, 260);
-            this.propertyGridExecSettings.TabIndex = 0;
-            this.propertyGridExecSettings.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGridExecSettings_PropertyValueChanged);
-            // 
-            // flowLayoutPanelMain
-            // 
-            this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(748, 450);
-            this.flowLayoutPanelMain.TabIndex = 0;
             // 
             // timerMain
             // 
@@ -574,11 +583,11 @@
             this.toolStripButtonGo,
             this.toolStripSeparator6,
             this.toolStripTextBoxTicker,
-            this.toolStripButton1,
+            this.toolStripButtonAddTicker,
             this.toolStripSeparator7});
             this.toolStripMain.Location = new System.Drawing.Point(3, 24);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(122, 25);
+            this.toolStripMain.Size = new System.Drawing.Size(214, 25);
             this.toolStripMain.TabIndex = 1;
             // 
             // toolStripButtonGo
@@ -601,14 +610,15 @@
             this.toolStripTextBoxTicker.Name = "toolStripTextBoxTicker";
             this.toolStripTextBoxTicker.Size = new System.Drawing.Size(50, 25);
             // 
-            // toolStripButton1
+            // toolStripButtonAddTicker
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButtonAddTicker.Image = global::MarketSimulator.Properties.Resources.bullet_add;
+            this.toolStripButtonAddTicker.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonAddTicker.Name = "toolStripButtonAddTicker";
+            this.toolStripButtonAddTicker.Size = new System.Drawing.Size(84, 22);
+            this.toolStripButtonAddTicker.Text = "Add Ticker";
+            this.toolStripButtonAddTicker.ToolTipText = "Add ticker symbol to the security master";
+            this.toolStripButtonAddTicker.Click += new System.EventHandler(this.toolStripButtonAddTicker_Click);
             // 
             // toolStripSeparator7
             // 
@@ -619,15 +629,6 @@
             // 
             this.marketSimulatorComponent.Sandboxes = null;
             this.marketSimulatorComponent.SecurityMaster = null;
-            // 
-            // checkedListBoxStrategies
-            // 
-            this.checkedListBoxStrategies.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxStrategies.FormattingEnabled = true;
-            this.checkedListBoxStrategies.Location = new System.Drawing.Point(0, 0);
-            this.checkedListBoxStrategies.Name = "checkedListBoxStrategies";
-            this.checkedListBoxStrategies.Size = new System.Drawing.Size(185, 186);
-            this.checkedListBoxStrategies.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -717,9 +718,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn TradeType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.ToolStripMenuItem dataRetrievalToolStripMenuItem;
-        private Components.MarketSimulatorComponent marketSimulatorComponent;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBarMain;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelWorker;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelStatus;
         private System.Windows.Forms.SplitContainer splitContainerMain;
         private System.Windows.Forms.SplitContainer splitContainerLeftNav;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
@@ -729,10 +729,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonGo;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxTicker;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAddTicker;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ImageList imageListMain;
         private System.Windows.Forms.CheckedListBox checkedListBoxStrategies;
+        internal Components.MarketSimulatorComponent marketSimulatorComponent;
 
     }
 }

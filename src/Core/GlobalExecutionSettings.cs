@@ -99,7 +99,21 @@ namespace MarketSimulator.Core
                 Properties.Settings.Default.PreviousSecurities = value;
                 Save();
             }
-       } 
+       }
+
+        /// <summary>
+        /// AddTicker
+        /// </summary>
+        /// <param name="symbol"></param>
+        /// <returns></returns>
+        public bool AddTicker(string symbol)
+        {
+            symbol = symbol.Trim().ToUpperInvariant();
+            if (SecurityMaster.Contains(symbol))
+                return false;
+            SecurityMaster.Add(symbol);
+            return true;
+        }
 
         /// <summary>
         /// Save
