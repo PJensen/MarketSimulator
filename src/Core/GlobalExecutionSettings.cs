@@ -70,6 +70,21 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
+        /// EndDate
+        /// </summary>
+        [System.ComponentModel.Category(CategoryGlobal)]
+        [System.ComponentModel.Description("The periodicity of market ticks")]
+        public TimeSpan Periodicity
+        {
+            get { return Properties.Settings.Default.Periodicity; }
+            set
+            {
+                Properties.Settings.Default.Periodicity = value;
+                Save();
+            }
+        }
+
+        /// <summary>
         /// StartingBalance
         /// </summary>
         [System.ComponentModel.Category(CategoryExecutionSandbox)]

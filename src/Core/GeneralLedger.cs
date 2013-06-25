@@ -13,7 +13,7 @@ namespace MarketSimulator.Core
     public class GeneralLedger
     {
         /// <summary>
-        /// backingStore
+        /// BackingStore
         /// </summary>
         private readonly Dictionary<string, Double> backingStore = new Dictionary<string, double>();
 

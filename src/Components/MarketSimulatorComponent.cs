@@ -194,6 +194,9 @@ namespace MarketSimulator.Components
             // Thus we use an accumulator to get to (X); but; obviously events simply 
             // stop firing if there is no data - to save time we just continue.
             var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count);
+            var tmpMaxDate = SecurityMaster.MaximumDate;
+            var tmpMinDate = SecurityMaster.MinimumDate;
+
             var currentMarketTick = 0;
 
             while (currentMarketTick < maximumPossibleTicks)
@@ -204,12 +207,18 @@ namespace MarketSimulator.Components
 
                     foreach (var securitySymbol in SecurityMaster.Keys)
                     {
-                        if (!SecurityMaster.CanSecurityTickPast(securitySymbol, currentMarketTick))
+                        if (!SecurityMaster.CanSecurityTickIndex(securitySymbol, currentMarketTick))
                         {
                             continue;
                         }
 
-                        var marketData = SecurityMaster[securitySymbol][currentMarketTick];
+                        var marketData = SecurityMaster[securitySymbol, currentMarketTick];
+
+                        if (GlobalExecutionSettings.Instance.StartDate > marketData.Date || 
+                            GlobalExecutionSettings.Instance.EndDate < marketData.Date)
+                        {
+                            continue;
+                        }
 
                         strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(securitySymbol,
                             marketData, securitiesSnap));
@@ -223,9 +232,9 @@ namespace MarketSimulator.Components
                         {
                             marketSimulatorWorker.CancelAsync();
                         }
-
-                        currentMarketTick++;
                     }
+
+                    currentMarketTick++;
                 }
             }
         }

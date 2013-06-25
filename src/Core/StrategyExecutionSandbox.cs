@@ -187,7 +187,7 @@ namespace MarketSimulator.Core
         /// <returns>the market data associated with the tick & security</returns>
         public MarketData GetMarketData(string security, int tick)
         {
-            return StrategyExecutor.SecurityMaster[security][tick];
+            return StrategyExecutor.SecurityMaster[security, tick];
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Reference to the StrategyExecutor's MarketData
         /// </summary>
-       // public List<SecuritiesSnap> MarketData { get { StrategyExecutor.Tick; } }
+        // public List<SecuritiesSnap> MarketData { get { StrategyExecutor.Tick; } }
 
         /// <summary>
         /// Portfolio
@@ -221,7 +221,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// The name of the strategy
         /// </summary>
-        public string Name 
+        public string Name
         {
             get { return Strategy.Name; }
             set { Strategy.Name = value; }

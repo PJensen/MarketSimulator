@@ -32,5 +32,8 @@
     <Setting Name="EndDate" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">06/22/2013 14:11:00</Value>
     </Setting>
+    <Setting Name="Periodicity" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">1.00:00:00</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
