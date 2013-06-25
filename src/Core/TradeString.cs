@@ -110,7 +110,7 @@ namespace MarketSimulator.Core
 
 
         /// <summary>
-        /// Clear buy and sell
+        /// Initialize buy and sell
         /// </summary>
         public void Clear()
         {

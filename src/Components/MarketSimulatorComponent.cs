@@ -182,6 +182,11 @@ namespace MarketSimulator.Components
 
             #endregion
 
+            foreach (var strategySandbox in Sandboxes)
+            {
+                strategySandbox.Initialize();
+            }
+
             // This is important because not all securities have the same amount of data.
             // AAAAA   X
             // BB      X

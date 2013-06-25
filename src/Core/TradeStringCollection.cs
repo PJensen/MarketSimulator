@@ -33,7 +33,7 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
-        /// Clear
+        /// Initialize
         /// </summary>
         public void Clear()
         {

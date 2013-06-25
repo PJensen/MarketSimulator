@@ -53,6 +53,7 @@ namespace MarketSimulator.Strategies
             currentMarketTick = e;
             OnSellEvent(SellSignal(e));
             OnBuyEvent(BuySignal(e));
+            OnMarketTickEvent(e);
         }
 
         /// <summary>
@@ -125,6 +126,18 @@ namespace MarketSimulator.Strategies
         }
 
         /// <summary>
+        /// Market tick event invocator
+        /// </summary>
+        /// <param name="e">market tick event args</param>
+        public void OnMarketTickEvent(MarketTickEventArgs e)
+        {
+            if (MarketTickEvent != null && e != null)
+            {
+                MarketTickEvent(this, e);
+            }
+        }
+
+        /// <summary>
         /// BuyEvent
         /// </summary>
         public event EventHandler<BuyEventArgs> BuyEvent;
@@ -133,6 +146,11 @@ namespace MarketSimulator.Strategies
         /// SellEvent
         /// </summary>
         public event EventHandler<SellEventArgs> SellEvent;
+
+        /// <summary>
+        /// MarketTickEvent
+        /// </summary>
+        public event EventHandler<MarketTickEventArgs> MarketTickEvent;
 
         /// <summary>
         /// ToString

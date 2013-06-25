@@ -28,17 +28,25 @@ namespace MarketSimulator.Core
                 throw new ArgumentNullException("strategy");
             }
 
+
+            Initialize();
             Strategy = strategy;
-            Cash = Properties.Settings.Default.StartingBalance;
-            ActiveTradeStrings = new TradeStringCollection();
-            CashHistory = new List<double>();
-            
-            CashHistory.Add(Cash);
-            GeneralLedger[CashSymbol] = Cash;
 
             // outer event wiring
             strategy.SellEvent += OnSellEvent;
             strategy.BuyEvent += OnBuyEvent;
+            strategy.MarketTickEvent += OnMarketTickEvent;
+        }
+
+        /// <summary>
+        /// Clears the execution sandbox for a possible re-run
+        /// </summary>
+        public void Initialize()
+        {
+            ActiveTradeStrings = new TradeStringCollection();
+            CashHistory = new List<double>();
+            GeneralLedger = new GeneralLedger();
+            Cash = GlobalExecutionSettings.Instance.StartingBalance;
         }
 
         #region Constants
@@ -51,6 +59,17 @@ namespace MarketSimulator.Core
         #endregion
 
         #region Public Facing Methods
+
+        /// <summary>
+        /// OnMarketTickEvent
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="eventArgs">event args</param>
+        public void OnMarketTickEvent(object sender, MarketTickEventArgs eventArgs)
+        {
+            CashHistory.Add(Cash);
+            Tick++;
+        }
 
         /// <summary>
         /// OnBuyEvent
@@ -67,12 +86,12 @@ namespace MarketSimulator.Core
                 return;
             }
 
-            GeneralLedger.Add(eventArgs);
             Cash -= totalValue;
-            Shares += eventArgs.Shares;
-            NumberOfTrades++;
 
-            CashHistory.Add(Cash);
+            GeneralLedger.Add(eventArgs);
+            Shares += eventArgs.Shares;
+
+            NumberOfTrades++;
             ActiveTradeStrings[eventArgs.Symbol].BuyLine.Add(eventArgs);
         }
 
@@ -94,12 +113,12 @@ namespace MarketSimulator.Core
                 eventArgs.Shares = Shares;
             }
 
+            Cash += eventArgs.Price * eventArgs.Shares;
+
             GeneralLedger.Add(eventArgs);
             Shares -= eventArgs.Shares;
-            Cash += eventArgs.Shares * eventArgs.MarketData.Close;
-            NumberOfTrades++;
 
-            CashHistory.Add(Cash);
+            NumberOfTrades++;
             ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
         }
 
@@ -190,7 +209,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Portfolio
         /// </summary>
-        public GeneralLedger GeneralLedger = new GeneralLedger();
+        public GeneralLedger GeneralLedger { get; private set; }
 
         /// <summary>
         /// BuyTally
