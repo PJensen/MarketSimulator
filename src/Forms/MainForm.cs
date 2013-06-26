@@ -137,6 +137,16 @@ namespace MarketSimulator.Forms
             {
                 LockGUI();
 
+                if (GlobalExecutionSettings.Instance.StartDate < marketSimulatorComponent.SecurityMaster.MinimumDate)
+                {
+                    GlobalExecutionSettings.Instance.StartDate = marketSimulatorComponent.SecurityMaster.MinimumDate;
+                }
+
+                if (GlobalExecutionSettings.Instance.EndDate > marketSimulatorComponent.SecurityMaster.MaximumDate)
+                {
+                    GlobalExecutionSettings.Instance.EndDate = marketSimulatorComponent.SecurityMaster.MaximumDate;
+                }
+
                 marketSimulatorComponent.marketSimulatorWorker.RunWorkerAsync();
             }
             else
