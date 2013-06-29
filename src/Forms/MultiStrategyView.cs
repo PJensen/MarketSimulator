@@ -38,8 +38,25 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         private void MultiStrategyView_Load(object sender, EventArgs e)
         {
+            var generalSeries = new Series("Market")
+            {
+                ChartType = SeriesChartType.Line,
+                YAxisType = AxisType.Secondary,
+                XAxisType = AxisType.Primary,
+                // TODO: fill in details for sandbox' series
+            };
+
+            foreach (var s in simulator.SecuritiesSnaps)
+            {
+                generalSeries.Points.AddXY(s.Date, s.PriceTotal);
+
+            }
+
+            chartView.Series.Add(generalSeries);
+            
             foreach (var sandbox in simulator.Sandboxes)
             {
+                
                 var sandboxSeries = new Series(sandbox.Name)
                 {
                     ChartType = SeriesChartType.Line,
@@ -48,7 +65,7 @@ namespace MarketSimulator.Forms
                     // TODO: fill in details for sandbox' series
                 };
 
-                foreach(var cash in sandbox.CashHistory)
+                foreach (var cash in sandbox.CashHistory)
                 {
                     sandboxSeries.Points.Add(cash);
                 }

@@ -58,7 +58,7 @@ namespace MarketSimulator.Events
         public double Price { get; set; }
 
         /// <summary>
-        /// MarketData
+        /// MarketTicks
         /// </summary>
         public MarketData MarketData { get; set; }
 

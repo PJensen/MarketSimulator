@@ -9,7 +9,7 @@ namespace MarketSimulator.Core
 
 
     /// <summary>
-    /// MarketData
+    /// MarketTicks
     /// TODO: Think about renaming this to <c>SecurityData</c>
     /// </summary>
     [DebuggerDisplay("{Date} [{Open}, {High}, {Low}, {Close}]")]

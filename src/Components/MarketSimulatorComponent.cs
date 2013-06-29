@@ -73,6 +73,12 @@ namespace MarketSimulator.Components
                 SecurityMaster = new GlobalSecuritiesData(R.EstimatedTicks);
             }
 
+            if (SecuritiesSnaps == null)
+            {
+                SecuritiesSnaps = new List<SecuritiesSnap>();
+            }
+
+            SecuritiesSnaps.Clear();
             SecurityMaster.Clear();
 
             // iterate over each security and populate the individual ticks within the security master; 
@@ -115,7 +121,7 @@ namespace MarketSimulator.Components
         /// <summary>
         /// The common backing store for all market data; for all securities; for all ticks.
         /// Refer to SecuritiesData for individual ticks across all constituents; and, 
-        /// MarketData for individual ticks on a per security basis.
+        /// MarketTicks for individual ticks on a per security basis.
         /// </summary>
         public GlobalSecuritiesData SecurityMaster { get; set; }
 
@@ -123,6 +129,11 @@ namespace MarketSimulator.Components
         /// Sandboxes
         /// </summary>
         public List<StrategyExecutionSandbox> Sandboxes { get; set; }
+
+        /// <summary>
+        /// SecuritiesSnaps
+        /// </summary>
+        public List<SecuritiesSnap> SecuritiesSnaps { get; set; }
 
         /// <summary>
         /// Has the market simulator component been initialized with a ticker
@@ -133,7 +144,6 @@ namespace MarketSimulator.Components
         /// WorkComplete
         /// </summary>
         public bool WorkComplete { get; private set; }
-
 
         /// <summary>
         /// Initializes the market simulator with a given ticker
@@ -177,7 +187,7 @@ namespace MarketSimulator.Components
             }
             else if (SecurityMaster == null || SecurityMaster.Count <= 0)
             {
-                throw new MarketSimulatorException("MarketData was null or empty!");
+                throw new MarketSimulatorException("MarketTicks was null or empty!");
             }
 
             #endregion
@@ -197,10 +207,12 @@ namespace MarketSimulator.Components
 
             var currentMarketTick = 0;
 
-            while (currentMarketTick < maximumPossibleTicks)
+            while (currentMarketTick < maximumPossibleTicks - 1)
             {
                 foreach (var strategySandbox in Sandboxes)
                 {
+                    var tmpSecuritesSnap = new SecuritiesSnap();
+
                     foreach (var securitySymbol in SecurityMaster.Keys)
                     {
                         if (!SecurityMaster.CanSecurityTickIndex(securitySymbol, currentMarketTick))
@@ -210,14 +222,17 @@ namespace MarketSimulator.Components
 
                         var marketData = SecurityMaster[securitySymbol, currentMarketTick];
 
-                        if (GlobalExecutionSettings.Instance.StartDate > marketData.Date || 
+                        tmpSecuritesSnap.Add(securitySymbol, marketData);
+
+                        if (GlobalExecutionSettings.Instance.StartDate > marketData.Date ||
                             GlobalExecutionSettings.Instance.EndDate < marketData.Date)
                         {
                             continue;
                         }
 
-                        strategySandbox.Strategy.MarketTick(this, new MarketTickEventArgs(securitySymbol,
-                            marketData, null));
+                        var tmpTickData = new MarketTickEventArgs(securitySymbol, marketData, null);
+
+                        strategySandbox.Strategy.MarketTick(this, tmpTickData);
 
                         if (marketSimulatorWorker.WorkerReportsProgress)
                         {
@@ -229,6 +244,8 @@ namespace MarketSimulator.Components
                             marketSimulatorWorker.CancelAsync();
                         }
                     }
+
+                    SecuritiesSnaps.Add(tmpSecuritesSnap);
 
                     currentMarketTick++;
                 }

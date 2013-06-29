@@ -147,7 +147,7 @@ namespace MarketSimulator.Forms
                     GlobalExecutionSettings.Instance.EndDate = marketSimulatorComponent.SecurityMaster.MaximumDate;
                 }
 
-                marketSimulatorComponent.marketSimulatorWorker.RunWorkerAsync();
+                marketSimulatorComponent.marketSimulatorWorker.RunWorkerAsync(GlobalExecutionSettings.Instance);
             }
             else
             {

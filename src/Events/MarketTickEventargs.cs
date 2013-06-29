@@ -25,7 +25,7 @@ namespace MarketSimulator
         public string Symbol { get; private set; }
 
         /// <summary>
-        /// MarketData
+        /// MarketTicks
         /// </summary>
         public MarketData MarketData { get; private set; }
 

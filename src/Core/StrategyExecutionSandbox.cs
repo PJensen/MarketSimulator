@@ -43,10 +43,12 @@ namespace MarketSimulator.Core
         /// </summary>
         public void Initialize()
         {
+            MarketTicks = new List<MarketTickEventArgs>();
             ActiveTradeStrings = new TradeStringCollection();
             CashHistory = new List<double>();
             GeneralLedger = new GeneralLedger();
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
+            Tick = 0;
         }
 
         #region Constants
@@ -61,12 +63,18 @@ namespace MarketSimulator.Core
         #region Public Facing Methods
 
         /// <summary>
+        /// MarketTicks
+        /// </summary>
+        public List<MarketTickEventArgs> MarketTicks { get; set; }
+
+        /// <summary>
         /// OnMarketTickEvent
         /// </summary>
         /// <param name="sender">event sender</param>
         /// <param name="eventArgs">event args</param>
         public void OnMarketTickEvent(object sender, MarketTickEventArgs eventArgs)
         {
+            MarketTicks.Add(eventArgs);
             CashHistory.Add(Cash);
             Tick++;
         }
@@ -202,9 +210,9 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
-        /// Reference to the StrategyExecutor's MarketData
+        /// Reference to the StrategyExecutor's MarketTicks
         /// </summary>
-        // public List<SecuritiesSnap> MarketData { get { StrategyExecutor.Tick; } }
+        // public List<SecuritiesSnap> MarketTicks { get { StrategyExecutor.Tick; } }
 
         /// <summary>
         /// Portfolio
