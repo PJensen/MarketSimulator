@@ -78,6 +78,7 @@ namespace MarketSimulator.Events
         public DateTime Date
         {
             get { return MarketData.Date; }
+            
         }
     }
 }

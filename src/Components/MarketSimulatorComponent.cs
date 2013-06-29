@@ -39,7 +39,7 @@ namespace MarketSimulator.Components
         }
 
         /// <summary>
-        /// Add a strategy to the strategy executor
+        /// AddPosition a strategy to the strategy executor
         /// </summary>
         /// <param name="strategy">the strategy to add</param>
         public bool AddStrategy(StrategyBase strategy)
@@ -125,11 +125,6 @@ namespace MarketSimulator.Components
         public List<StrategyExecutionSandbox> Sandboxes { get; set; }
 
         /// <summary>
-        /// SecuritiesSnaps
-        /// </summary>
-        // public List<SecuritiesSnap> SecuritiesSnaps { get; set; }
-
-        /// <summary>
         /// Has the market simulator component been initialized with a ticker
         /// </summary>
         public bool Initialized { get; private set; }
@@ -186,11 +181,6 @@ namespace MarketSimulator.Components
 
             #endregion
 
-            foreach (var strategySandbox in Sandboxes)
-            {
-                strategySandbox.Initialize();
-            }
-
             // This is important because not all securities have the same amount of data.
             // AAAAA   X
             // BB      X
@@ -207,6 +197,8 @@ namespace MarketSimulator.Components
                 var endDate = SecurityMaster.MaximumDate;
                 var totalDays = endDate - startDate;
                 var currentDate = startDate;
+
+                sandbox.Initialize();
 
                 while (currentDate < endDate)
                 {
@@ -244,9 +236,9 @@ namespace MarketSimulator.Components
                     {
                         currentDate = currentDate.AddDays(1);
                     }
-                    
+
+                    sandbox.SnapshotSandbox(currentDate);
                     currentMarketTick++;
-                    sandbox.SnapshotSandbox();
                 }
             }
 

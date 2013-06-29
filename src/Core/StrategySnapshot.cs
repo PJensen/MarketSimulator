@@ -18,22 +18,12 @@ namespace MarketSimulator.Core
         public StrategySnapshot(StrategyExecutionSandbox sandbox)
         {
             ParentSandbox = sandbox;
-
-            Positions = new List<IPosition>();
-
+            if (sandbox.PositionData.Count() > 0)
+                PositionData = new PositionData(sandbox.PositionData);
             Cash = sandbox.Cash;
             NumberOfTrades = sandbox.NumberOfTrades;
             Tick = sandbox.Tick;
             Date = sandbox.Date;
-        }
-
-        /// <summary>
-        /// AddPosition
-        /// </summary>
-        /// <param name="position"></param>
-        public void AddPosition(IPosition position)
-        {
-            Positions.Add(position);
         }
 
         /// <summary>
@@ -59,11 +49,11 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Positions
         /// </summary>
-        public List<IPosition> Positions { get; private set; }
+        public PositionData PositionData { get; private set; }
 
         /// <summary>
-        /// 
+        /// ParentSandbox
         /// </summary>
-        public StrategyExecutionSandbox ParentSandbox{get; private set;}
+        public StrategyExecutionSandbox ParentSandbox { get; private set; }
     }
 }

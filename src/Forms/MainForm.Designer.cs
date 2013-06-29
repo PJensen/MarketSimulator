@@ -616,8 +616,8 @@
             this.toolStripButtonAddTicker.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAddTicker.Name = "toolStripButtonAddTicker";
             this.toolStripButtonAddTicker.Size = new System.Drawing.Size(84, 22);
-            this.toolStripButtonAddTicker.Text = "Add Ticker";
-            this.toolStripButtonAddTicker.ToolTipText = "Add ticker symbol to the security master";
+            this.toolStripButtonAddTicker.Text = "AddPosition Ticker";
+            this.toolStripButtonAddTicker.ToolTipText = "AddPosition ticker symbol to the security master";
             this.toolStripButtonAddTicker.Click += new System.EventHandler(this.toolStripButtonAddTicker_Click);
             // 
             // toolStripSeparator7

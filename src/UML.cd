@@ -40,6 +40,7 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\SellEventArgs.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MarketSimulator.Events.BuyEventArgs">
     <Position X="7.5" Y="6.25" Width="4.5" />
@@ -47,11 +48,12 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\BuyEventArgs.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MarketSimulator.Core.StrategyExecutionSandbox">
     <Position X="13" Y="9.25" Width="5.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAQQEACAAQQAAgAAAAQAAQAAAgElAgAAABgBQAE=</HashCode>
+      <HashCode>AAgAAAQQEACAAQQgAgAAAAQAAQAAAgElAgAAABgBQAE=</HashCode>
       <FileName>Core\StrategyExecutionSandbox.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -162,7 +164,7 @@
   <Struct Name="MarketSimulator.Core.Position" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="25.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAAQAAAAAAAAAAAAAAAAAAAAABAAAAAAAACAA=</HashCode>
+      <HashCode>AAAQAAAAAQAAAAAAAABAAAAAAAAAAAABAAAAAAAACAA=</HashCode>
       <FileName>Core\Position.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -205,7 +207,7 @@
   <Interface Name="MarketSimulator.Interfaces.IStrategyExecutor">
     <Position X="6" Y="11" Width="5.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAgAAIAAAAIAAQAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAIAAQAA=</HashCode>
       <FileName>Interfaces\IStrategyExecutor.cs</FileName>
     </TypeIdentifier>
   </Interface>

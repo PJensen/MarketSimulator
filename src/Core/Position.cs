@@ -62,5 +62,15 @@ namespace MarketSimulator.Core
         public int Shares { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// SameSecurityAndDate
+        /// </summary>
+        /// <returns>true if the two Positions have the same security and date</returns>
+        public bool SameSecurityAndDate(Position other)
+        {
+             return other.Date.Equals(Date) &&
+                other.Symbol.Equals(Symbol);
+        }
     }
 }

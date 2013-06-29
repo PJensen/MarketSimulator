@@ -72,7 +72,7 @@
             this.removeToolStripMenuItem.Image = global::MarketSimulator.Properties.Resources.chart_bar_delete;
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
             this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Text = "RemovePosition";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // StrategyExecutionSandboxControl

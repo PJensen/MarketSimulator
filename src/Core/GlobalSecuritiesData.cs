@@ -79,7 +79,7 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
-        /// Add
+        /// AddPosition
         /// </summary>
         /// <param name="security">the security</param>
         /// <param name="marketData">the market data</param>

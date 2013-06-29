@@ -37,7 +37,7 @@ namespace MarketSimulator.Forms
 
             #endregion
 
-            #region Add known strategies
+            #region AddPosition known strategies
             // eventually they'll be loaded reflectively.
             AddStrategyNode(new RandomStrategy());
             AddStrategyNode(new RandomStrategy2());
@@ -186,7 +186,7 @@ namespace MarketSimulator.Forms
             flowLayoutPanelMain.Controls.Clear();
             marketSimulatorComponent.Sandboxes.Sort();
 
-            // flowLayoutPanelMain.Controls.Add(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
+            // flowLayoutPanelMain.Controls.AddPosition(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
             foreach (var sandbox in marketSimulatorComponent.Sandboxes)
             {
                 flowLayoutPanelMain.Controls.Add(new StrategyExecutionSandboxControl(sandbox));

@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\GlobalSecuritiesData.cs" />
+    <Compile Include="Core\PositionData.cs" />
     <Compile Include="Core\StrategySnapshot.cs" />
     <Compile Include="Core\TradeStringCollection.cs" />
     <Compile Include="Events\ITechnicalSnap.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Forms\WorkingDirectoryForm.Designer.cs">
       <DependentUpon>WorkingDirectoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ISnappable.cs" />
     <Compile Include="Interfaces\IStrategyExecutor.cs" />
     <Compile Include="Interfaces\ITradeEventListener.cs" />
     <Compile Include="Interfaces\IMarketSignalEventSource.cs" />

@@ -33,7 +33,7 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
-        /// Creates a new trade string using some polymorphic positions
+        /// Creates a new trade string using some polymorphic Positions
         /// </summary>
         /// <param name="purchases"></param>
         /// <param name="sales"></param>

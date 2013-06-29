@@ -46,6 +46,7 @@ namespace MarketSimulator.Core
             MarketTicks = new List<MarketTickEventArgs>();
             ActiveTradeStrings = new TradeStringCollection();
             CashHistory = new List<double>();
+            PositionData = new PositionData();
 
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
             Tick = 0;
@@ -100,7 +101,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// SnapshotSandbox
         /// </summary>
-        public void SnapshotSandbox()
+        public void SnapshotSandbox(DateTime dt)
         {
             StrategySnapshots.Add(new StrategySnapshot(this));
             CashHistory.Add(Cash);
@@ -118,13 +119,13 @@ namespace MarketSimulator.Core
             if (totalValue >= Cash)
             {
                 eventArgs.Cancel = true;
+
                 return;
             }
 
             Cash -= totalValue;
 
-            // GeneralLedger.AddPosition(eventArgs);
-            //Shares += eventArgs.Shares;
+            PositionData.AddPosition(eventArgs);
 
             NumberOfTrades++;
             ActiveTradeStrings[eventArgs.Symbol].BuyLine.Add(eventArgs);
@@ -139,22 +140,18 @@ namespace MarketSimulator.Core
             if (eventArgs.Shares <= 0)
             {
                 eventArgs.Cancel = true;
+
                 return;
             }
 
-            //if (eventArgs.Shares > Shares)
+            // adding to cash is predicated on safe removal
+            if (PositionData.RemovePosition(eventArgs))
             {
-                // re-set shares to keep strategy from selling more shares than it has
-                //eventArgs.Shares = Shares;
+                Cash += eventArgs.Price * eventArgs.Shares;
+
+                NumberOfTrades++;
+                ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
             }
-
-            Cash += eventArgs.Price * eventArgs.Shares;
-
-            // GeneralLedger.Add(eventArgs);
-            //Shares -= eventArgs.Shares;
-
-            NumberOfTrades++;
-            ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
         }
 
         /// <summary>
@@ -191,9 +188,14 @@ namespace MarketSimulator.Core
         public double Cash { get; set; }
 
         /// <summary>
-        /// Date
+        /// Date0p
         /// </summary>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// PositionData
+        /// </summary>
+        public PositionData PositionData { get; set; }
 
         /// <summary>
         /// StrategySnapshots

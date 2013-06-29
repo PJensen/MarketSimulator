@@ -6,9 +6,9 @@ namespace MarketSimulator.Interfaces
     /// </summary>
     public interface IPosition
     {
-        double Price { get; }
-        int Shares { get; }
-        string Symbol { get; }
+        double Price { get; set; }
+        int Shares { get; set; }
+        string Symbol { get; set; }
         DateTime Date { get; }
     }
 }

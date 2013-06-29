@@ -10,7 +10,7 @@ namespace MarketSimulator.Events
     /// <summary>
     /// BuyEventArgs
     /// </summary>
-    public class SellEventArgs : TradeEventArgs
+    public class SellEventArgs : TradeEventArgs, IPosition
     {
         /// <summary>
         /// Create a new SellEventArgs with the specified quantity
