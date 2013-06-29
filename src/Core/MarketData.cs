@@ -16,12 +16,44 @@ namespace MarketSimulator.Core
     public class MarketData : IMarketData
     {
         /// <summary>
+        /// Create a new MarketData
+        /// </summary>
+        /// <param name="prev"></param>
+        /// <param name="next"></param>
+        public MarketData(MarketData prev = null, MarketData next = null)
+        {
+            Next = next;
+            Prev = prev;
+        }
+
+        /// <summary>
+        /// HasNext
+        /// </summary>
+        public bool HasNext { get { return Next != null; } }
+
+        /// <summary>
+        /// HasPrev
+        /// </summary>
+        public bool HasPrev { get { return Next != null; } }
+
+
+        /// <summary>
+        /// The next market tick
+        /// </summary>
+        public MarketData Next { get; set; }
+
+        /// <summary>
+        /// The next market tick
+        /// </summary>
+        public MarketData Prev { get; set; }
+
+        /// <summary>
         /// ToString
         /// </summary>
         /// <returns>string representation of this market data element</returns>
         public override string ToString()
         {
-            return string.Format("{0} [{1}, {2}, {3}]", Date, Open, High, Low, Close);
+            return string.Format("{0} [{1}, {2}, {3}, {4}]", Date, Open, High, Low, Close);
         }
 
         /// <summary>
@@ -71,6 +103,9 @@ namespace MarketSimulator.Core
             }
         }
 
+        /// <summary>
+        /// AsLine is just the closing price
+        /// </summary>
         public double AsLine
         {
             get
@@ -78,6 +113,5 @@ namespace MarketSimulator.Core
                 return Close;
             }
         }
-
     }
 }

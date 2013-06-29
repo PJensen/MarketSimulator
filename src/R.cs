@@ -108,14 +108,14 @@ namespace MarketSimulator
         /// <returns></returns>
         public static List<MarketData> Convert(DataTable table)
         {
-            var retVal = new List<MarketData>();
+            var retVal = new MarketData[table.Rows.Count];
 
             if (table == null)
-                return retVal;
+                return retVal.ToList();
 
-            for (var i = 0; i < table.Rows.Count; i++)
+            for (var i = 0; i < table.Rows.Count; ++i)
             {
-                retVal.Add(new MarketData()
+                retVal[i] = new MarketData()
                 {
                     Date = DateTime.Parse(table.Rows[i]["Date"].ToString()),
                     Open = double.Parse(table.Rows[i]["Open"].ToString()),
@@ -123,10 +123,20 @@ namespace MarketSimulator
                     Low = double.Parse(table.Rows[i]["Low"].ToString()),
                     Close = double.Parse(table.Rows[i]["Close"].ToString()),
                     Volume = long.Parse(table.Rows[i]["Volume"].ToString())
-                });
+                };
             }
 
-            return retVal;
+            for (var i = 1; i < table.Rows.Count; ++i)
+            {
+                retVal[i].Prev = retVal[i - 1];
+            }
+
+            for (var i = 0; i < table.Rows.Count - 1; ++i)
+            {
+                retVal[i].Next = retVal[i + 1];
+            }
+
+            return retVal.ToList();
         }
     }
 }
