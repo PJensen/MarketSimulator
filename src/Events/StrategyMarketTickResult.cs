@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketSimulator.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace MarketSimulator.Events
             BuyEventArgs = b;
             SellEventArgs = s;
         }
+
+        /// <summary>
+        /// StrategySnapshot
+        /// </summary>
+        public StrategySnapshot StrategySnapshot { get; set; }
 
         /// <summary>
         /// MarketTickEventArgs

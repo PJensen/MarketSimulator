@@ -183,14 +183,14 @@ namespace MarketSimulator.Forms
 
             SetStatus(tmpStatusMessage);
 
+            flowLayoutPanelMain.Controls.Clear();
             marketSimulatorComponent.Sandboxes.Sort();
-            flowLayoutPanelMain.Controls.Add(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
+
+            // flowLayoutPanelMain.Controls.Add(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
             foreach (var sandbox in marketSimulatorComponent.Sandboxes)
             {
                 flowLayoutPanelMain.Controls.Add(new StrategyExecutionSandboxControl(sandbox));
             }
-
-
         }
 
         /// <summary>

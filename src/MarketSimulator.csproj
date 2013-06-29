@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\GlobalSecuritiesData.cs" />
+    <Compile Include="Core\StrategySnapshot.cs" />
     <Compile Include="Core\TradeStringCollection.cs" />
     <Compile Include="Events\ITechnicalSnap.cs" />
     <Compile Include="Events\MarketSimulatorEventArgs.cs" />

@@ -71,5 +71,13 @@ namespace MarketSimulator.Events
         /// Cancel
         /// </summary>
         public bool Cancel { get; set; }
+
+        /// <summary>
+        /// Date
+        /// </summary>
+        public DateTime Date
+        {
+            get { return MarketData.Date; }
+        }
     }
 }

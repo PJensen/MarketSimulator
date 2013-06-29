@@ -59,6 +59,26 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
+        /// SecuritiesSnap Indexer
+        /// </summary>
+        /// <param name="index">The index</param>
+        /// <returns>SecuritiesSnap</returns>
+        public SecuritiesSnap this[DateTime index]
+        {
+            get 
+            {
+                var retVal = new SecuritiesSnap();
+
+                foreach (var k in Keys.Distinct())
+                {
+                    retVal.Add(k, this[k, index]);
+                }
+
+                return retVal;
+            }
+        }
+
+        /// <summary>
         /// Add
         /// </summary>
         /// <param name="security">the security</param>

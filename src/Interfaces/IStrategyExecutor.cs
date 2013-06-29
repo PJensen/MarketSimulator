@@ -17,5 +17,6 @@ namespace MarketSimulator.Interfaces
         MarketSimulator.Core.GlobalSecuritiesData SecurityMaster { get; set; }
         int Tick { get; }
         Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory { get; set; }
+        List<StrategySnapshot> StrategySnapshots { get; set; }
     }
 }

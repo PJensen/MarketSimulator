@@ -39,25 +39,53 @@ namespace MarketSimulator.Controls
         /// <param name="e">event args</param>
         private void StrategyExecutionSandboxControl_Load(object sender, EventArgs e)
         {
-            foreach (var security in StrategyExecutionSandbox.StrategyExecutor.SecurityMaster.Keys)
+            lock (StrategyExecutionSandbox)
             {
-                var tmpSeries = new Series(security) 
+                lock (chartSandbox)
                 {
-                    ChartType = SeriesChartType.Line,
-                    XValueType = ChartValueType.DateTime,
-                    YValueType = ChartValueType.Double,
-                    XAxisType = AxisType.Primary,
-                    YAxisType = AxisType.Primary,
-                };
+                    foreach (var security in StrategyExecutionSandbox.StrategyExecutor.SecurityMaster.Keys)
+                    {
+                        var tmpSeriesSecurity = new Series(security)
+                        {
+                            ChartType = SeriesChartType.Line,
+                            XValueType = ChartValueType.DateTime,
+                            YValueType = ChartValueType.Double,
+                            XAxisType = AxisType.Primary,
+                            YAxisType = AxisType.Primary,
+                            Enabled = true,
+                        };
 
-                foreach (var hist in StrategyExecutionSandbox.StrategyExecutor.StrategyTickHistory[security])
-                {
-                    tmpSeries.Points.AddXY(hist.MarketTickEventArgs.MarketData.Date, 
-                        hist.MarketTickEventArgs.MarketData.Close);
+                        foreach (var hist in StrategyExecutionSandbox.StrategyExecutor.StrategyTickHistory[security])
+                        {
+                            tmpSeriesSecurity.Points.AddXY(hist.MarketTickEventArgs.MarketData.Date,
+                                hist.MarketTickEventArgs.MarketData.Close);
+                            
+                        }
+
+                        chartSandbox.Series.Add(tmpSeriesSecurity);
+                    }
+
+                    #region Sandbox Info Series
+
+                    var tmpSeriesCash = new Series(StrategyExecutionSandbox.Name)
+                    {
+                        ChartType = SeriesChartType.Line,
+                        XValueType = ChartValueType.DateTime,
+                        YValueType = ChartValueType.Double,
+                        XAxisType = AxisType.Primary,
+                        YAxisType = AxisType.Primary,
+                        Enabled = true,
+                    };
+
+                    foreach (var h in StrategyExecutionSandbox.StrategyExecutor.StrategySnapshots)
+                    {
+                        tmpSeriesCash.Points.AddXY(h.Date, h.Cash);
+                    }
+
+                    chartSandbox.Series.Add(tmpSeriesCash);
+
+                    #endregion
                 }
-
-                chartSandbox.Series.Add(tmpSeries);
-               
             }
         }
 

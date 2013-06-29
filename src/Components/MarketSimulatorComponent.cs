@@ -74,14 +74,6 @@ namespace MarketSimulator.Components
                 SecurityMaster = new GlobalSecuritiesData(R.EstimatedTicks);
             }
 
-
-            if (StrategyTickHistory == null)
-            {
-                StrategyTickHistory = new Dictionary<string, List<StrategyMarketTickResult>>();
-            }
-
-
-            StrategyTickHistory.Clear();
             SecurityMaster.Clear();
 
             // iterate over each security and populate the individual ticks within the security master; 
@@ -207,9 +199,45 @@ namespace MarketSimulator.Components
             // Thus we use an accumulator to get to (X); but; obviously events simply 
             // stop firing if there is no data - to save time we just continue.
             var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count - 1);
-
+            var currentMarketDate = GlobalExecutionSettings.Instance.StartDate;
             var currentMarketTick = 0;
 
+            foreach (var sandbox in Sandboxes)
+            {
+                var startDate = SecurityMaster.MinimumDate;
+                var endDate = SecurityMaster.MaximumDate;
+                var totalDays = endDate - startDate;
+                var currentDate = startDate;
+
+                while (currentDate < endDate)
+                {
+                    var securitySnap = SecurityMaster[currentDate];
+
+                    foreach (var security in SecurityMaster.Keys)
+                    {
+                        var tmpMarketData = SecurityMaster[security, currentDate];
+
+                        sandbox.Strategy.MarketTick(this, new MarketTickEventArgs(security, tmpMarketData, securitySnap));
+                    }
+
+                    if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
+                    {
+                        marketSimulatorWorker.CancelAsync();
+
+                        break;
+                    }
+                    else if (marketSimulatorWorker.WorkerReportsProgress)
+                    {
+                        marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / totalDays.Days) * 100.00), sandbox.Name);
+                    }
+
+                    currentDate = currentDate.AddDays(1);
+                    
+                    currentMarketTick++;
+                }
+            }
+
+#if __
             while (currentMarketTick < maximumPossibleTicks)
             {
                 foreach (var strategySandbox in Sandboxes)
@@ -234,9 +262,18 @@ namespace MarketSimulator.Components
                             continue;
                         }
 
+                        // set the current market data
+                        if (currentMarketDate != DateTime.MinValue && currentMarketDate != marketData.Date)
+                        {
+                            throw new MarketSimulatorException("Date alignment exception");
+                        }
+                       
+                        currentMarketDate = marketData.Date;
+
                         // Note: Where the rubber hits the road both in and out of the strategy
-                        StrategyTickHistory[securitySymbol].Add(strategySandbox.Strategy.MarketTick(this, 
-                            new MarketTickEventArgs(securitySymbol, marketData, null)));
+                        StrategyTickHistory[securitySymbol].Add(
+                            strategySandbox.Strategy.MarketTick(this,
+                                new MarketTickEventArgs(securitySymbol, marketData, null)));
 
                         if (marketSimulatorWorker.WorkerReportsProgress)
                         {
@@ -249,16 +286,12 @@ namespace MarketSimulator.Components
                         }
                     }
 
-                    //SecuritiesSnaps.Add(tmpSecuritesSnap);
+                    StrategySnapshots.Add(new StrategySnapshot(strategySandbox));
                 }
                 currentMarketTick++;
             }
+#endif
         }
-
-        /// <summary>
-        /// StrategyTickHistory
-        /// </summary>
-        public Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory { get; set; }
 
         /// <summary>
         /// marketSimulatorWorker_ProgressChanged
@@ -281,5 +314,16 @@ namespace MarketSimulator.Components
         }
 
         #endregion
+
+        public Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory
+        {
+            get;
+            set;
+        }
+
+        public List<StrategySnapshot> StrategySnapshots 
+        {
+            get; set; 
+        }
     }
 }

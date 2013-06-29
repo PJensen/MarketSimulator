@@ -9,5 +9,6 @@ namespace MarketSimulator.Interfaces
         double Price { get; }
         int Shares { get; }
         string Symbol { get; }
+        DateTime Date { get; }
     }
 }

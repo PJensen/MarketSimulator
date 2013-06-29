@@ -17,12 +17,13 @@ namespace MarketSimulator.Core
         /// <param name="symbol">the symbol</param>
         /// <param name="shares">the number of shares</param>
         /// <param name="price">the price</param>
-        public Position(string symbol, int shares, double price)
+        public Position(DateTime date, string symbol, int shares, double price)
             : this()
         {
             Symbol = symbol;
             Shares = shares;
             Price = price;
+            Date = date;
         }
 
         /// <summary>
@@ -35,9 +36,15 @@ namespace MarketSimulator.Core
             Symbol = position.Symbol;
             Shares = position.Shares;
             Price = position.Price;
+            Date = position.Date;
         }
 
         #region Public facing properties
+
+        /// <summary>
+        /// Date
+        /// </summary>
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// Symbol

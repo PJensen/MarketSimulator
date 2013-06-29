@@ -46,9 +46,22 @@ namespace MarketSimulator.Core
             MarketTicks = new List<MarketTickEventArgs>();
             ActiveTradeStrings = new TradeStringCollection();
             CashHistory = new List<double>();
-            //GeneralLedger = new PositionSnap();
+            
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
             Tick = 0;
+
+            if (StrategyTickHistory == null)
+            {
+                StrategyTickHistory = new Dictionary<string, List<StrategyMarketTickResult>>();
+            }
+
+            if (StrategySnapshots == null)
+            {
+                StrategySnapshots = new List<StrategySnapshot>();
+            }
+
+            StrategyTickHistory.Clear();
+            StrategySnapshots.Clear();
         }
 
         #region Constants
@@ -74,6 +87,7 @@ namespace MarketSimulator.Core
         /// <param name="eventArgs">event args</param>
         public void OnMarketTickEvent(object sender, MarketTickEventArgs eventArgs)
         {
+            Date = eventArgs.MarketData.Date;
             MarketTicks.Add(eventArgs);
             CashHistory.Add(Cash);
             Tick++;
@@ -96,7 +110,7 @@ namespace MarketSimulator.Core
             Cash -= totalValue;
 
            // GeneralLedger.AddPosition(eventArgs);
-            Shares += eventArgs.Shares;
+            //Shares += eventArgs.Shares;
 
             NumberOfTrades++;
             ActiveTradeStrings[eventArgs.Symbol].BuyLine.Add(eventArgs);
@@ -114,16 +128,16 @@ namespace MarketSimulator.Core
                 return;
             }
 
-            if (eventArgs.Shares > Shares)
+            //if (eventArgs.Shares > Shares)
             {
                 // re-set shares to keep strategy from selling more shares than it has
-                eventArgs.Shares = Shares;
+                //eventArgs.Shares = Shares;
             }
 
             Cash += eventArgs.Price * eventArgs.Shares;
 
             // GeneralLedger.Add(eventArgs);
-            Shares -= eventArgs.Shares;
+            //Shares -= eventArgs.Shares;
 
             NumberOfTrades++;
             ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
@@ -148,11 +162,6 @@ namespace MarketSimulator.Core
         #region Public Facing Properties
 
         /// <summary>
-        /// The number of shares currently owned by this strategy
-        /// </summary>
-        public int Shares { get; set; }
-
-        /// <summary>
         /// The market execution tick that this strategy is on
         /// </summary>
         public int Tick { get; set; }
@@ -166,6 +175,21 @@ namespace MarketSimulator.Core
         /// The current cash position
         /// </summary>
         public double Cash { get; set; }
+
+        /// <summary>
+        /// Date
+        /// </summary>
+        public DateTime Date { get; set;  }
+
+        /// <summary>
+        /// StrategySnapshots
+        /// </summary>
+        public List<StrategySnapshot> StrategySnapshots { get; set; }
+
+        /// <summary>
+        /// StrategyTickHistory
+        /// </summary>
+        public Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory { get; set; }
 
         /// <summary>
         /// The strategy executor for easy access to data at that seggrated level
@@ -203,16 +227,6 @@ namespace MarketSimulator.Core
             // NOTE: Here were referring to the Tick property
             return GetMarketData(security, Tick);
         }
-
-        /// <summary>
-        /// Reference to the StrategyExecutor's MarketTicks
-        /// </summary>
-        // public List<SecuritiesSnap> MarketTicks { get { StrategyExecutor.Tick; } }
-
-        /// <summary>
-        /// Portfolio
-        /// </summary>
-        //public PositionSnap GeneralLedger { get; private set; }
 
         /// <summary>
         /// BuyTally

@@ -9,7 +9,7 @@ namespace MarketSimulator.Core
     /// <summary>
     /// SecuritiesData
     /// </summary>
-    public class SecuritiesSnap : Dictionary<string, MarketData>
+    public class SecuritiesSnap : Dictionary<string, MarketData>, IEnumerable<MarketData>
     {
         /// <summary>
         /// SecuritiesData
@@ -74,6 +74,15 @@ namespace MarketSimulator.Core
         public double PriceTotal
         {
             get { return Values.Sum(f => f.Close); }
+        }
+
+        /// <summary>
+        /// GetEnumerator
+        /// </summary>
+        /// <returns></returns>
+        public new IEnumerator<MarketData> GetEnumerator()
+        {
+            return Values.GetEnumerator();
         }
     }
 }

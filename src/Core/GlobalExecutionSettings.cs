@@ -105,7 +105,7 @@ namespace MarketSimulator.Core
         [System.ComponentModel.ListBindable(true)]
         public StringCollection SecurityMaster
         {
-            get 
+            get
             {
                 return Properties.Settings.Default.PreviousSecurities;
             }
@@ -114,7 +114,7 @@ namespace MarketSimulator.Core
                 Properties.Settings.Default.PreviousSecurities = value;
                 Save();
             }
-       }
+        }
 
         /// <summary>
         /// AddTicker
@@ -124,9 +124,10 @@ namespace MarketSimulator.Core
         public bool AddTicker(string symbol)
         {
             symbol = symbol.Trim().ToUpperInvariant();
-            if (SecurityMaster.Contains(symbol))
+            if (Properties.Settings.Default.PreviousSecurities.Contains(symbol))
                 return false;
-            SecurityMaster.Add(symbol);
+            Properties.Settings.Default.PreviousSecurities.Add(symbol);
+            Save();
             return true;
         }
 
