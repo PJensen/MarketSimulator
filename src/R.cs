@@ -126,6 +126,8 @@ namespace MarketSimulator
                 };
             }
 
+            retVal = retVal.Reverse().ToArray();
+
             for (var i = 1; i < table.Rows.Count; ++i)
             {
                 retVal[i].Prev = retVal[i - 1];

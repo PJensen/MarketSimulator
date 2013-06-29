@@ -46,13 +46,13 @@ namespace MarketSimulator.Core
             MarketTicks = new List<MarketTickEventArgs>();
             ActiveTradeStrings = new TradeStringCollection();
             CashHistory = new List<double>();
-            
+
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
             Tick = 0;
 
             if (StrategyTickHistory == null)
             {
-                StrategyTickHistory = new Dictionary<string, List<StrategyMarketTickResult>>();
+                StrategyTickHistory = new List<StrategyMarketTickResult>();
             }
 
             if (StrategySnapshots == null)
@@ -87,8 +87,22 @@ namespace MarketSimulator.Core
         /// <param name="eventArgs">event args</param>
         public void OnMarketTickEvent(object sender, MarketTickEventArgs eventArgs)
         {
-            Date = eventArgs.MarketData.Date;
-            MarketTicks.Add(eventArgs);
+            if (eventArgs.MarketData != null)
+            {
+                if (eventArgs.MarketData.IsValid)
+                {
+                    Date = eventArgs.MarketData.Date;
+                    MarketTicks.Add(eventArgs);
+                }
+            }
+        }
+
+        /// <summary>
+        /// SnapshotSandbox
+        /// </summary>
+        public void SnapshotSandbox()
+        {
+            StrategySnapshots.Add(new StrategySnapshot(this));
             CashHistory.Add(Cash);
             Tick++;
         }
@@ -109,7 +123,7 @@ namespace MarketSimulator.Core
 
             Cash -= totalValue;
 
-           // GeneralLedger.AddPosition(eventArgs);
+            // GeneralLedger.AddPosition(eventArgs);
             //Shares += eventArgs.Shares;
 
             NumberOfTrades++;
@@ -179,7 +193,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Date
         /// </summary>
-        public DateTime Date { get; set;  }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// StrategySnapshots
@@ -189,7 +203,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// StrategyTickHistory
         /// </summary>
-        public Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory { get; set; }
+        public List<StrategyMarketTickResult> StrategyTickHistory { get; set; }
 
         /// <summary>
         /// The strategy executor for easy access to data at that seggrated level

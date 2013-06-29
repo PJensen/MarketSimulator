@@ -43,30 +43,6 @@ namespace MarketSimulator.Controls
             {
                 lock (chartSandbox)
                 {
-                    foreach (var security in StrategyExecutionSandbox.StrategyExecutor.SecurityMaster.Keys)
-                    {
-                        var tmpSeriesSecurity = new Series(security)
-                        {
-                            ChartType = SeriesChartType.Line,
-                            XValueType = ChartValueType.DateTime,
-                            YValueType = ChartValueType.Double,
-                            XAxisType = AxisType.Primary,
-                            YAxisType = AxisType.Primary,
-                            Enabled = true,
-                        };
-
-                        foreach (var hist in StrategyExecutionSandbox.StrategyExecutor.StrategyTickHistory[security])
-                        {
-                            tmpSeriesSecurity.Points.AddXY(hist.MarketTickEventArgs.MarketData.Date,
-                                hist.MarketTickEventArgs.MarketData.Close);
-                            
-                        }
-
-                        chartSandbox.Series.Add(tmpSeriesSecurity);
-                    }
-
-                    #region Sandbox Info Series
-
                     var tmpSeriesCash = new Series(StrategyExecutionSandbox.Name)
                     {
                         ChartType = SeriesChartType.Line,
@@ -77,14 +53,12 @@ namespace MarketSimulator.Controls
                         Enabled = true,
                     };
 
-                    foreach (var h in StrategyExecutionSandbox.StrategyExecutor.StrategySnapshots)
+                    foreach (var snapshot in StrategyExecutionSandbox.StrategySnapshots)
                     {
-                        tmpSeriesCash.Points.AddXY(h.Date, h.Cash);
+                        tmpSeriesCash.Points.AddXY(snapshot.Date, snapshot.Cash);
                     }
 
                     chartSandbox.Series.Add(tmpSeriesCash);
-
-                    #endregion
                 }
             }
         }

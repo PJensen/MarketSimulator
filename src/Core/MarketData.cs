@@ -27,6 +27,17 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
+        /// IsValid
+        /// </summary>
+        public bool IsValid 
+        {
+            get 
+            {
+                return Date != null;
+            } 
+        }
+
+        /// <summary>
         /// HasNext
         /// </summary>
         public bool HasNext { get { return Next != null; } }
@@ -34,8 +45,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// HasPrev
         /// </summary>
-        public bool HasPrev { get { return Next != null; } }
-
+        public bool HasPrev { get { return Prev != null; } }
 
         /// <summary>
         /// The next market tick

@@ -96,7 +96,7 @@
   <Class Name="MarketSimulator.Core.MarketData" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="27.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAIAAEAgAAAEAAAAgAAAABAAIAAACAAAA=</HashCode>
+      <HashCode>AgAACAAAAAAAIAAGAggAAEAAAAgQAEABAAIAAACAAAA=</HashCode>
       <FileName>Core\MarketData.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -137,7 +137,7 @@
   <Class Name="MarketSimulator.Components.MarketSimulatorComponent" BaseTypeListCollapsed="true">
     <Position X="12.5" Y="15" Width="6.5" />
     <TypeIdentifier>
-      <HashCode>AAAQEAABACCAAQQAAQCAAAACACAAAgAAIAIAgIBAQAA=</HashCode>
+      <HashCode>AAAQEAABACAAAQQAAQCAAAACACAAAAAAIAIAgIBAQAA=</HashCode>
       <FileName>Components\MarketSimulatorComponent.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -145,7 +145,6 @@
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Sandboxes" />
-      <Property Name="StrategyTickHistory" />
     </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" />
   </Class>

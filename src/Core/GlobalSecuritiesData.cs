@@ -40,7 +40,7 @@ namespace MarketSimulator.Core
                     throw new MarketSimulatorException(string.Format("The security \"{0}\" could not be found!", security));
                 }
 
-                return BackingStore[security].First(f => f.Date.Equals(index));
+                return BackingStore[security].FirstOrDefault(f => f.Date.Equals(index));
             }
         }
 

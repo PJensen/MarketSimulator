@@ -81,7 +81,6 @@ namespace MarketSimulator.Components
             foreach (var security in GlobalExecutionSettings.Instance.SecurityMaster)
             {
                 var tmpMarketData = R.Convert(new YahooDataRetriever().Retrieve(security, out message, out fail));
-                tmpMarketData.Reverse();
 
                 if (fail)
                 {
@@ -212,12 +211,18 @@ namespace MarketSimulator.Components
                 while (currentDate < endDate)
                 {
                     var securitySnap = SecurityMaster[currentDate];
+                    var nextDate = currentDate;
 
                     foreach (var security in SecurityMaster.Keys)
                     {
                         var tmpMarketData = SecurityMaster[security, currentDate];
 
                         sandbox.Strategy.MarketTick(this, new MarketTickEventArgs(security, tmpMarketData, securitySnap));
+
+                        if (nextDate == currentDate && tmpMarketData.HasNext)
+                        {
+                            nextDate = tmpMarketData.Next.Date;
+                        }
                     }
 
                     if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
@@ -231,9 +236,17 @@ namespace MarketSimulator.Components
                         marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / totalDays.Days) * 100.00), sandbox.Name);
                     }
 
-                    currentDate = currentDate.AddDays(1);
+                    if (currentDate != nextDate && nextDate > currentDate)
+                    {
+                        currentDate = nextDate;
+                    }
+                    else
+                    {
+                        currentDate = currentDate.AddDays(1);
+                    }
                     
                     currentMarketTick++;
+                    sandbox.SnapshotSandbox();
                 }
             }
 
@@ -314,16 +327,5 @@ namespace MarketSimulator.Components
         }
 
         #endregion
-
-        public Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory
-        {
-            get;
-            set;
-        }
-
-        public List<StrategySnapshot> StrategySnapshots 
-        {
-            get; set; 
-        }
     }
 }
