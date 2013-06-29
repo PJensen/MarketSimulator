@@ -61,11 +61,11 @@
       <DependentUpon>StrategyExecutionSandboxControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\GlobalExecutionSettings.cs" />
-    <Compile Include="Core\GeneralLedger.cs" />
     <Compile Include="Core\GlobalSecuritiesData.cs" />
     <Compile Include="Core\TradeStringCollection.cs" />
     <Compile Include="Events\ITechnicalSnap.cs" />
     <Compile Include="Events\MarketSimulatorEventArgs.cs" />
+    <Compile Include="Events\StrategyMarketTickResult.cs" />
     <Compile Include="Forms\MultiStrategyView.cs">
       <SubType>Form</SubType>
     </Compile>

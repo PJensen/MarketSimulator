@@ -11,6 +11,11 @@ namespace MarketSimulator.Interfaces
         /// <summary>
         /// The name of the strategy
         /// </summary>
-        string Name { get; set; }      
+        string Name { get; set; }
+
+        /// <summary>
+        /// The description of the strategy
+        /// </summary>
+        string Description { get; set; }
     }
 }

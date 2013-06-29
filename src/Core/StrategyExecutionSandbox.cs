@@ -46,7 +46,7 @@ namespace MarketSimulator.Core
             MarketTicks = new List<MarketTickEventArgs>();
             ActiveTradeStrings = new TradeStringCollection();
             CashHistory = new List<double>();
-            GeneralLedger = new GeneralLedger();
+            //GeneralLedger = new PositionSnap();
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
             Tick = 0;
         }
@@ -90,13 +90,12 @@ namespace MarketSimulator.Core
             if (totalValue >= Cash)
             {
                 eventArgs.Cancel = true;
-
                 return;
             }
 
             Cash -= totalValue;
 
-            GeneralLedger.Add(eventArgs);
+           // GeneralLedger.AddPosition(eventArgs);
             Shares += eventArgs.Shares;
 
             NumberOfTrades++;
@@ -123,7 +122,7 @@ namespace MarketSimulator.Core
 
             Cash += eventArgs.Price * eventArgs.Shares;
 
-            GeneralLedger.Add(eventArgs);
+            // GeneralLedger.Add(eventArgs);
             Shares -= eventArgs.Shares;
 
             NumberOfTrades++;
@@ -166,11 +165,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// The current cash position
         /// </summary>
-        public double Cash
-        {
-            get { return GeneralLedger[CashSymbol]; }
-            set { GeneralLedger[CashSymbol] = value; }
-        }
+        public double Cash { get; set; }
 
         /// <summary>
         /// The strategy executor for easy access to data at that seggrated level
@@ -217,7 +212,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Portfolio
         /// </summary>
-        public GeneralLedger GeneralLedger { get; private set; }
+        //public PositionSnap GeneralLedger { get; private set; }
 
         /// <summary>
         /// BuyTally

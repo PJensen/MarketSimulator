@@ -1,83 +1,248 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="MarketSimulator.YahooDataRetriever">
-    <Position X="0.5" Y="2.5" Width="1.75" />
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="MarketSimulator.YahooDataRetriever" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25.5" Y="1.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MarketDataRetriever\YahooDataRetriever.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MarketSimulator.Events.MarketEventArgs">
-    <Position X="6" Y="2.25" Width="1.5" />
+    <Position X="14" Y="2.75" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Events\MarketEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MarketSimulator.MarketTickEventArgs">
-    <Position X="2.75" Y="2.5" Width="1.5" />
+    <Position X="12.75" Y="5.25" Width="5.75" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAACAAAAAAAAAAEAAAAAAAAAAAAEAAAAACAA=</HashCode>
       <FileName>Events\MarketTickEventargs.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MarketSimulator.Events.TradeEventArgs">
-    <Position X="6" Y="4.5" Width="1.5" />
+    <Position X="4.5" Y="2.75" Width="5.25" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAQAAAAgAAAAAAAQAAAAAAAAAAIAAAAAAEAAA=</HashCode>
+      <HashCode>AAAQAAAAQQAAAAAAAAAAAEAAAAAAAAAAAAAAAAAECAA=</HashCode>
       <FileName>Events\TradeEventArgs.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TradeType" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MarketSimulator.Events.SellEventArgs">
-    <Position X="4.75" Y="8" Width="1.5" />
+    <Position X="2.25" Y="6.25" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\SellEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MarketSimulator.Events.BuyEventArgs">
-    <Position X="7.25" Y="8" Width="1.5" />
+    <Position X="7.5" Y="6.25" Width="4.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Events\BuyEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MarketSimulator.Core.StrategyExecutionSandbox">
-    <Position X="17.75" Y="3.25" Width="2.25" />
+    <Position X="13" Y="9.25" Width="5.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAQAAAAAAAAAAigAAEQAQQAAAAEgAgAAABAAQAA=</HashCode>
+      <HashCode>AAAQAAQQEAAAAQQAAgAAAAQAAQAAAAEkAgAAABgBQAE=</HashCode>
       <FileName>Core\StrategyExecutionSandbox.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ActiveTradeStrings" />
+      <Property Name="StrategyExecutor" />
+      <Property Name="Strategy" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="MarketTicks" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MarketSimulator.Events.MarketSimulatorEventArgs">
+    <Position X="12.25" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Events\MarketSimulatorEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Events.StrategyMarketTickResult">
+    <Position X="19.25" Y="2.75" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEACAAAAAAEAAAA=</HashCode>
+      <FileName>Events\StrategyMarketTickResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Core.GlobalExecutionSettings" Collapsed="true">
+    <Position X="25.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAJAAAAAAAAAQEAAAAAAgAABAAAAA4AAAAEAAAAA=</HashCode>
+      <FileName>Core\GlobalExecutionSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Core.GlobalSecuritiesData" BaseTypeListCollapsed="true">
+    <Position X="15" Y="21.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ACMAAAAAAAAAABAACAAAAAQAEAAAAAAAAAAgAAFAAAA=</HashCode>
+      <FileName>Core\GlobalSecuritiesData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MarketSimulator.Core.MarketData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="27.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAIAAEAgAAAEAAAAgAAAABAAIAAACAAAA=</HashCode>
+      <FileName>Core\MarketData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MarketSimulator.Core.SecuritiesSnap" Collapsed="true">
+    <Position X="29" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAIAAAAgAAAAAAAAgAAAABAAIAAACAAAA=</HashCode>
+      <FileName>Core\SecuritiesSnap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Core.TradeString">
+    <Position X="5.25" Y="16.75" Width="6" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAQAAAIAAAAAgAAAQYAIAAAAAAAAAEAABBBAA=</HashCode>
+      <FileName>Core\TradeString.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MarketSimulator.Core.TradeStringCollection">
+    <Position X="7.25" Y="14" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Core\TradeStringCollection.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="ActiveTradeStrings" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MarketSimulator.Strategies.StrategyBase">
+    <Position X="20" Y="9" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAIEAAABAAAgAAAERAAAAAQAAQACAAAgUAAAAAAFAAA=</HashCode>
+      <FileName>Strategies\StrategyBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="MarketSimulator.Interfaces.IMarketDataRetriever">
-    <Position X="15.25" Y="8" Width="1.5" />
+  <Class Name="MarketSimulator.Components.MarketSimulatorComponent" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="15" Width="6.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQEAABACCAAQQAAQCAAAACACAAAAAAIAIAgIBAQAA=</HashCode>
+      <FileName>Components\MarketSimulatorComponent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SecurityMaster" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sandboxes" />
+      <Property Name="StrategyTickHistory" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Collections.Generic.List&lt;T&gt;">
+    <Position X="20.75" Y="15.25" Width="4.75" />
+    <NestedTypes>
+      <Struct Name="System.Collections.Generic.List&lt;T&gt;.Enumerator" Collapsed="true">
+        <TypeIdentifier />
+        <Lollipop Position="0.2" />
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Struct Name="MarketSimulator.Core.Position" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Core\Position.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Struct>
+  <Interface Name="MarketSimulator.Interfaces.IMarketDataRetriever" Collapsed="true">
+    <Position X="27.25" Y="4" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IMarketDataRetriever.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MarketSimulator.Interfaces.IMarketSignalEventSource">
-    <Position X="11" Y="10.5" Width="2" />
+    <Position X="7.5" Y="8.75" Width="4" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IMarketSignalEventSource.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MarketSimulator.Interfaces.IStrategy">
-    <Position X="12.75" Y="8.25" Width="1.5" />
+    <Position X="1.5" Y="10.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interfaces\IStrategy.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MarketSimulator.Interfaces.ITradeEventListener">
-    <Position X="13.75" Y="10.5" Width="1.75" />
+    <Position X="2.75" Y="8.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAEAAA=</HashCode>
       <FileName>Interfaces\ITradeEventListener.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="MarketSimulator.Events.ITechnicalSnap" Collapsed="true">
+    <Position X="27.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Events\ITechnicalSnap.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarketSimulator.Interfaces.IStrategyExecutor">
+    <Position X="6" Y="11" Width="5.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAIAAAAIAAQAA=</HashCode>
+      <FileName>Interfaces\IStrategyExecutor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarketSimulator.Interfaces.IMarketData" Collapsed="true">
+    <Position X="25.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAgAAAAAAAAgAAAABAAIAAACAAAA=</HashCode>
+      <FileName>Interfaces\IMarketData.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarketSimulator.Interfaces.IPosition" Collapsed="true">
+    <Position X="29" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Interfaces\IPosition.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MarketSimulator.Interfaces.IStrategyEventReciever" Collapsed="true">
+    <Position X="25.5" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAgAAAAABAAAAA=</HashCode>
+      <FileName>Interfaces\IStrategyEventReciever.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MarketSimulator.Core.TradeFlags" Collapsed="true">
+    <Position X="25.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\TradeFlags.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MarketSimulator.Core.TradeType">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\TradeType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

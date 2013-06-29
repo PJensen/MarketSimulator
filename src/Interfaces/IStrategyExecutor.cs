@@ -1,4 +1,5 @@
 ﻿using MarketSimulator.Core;
+using MarketSimulator.Events;
 using MarketSimulator.Strategies;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace MarketSimulator.Interfaces
         System.Collections.Generic.List<MarketSimulator.Core.StrategyExecutionSandbox> Sandboxes { get; set; }
         MarketSimulator.Core.GlobalSecuritiesData SecurityMaster { get; set; }
         int Tick { get; }
+        Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory { get; set; }
     }
 }

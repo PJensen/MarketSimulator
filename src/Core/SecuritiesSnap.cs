@@ -6,8 +6,6 @@ using System.Text;
 
 namespace MarketSimulator.Core
 {
-
-
     /// <summary>
     /// SecuritiesData
     /// </summary>

@@ -39,39 +39,25 @@ namespace MarketSimulator.Controls
         /// <param name="e">event args</param>
         private void StrategyExecutionSandboxControl_Load(object sender, EventArgs e)
         {
-            #region Sandbox cash
-
-            var sandboxSeries = new Series(StrategyExecutionSandbox.Name)
+            foreach (var security in StrategyExecutionSandbox.StrategyExecutor.SecurityMaster.Keys)
             {
-                ChartType = SeriesChartType.Line,
-                YAxisType = AxisType.Secondary,
-                XAxisType = AxisType.Secondary,
-            };
-
-            foreach (var cash in StrategyExecutionSandbox.CashHistory)
-            {
-                sandboxSeries.Points.Add(cash);
-            }
-
-            chartSandbox.Series.Add(sandboxSeries);
-
-            #endregion
-
-            foreach (var securityMaster in StrategyExecutionSandbox.StrategyExecutor.SecurityMaster)
-            {
-                var mktSeries = new Series(securityMaster.Key)
+                var tmpSeries = new Series(security) 
                 {
                     ChartType = SeriesChartType.Line,
-                    YAxisType = AxisType.Secondary,
-                    XAxisType = AxisType.Secondary,
+                    XValueType = ChartValueType.DateTime,
+                    YValueType = ChartValueType.Double,
+                    XAxisType = AxisType.Primary,
+                    YAxisType = AxisType.Primary,
                 };
 
-                foreach (var marketData in securityMaster.Value)
+                foreach (var hist in StrategyExecutionSandbox.StrategyExecutor.StrategyTickHistory[security])
                 {
-                    mktSeries.Points.Add(marketData.Close);
+                    tmpSeries.Points.AddXY(hist.MarketTickEventArgs.MarketData.Date, 
+                        hist.MarketTickEventArgs.MarketData.Close);
                 }
 
-                chartSandbox.Series.Add(mktSeries);
+                chartSandbox.Series.Add(tmpSeries);
+               
             }
         }
 

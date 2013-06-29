@@ -24,7 +24,7 @@
   <Class Name="MarketSimulator.MarketTickEventArgs">
     <Position X="3.25" Y="5" Width="2" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAACAAAAAAAAAAEAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <HashCode>IAAAAAAAAACAAAAAAAAAAEAAAAAAAAAAAAEAAAAACAA=</HashCode>
       <FileName>Events\MarketTickEventargs.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -39,7 +39,7 @@
   <Class Name="MarketSimulator.Events.TradeEventArgs">
     <Position X="6.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAQAAAAQQAAAAAgAAAAAEAAAAAAAAAAAAAAAAAECAA=</HashCode>
+      <HashCode>AAAQAAAAQQAAAAAAAAAAAEAAAAAAAAAAAAAAAAAECAA=</HashCode>
       <FileName>Events\TradeEventArgs.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

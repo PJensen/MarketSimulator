@@ -1,4 +1,5 @@
 ﻿using MarketSimulator.Core;
+using MarketSimulator.Events;
 using MarketSimulator.Exceptions;
 using MarketSimulator.Interfaces;
 using MarketSimulator.Strategies;
@@ -73,12 +74,14 @@ namespace MarketSimulator.Components
                 SecurityMaster = new GlobalSecuritiesData(R.EstimatedTicks);
             }
 
-            if (SecuritiesSnaps == null)
+
+            if (StrategyTickHistory == null)
             {
-                SecuritiesSnaps = new List<SecuritiesSnap>();
+                StrategyTickHistory = new Dictionary<string, List<StrategyMarketTickResult>>();
             }
 
-            SecuritiesSnaps.Clear();
+
+            StrategyTickHistory.Clear();
             SecurityMaster.Clear();
 
             // iterate over each security and populate the individual ticks within the security master; 
@@ -133,7 +136,7 @@ namespace MarketSimulator.Components
         /// <summary>
         /// SecuritiesSnaps
         /// </summary>
-        public List<SecuritiesSnap> SecuritiesSnaps { get; set; }
+        // public List<SecuritiesSnap> SecuritiesSnaps { get; set; }
 
         /// <summary>
         /// Has the market simulator component been initialized with a ticker
@@ -181,11 +184,11 @@ namespace MarketSimulator.Components
             {
                 throw new MarketSimulatorException("The market simulator component has not been initialized.");
             }
-            else if (Sandboxes == null || Sandboxes.Count <= 0)
+            if (Sandboxes == null || Sandboxes.Count <= 0)
             {
                 throw new MarketSimulatorException("Market simulator sandboxes was null or empty.");
             }
-            else if (SecurityMaster == null || SecurityMaster.Count <= 0)
+            if (SecurityMaster == null || SecurityMaster.Count <= 0)
             {
                 throw new MarketSimulatorException("MarketTicks was null or empty!");
             }
@@ -203,16 +206,14 @@ namespace MarketSimulator.Components
             // CCCCCCCCX
             // Thus we use an accumulator to get to (X); but; obviously events simply 
             // stop firing if there is no data - to save time we just continue.
-            var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count);
+            var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count - 1);
 
             var currentMarketTick = 0;
 
-            while (currentMarketTick < maximumPossibleTicks - 1)
+            while (currentMarketTick < maximumPossibleTicks)
             {
                 foreach (var strategySandbox in Sandboxes)
                 {
-                    var tmpSecuritesSnap = new SecuritiesSnap();
-
                     foreach (var securitySymbol in SecurityMaster.Keys)
                     {
                         if (!SecurityMaster.CanSecurityTickIndex(securitySymbol, currentMarketTick))
@@ -220,9 +221,12 @@ namespace MarketSimulator.Components
                             continue;
                         }
 
-                        var marketData = SecurityMaster[securitySymbol, currentMarketTick];
+                        if (!StrategyTickHistory.ContainsKey(securitySymbol))
+                        {
+                            StrategyTickHistory.Add(securitySymbol, new List<StrategyMarketTickResult>());
+                        }
 
-                        tmpSecuritesSnap.Add(securitySymbol, marketData);
+                        var marketData = SecurityMaster[securitySymbol, currentMarketTick];
 
                         if (GlobalExecutionSettings.Instance.StartDate > marketData.Date ||
                             GlobalExecutionSettings.Instance.EndDate < marketData.Date)
@@ -230,9 +234,9 @@ namespace MarketSimulator.Components
                             continue;
                         }
 
-                        var tmpTickData = new MarketTickEventArgs(securitySymbol, marketData, null);
-
-                        strategySandbox.Strategy.MarketTick(this, tmpTickData);
+                        // Note: Where the rubber hits the road both in and out of the strategy
+                        StrategyTickHistory[securitySymbol].Add(strategySandbox.Strategy.MarketTick(this, 
+                            new MarketTickEventArgs(securitySymbol, marketData, null)));
 
                         if (marketSimulatorWorker.WorkerReportsProgress)
                         {
@@ -245,12 +249,16 @@ namespace MarketSimulator.Components
                         }
                     }
 
-                    SecuritiesSnaps.Add(tmpSecuritesSnap);
-
-                    currentMarketTick++;
+                    //SecuritiesSnaps.Add(tmpSecuritesSnap);
                 }
+                currentMarketTick++;
             }
         }
+
+        /// <summary>
+        /// StrategyTickHistory
+        /// </summary>
+        public Dictionary<string, List<StrategyMarketTickResult>> StrategyTickHistory { get; set; }
 
         /// <summary>
         /// marketSimulatorWorker_ProgressChanged

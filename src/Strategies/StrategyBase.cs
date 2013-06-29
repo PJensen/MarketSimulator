@@ -46,14 +46,19 @@ namespace MarketSimulator.Strategies
         /// </summary>
         /// <param name="sender">event sender</param>
         /// <param name="e">market Tick event arguments</param>
-        public virtual void MarketTick(object sender, MarketTickEventArgs e)
+        public virtual StrategyMarketTickResult MarketTick(object sender, MarketTickEventArgs e)
         {
             // TODO: Determine if strategies should be prevented from buying AND selling in the same tick.
             // if not; determine precedence; for now it's sell first (for liquidity) and purchase 2nd.
             currentMarketTick = e;
-            OnSellEvent(SellSignal(e));
-            OnBuyEvent(BuySignal(e));
+            var s = SellSignal(e);
+            var b = BuySignal(e);
+
+            OnSellEvent(s);
+            OnBuyEvent(b);
             OnMarketTickEvent(e);
+
+            return new StrategyMarketTickResult(e, b, s);
         }
 
         /// <summary>

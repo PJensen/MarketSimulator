@@ -43,14 +43,14 @@ namespace MarketSimulator.Forms
                 ChartType = SeriesChartType.Line,
                 YAxisType = AxisType.Secondary,
                 XAxisType = AxisType.Primary,
-                // TODO: fill in details for sandbox' series
+                // TODO: fill in details for sandbox' securitySeries
             };
 
-            foreach (var s in simulator.SecuritiesSnaps)
-            {
-                generalSeries.Points.AddXY(s.Date, s.PriceTotal);
-
-            }
+           // foreach (var s in simulator.SecuritiesSnaps)
+         //   {
+         //       generalSeries.Points.AddXY(s.Date, s.PriceTotal);
+//
+          //  }
 
             chartView.Series.Add(generalSeries);
             
@@ -62,7 +62,7 @@ namespace MarketSimulator.Forms
                     ChartType = SeriesChartType.Line,
                     YAxisType = AxisType.Secondary,
                     XAxisType = AxisType.Primary,
-                    // TODO: fill in details for sandbox' series
+                    // TODO: fill in details for sandbox' securitySeries
                 };
 
                 foreach (var cash in sandbox.CashHistory)

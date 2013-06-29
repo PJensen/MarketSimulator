@@ -1,4 +1,5 @@
 ﻿using MarketSimulator.Core;
+using MarketSimulator.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,15 @@ namespace MarketSimulator.Strategies
         public Issue12Strategy()
             : base("Issue 12 Strategy") { }
 
-        public override void MarketTick(object sender, MarketTickEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public override StrategyMarketTickResult MarketTick(object sender, MarketTickEventArgs e)
         {
-            base.MarketTick(sender, e);
+            return base.MarketTick(sender, e);
         }
 
         public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
