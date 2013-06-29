@@ -59,6 +59,17 @@ namespace MarketSimulator.Components
         }
 
         /// <summary>
+        /// ClearStrategies
+        /// </summary>
+        public void ClearStrategies()
+        {
+            if (Sandboxes == null)
+                return;
+
+            Sandboxes.Clear();
+        }
+
+        /// <summary>
         /// LoadMarketData
         /// </summary>
         /// <param name="ticker"></param>
@@ -195,7 +206,6 @@ namespace MarketSimulator.Components
             {
                 var startDate = SecurityMaster.MinimumDate;
                 var endDate = SecurityMaster.MaximumDate;
-                var totalDays = endDate - startDate;
                 var currentDate = startDate;
 
                 sandbox.Initialize();
@@ -209,6 +219,11 @@ namespace MarketSimulator.Components
                     {
                         var tmpMarketData = SecurityMaster[security, currentDate];
 
+                        if (tmpMarketData == null)
+                        {
+                            continue;
+                        }
+
                         sandbox.Strategy.MarketTick(this, new MarketTickEventArgs(security, tmpMarketData, securitySnap));
 
                         if (nextDate == currentDate && tmpMarketData.HasNext)
@@ -217,15 +232,11 @@ namespace MarketSimulator.Components
                         }
                     }
 
-                    if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
-                    {
-                        marketSimulatorWorker.CancelAsync();
+                    ReportProgress((currentMarketTick / maximumPossibleTicks) * 100, currentDate);
 
-                        break;
-                    }
-                    else if (marketSimulatorWorker.WorkerReportsProgress)
+                    if (CheckCancelled())
                     {
-                        marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / totalDays.Days) * 100.00), sandbox.Name);
+                        return;
                     }
 
                     if (currentDate != nextDate && nextDate > currentDate)
@@ -240,62 +251,53 @@ namespace MarketSimulator.Components
                     sandbox.SnapshotSandbox(currentDate);
                     currentMarketTick++;
                 }
-            }
 
-#if __
-            while (currentMarketTick < maximumPossibleTicks)
-            {
-                foreach (var strategySandbox in Sandboxes)
+                if (StrategyFinishedRunningEvent != null)
                 {
-                    foreach (var securitySymbol in SecurityMaster.Keys)
-                    {
-                        if (!SecurityMaster.CanSecurityTickIndex(securitySymbol, currentMarketTick))
-                        {
-                            continue;
-                        }
-
-                        if (!StrategyTickHistory.ContainsKey(securitySymbol))
-                        {
-                            StrategyTickHistory.Add(securitySymbol, new List<StrategyMarketTickResult>());
-                        }
-
-                        var marketData = SecurityMaster[securitySymbol, currentMarketTick];
-
-                        if (GlobalExecutionSettings.Instance.StartDate > marketData.Date ||
-                            GlobalExecutionSettings.Instance.EndDate < marketData.Date)
-                        {
-                            continue;
-                        }
-
-                        // set the current market data
-                        if (currentMarketDate != DateTime.MinValue && currentMarketDate != marketData.Date)
-                        {
-                            throw new MarketSimulatorException("Date alignment exception");
-                        }
-                       
-                        currentMarketDate = marketData.Date;
-
-                        // Note: Where the rubber hits the road both in and out of the strategy
-                        StrategyTickHistory[securitySymbol].Add(
-                            strategySandbox.Strategy.MarketTick(this,
-                                new MarketTickEventArgs(securitySymbol, marketData, null)));
-
-                        if (marketSimulatorWorker.WorkerReportsProgress)
-                        {
-                            marketSimulatorWorker.ReportProgress((int)((currentMarketTick * 1.0 / maximumPossibleTicks) * 100.00), securitySymbol);
-                        }
-
-                        if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
-                        {
-                            marketSimulatorWorker.CancelAsync();
-                        }
-                    }
-
-                    StrategySnapshots.Add(new StrategySnapshot(strategySandbox));
+                    StrategyFinishedRunningEvent(this, new StrategyEventArgs(sandbox.Strategy));
                 }
-                currentMarketTick++;
             }
-#endif
+        }
+
+        /// <summary>
+        /// CheckCancelled
+        /// </summary>
+        /// <returns>true if cancelled</returns>
+        private bool CheckCancelled()
+        {
+            if (marketSimulatorWorker.WorkerSupportsCancellation && marketSimulatorWorker.CancellationPending)
+            {
+                marketSimulatorWorker.CancelAsync();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// StrategyFinishedRunningEvent
+        /// </summary>
+        public event EventHandler<StrategyEventArgs> StrategyFinishedRunningEvent;
+
+        /// <summary>
+        /// ReportProgress
+        /// </summary>
+        /// <param name="percent">percent</param>
+        /// <param name="state">state</param>
+        private void ReportProgress(double percent, object state)
+        {
+            percent = Math.Round(percent, 0);
+
+            if (percent > 100)
+            {
+                throw new MarketSimulatorException("percent exceeded 100");
+            }
+
+            if (marketSimulatorWorker.WorkerReportsProgress)
+            {
+                marketSimulatorWorker.ReportProgress((int)percent, state);
+            }
         }
 
         /// <summary>

@@ -67,6 +67,7 @@
     <Compile Include="Core\TradeStringCollection.cs" />
     <Compile Include="Events\ITechnicalSnap.cs" />
     <Compile Include="Events\MarketSimulatorEventArgs.cs" />
+    <Compile Include="Events\StrategyEventArgs.cs" />
     <Compile Include="Events\StrategyMarketTickResult.cs" />
     <Compile Include="Forms\MultiStrategyView.cs">
       <SubType>Form</SubType>

@@ -63,7 +63,7 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            if (R.Random.Next(0, 100) <= 1)
+            if (R.Random.Next(0, 1000) <= 1)
             {
                 return Buy(1);
             }
@@ -77,10 +77,46 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            if (R.Random.Next(0, 100) <= 1)
+            if (R.Random.Next(0, 1000) <= 1)
             {
                 return Sell(1);
             }
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// RandomStrategy
+    /// </summary>
+    public class BuyOnly : StrategyBase
+    {
+        /// <summary>
+        /// RandomStrategy
+        /// </summary>
+        public BuyOnly()
+            : base("Buy Only") { }
+
+        /// <summary>
+        /// BuySignal
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
+        public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
+        {
+            if (R.Random.Next(0, 10) <= 1)
+            {
+                return Buy(R.Random.Next(1,10));
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// SellSignal
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
+        public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
+        {
             return null;
         }
     }

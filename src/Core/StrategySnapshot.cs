@@ -18,8 +18,7 @@ namespace MarketSimulator.Core
         public StrategySnapshot(StrategyExecutionSandbox sandbox)
         {
             ParentSandbox = sandbox;
-            if (sandbox.PositionData.Count() > 0)
-                PositionData = new PositionData(sandbox.PositionData);
+            PositionData = new PositionData(sandbox.PositionData);
             Cash = sandbox.Cash;
             NumberOfTrades = sandbox.NumberOfTrades;
             Tick = sandbox.Tick;

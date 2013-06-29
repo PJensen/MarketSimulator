@@ -1,4 +1,5 @@
 ﻿using MarketSimulator.Components;
+using MarketSimulator.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,39 +39,35 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         private void MultiStrategyView_Load(object sender, EventArgs e)
         {
-            var generalSeries = new Series("Market")
-            {
-                ChartType = SeriesChartType.Line,
-                YAxisType = AxisType.Secondary,
-                XAxisType = AxisType.Primary,
-                // TODO: fill in details for sandbox' securitySeries
-            };
-
-           // foreach (var s in simulator.SecuritiesSnaps)
-         //   {
-         //       generalSeries.Points.AddXY(s.Date, s.PriceTotal);
-//
-          //  }
-
-            chartView.Series.Add(generalSeries);
-            
             foreach (var sandbox in simulator.Sandboxes)
             {
-                
-                var sandboxSeries = new Series(sandbox.Name)
+                var sandboxControl = new StrategyExecutionSandboxControl(sandbox);
+
+                var tmpSandboxPage = new TabPage(sandbox.Name);
+                tmpSandboxPage.Controls.Add(sandboxControl);
+                tabControl.TabPages.Add(tmpSandboxPage);
+
+                chartView.Series.Add(sandboxControl.CashSeries);
+            }
+
+            foreach (var security in simulator.SecurityMaster)
+            {
+                var tmpSecuritySeries = new Series(security.Key) 
                 {
                     ChartType = SeriesChartType.Line,
-                    YAxisType = AxisType.Secondary,
+                    XValueType = ChartValueType.DateTime,
+                    YValueType = ChartValueType.Double,
                     XAxisType = AxisType.Primary,
-                    // TODO: fill in details for sandbox' securitySeries
+                    YAxisType = AxisType.Secondary,
+                    Enabled = true,
                 };
 
-                foreach (var cash in sandbox.CashHistory)
+                foreach (var marketTick in security.Value)
                 {
-                    sandboxSeries.Points.Add(cash);
+                    tmpSecuritySeries.Points.AddXY(marketTick.Date, marketTick.Close);
                 }
 
-                chartView.Series.Add(sandboxSeries);
+                chartView.Series.Add(tmpSecuritySeries);
             }
         }
     }

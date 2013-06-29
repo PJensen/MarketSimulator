@@ -587,7 +587,7 @@
             this.toolStripSeparator7});
             this.toolStripMain.Location = new System.Drawing.Point(3, 24);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(214, 25);
+            this.toolStripMain.Size = new System.Drawing.Size(183, 25);
             this.toolStripMain.TabIndex = 1;
             // 
             // toolStripButtonGo
@@ -616,7 +616,7 @@
             this.toolStripButtonAddTicker.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAddTicker.Name = "toolStripButtonAddTicker";
             this.toolStripButtonAddTicker.Size = new System.Drawing.Size(84, 22);
-            this.toolStripButtonAddTicker.Text = "AddPosition Ticker";
+            this.toolStripButtonAddTicker.Text = "Add Ticker";
             this.toolStripButtonAddTicker.ToolTipText = "AddPosition ticker symbol to the security master";
             this.toolStripButtonAddTicker.Click += new System.EventHandler(this.toolStripButtonAddTicker_Click);
             // 

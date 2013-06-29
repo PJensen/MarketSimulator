@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using MarketSimulator.Core;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MarketSimulator
 {

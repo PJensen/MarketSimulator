@@ -25,6 +25,16 @@ namespace MarketSimulator.Controls
             InitializeComponent();
             StrategyExecutionSandbox = sandbox;
             propertyGridSandbox.SelectedObject = StrategyExecutionSandbox;
+
+            CashSeries = new Series(StrategyExecutionSandbox.Name)
+            {
+                ChartType = SeriesChartType.Line,
+                XValueType = ChartValueType.DateTime,
+                YValueType = ChartValueType.Double,
+                XAxisType = AxisType.Primary,
+                YAxisType = AxisType.Primary,
+                Enabled = true,
+            };
         }
 
         /// <summary>
@@ -43,33 +53,20 @@ namespace MarketSimulator.Controls
             {
                 lock (chartSandbox)
                 {
-                    var tmpSeriesCash = new Series(StrategyExecutionSandbox.Name)
-                    {
-                        ChartType = SeriesChartType.Line,
-                        XValueType = ChartValueType.DateTime,
-                        YValueType = ChartValueType.Double,
-                        XAxisType = AxisType.Primary,
-                        YAxisType = AxisType.Primary,
-                        Enabled = true,
-                    };
-
                     foreach (var snapshot in StrategyExecutionSandbox.StrategySnapshots)
                     {
-                        tmpSeriesCash.Points.AddXY(snapshot.Date, snapshot.Cash);
-
-                        if (snapshot.PositionData != null)
-                        {
-                            if (snapshot.PositionData.Count() > 0)
-                            {
-                                tmpSeriesCash.Points.AddXY(snapshot.Date, snapshot.Cash);
-                            }
-                        }
+                        CashSeries.Points.AddXY(snapshot.Date, snapshot.Cash);
                     }
 
-                    chartSandbox.Series.Add(tmpSeriesCash);
+                    chartSandbox.Series.Add(CashSeries);
                 }
             }
         }
+
+        /// <summary>
+        /// CashSeries
+        /// </summary>
+        public readonly Series CashSeries;
 
         /// <summary>
         /// removeToolStripMenuItem_Click

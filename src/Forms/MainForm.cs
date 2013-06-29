@@ -6,6 +6,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using MarketSimulator.Core;
 using MarketSimulator.Strategies;
 using MarketSimulator.Controls;
+using System.Linq;
 
 namespace MarketSimulator.Forms
 {
@@ -21,9 +22,11 @@ namespace MarketSimulator.Forms
         {
             InitializeComponent();
 
+            #region Auto Complete for Ticker
             toolStripTextBoxTicker.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             toolStripTextBoxTicker.AutoCompleteSource = AutoCompleteSource.CustomSource;
             toolStripTextBoxTicker.AutoCompleteCustomSource = new AutoCompleteStringCollection();
+            #endregion
 
             #region events
 
@@ -41,10 +44,8 @@ namespace MarketSimulator.Forms
             // eventually they'll be loaded reflectively.
             AddStrategyNode(new RandomStrategy());
             AddStrategyNode(new RandomStrategy2());
+            AddStrategyNode(new BuyOnly());
             #endregion
-
-            marketSimulatorComponent.AddStrategy(new RandomStrategy());
-            marketSimulatorComponent.AddStrategy(new RandomStrategy2());
         }
 
         /// <summary>
@@ -124,11 +125,6 @@ namespace MarketSimulator.Forms
             Cursor = Cursors.WaitCursor;
             string tmpInitMessage = string.Empty;
 
-            foreach (var s in checkedListBoxStrategies.CheckedItems)
-            {
-                marketSimulatorComponent.AddStrategy((StrategyBase)s);
-            }
-
             if (marketSimulatorComponent.marketSimulatorWorker.IsBusy)
             {
                 SetStatus("Busy!");
@@ -136,6 +132,16 @@ namespace MarketSimulator.Forms
             else if (marketSimulatorComponent.Initialize(null))
             {
                 LockGUI();
+
+                marketSimulatorComponent.ClearStrategies();
+
+                if (checkedListBoxStrategies.CheckedItems.Count > 0)
+                {
+                    foreach (var s in checkedListBoxStrategies.CheckedItems.Cast<StrategyBase>())
+                    {
+                        marketSimulatorComponent.AddStrategy((StrategyBase)s);
+                    }
+                }
 
                 if (GlobalExecutionSettings.Instance.StartDate < marketSimulatorComponent.SecurityMaster.MinimumDate)
                 {
@@ -186,11 +192,12 @@ namespace MarketSimulator.Forms
             flowLayoutPanelMain.Controls.Clear();
             marketSimulatorComponent.Sandboxes.Sort();
 
-            // flowLayoutPanelMain.Controls.AddPosition(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
-            foreach (var sandbox in marketSimulatorComponent.Sandboxes)
-            {
-                flowLayoutPanelMain.Controls.Add(new StrategyExecutionSandboxControl(sandbox));
-            }
+            flowLayoutPanelMain.Controls.Add(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
+
+            //foreach (var sandbox in marketSimulatorComponent.Sandboxes)
+            //{
+            //    flowLayoutPanelMain.Controls.Add(new StrategyExecutionSandboxControl(sandbox));
+            //}
         }
 
         /// <summary>
@@ -203,6 +210,7 @@ namespace MarketSimulator.Forms
             if (toolStripProgressBarMain != null && toolStripProgressBarMain.Value > 0)
             {
                 toolStripProgressBarMain.Value = e.ProgressPercentage;
+                toolStripProgressBarMain.Control.Update();
             }
 
             SetStatus((e.UserState ?? string.Empty).ToString());
@@ -224,6 +232,12 @@ namespace MarketSimulator.Forms
 
             // Get user default settings
             propertyGridExecSettings.SelectedObject = GlobalExecutionSettings.Instance;
+
+            // check all strategies by default
+            for (int index = 0; index < checkedListBoxStrategies.Items.Count; ++index)
+            {
+                checkedListBoxStrategies.SetItemChecked(index, true);
+            }
         }
 
         /// <summary>
