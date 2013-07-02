@@ -55,7 +55,7 @@ namespace MarketSimulator.Controls
                 {
                     foreach (var snapshot in StrategyExecutionSandbox.StrategySnapshots)
                     {
-                        CashSeries.Points.AddXY(snapshot.Date, snapshot.Cash);
+                        CashSeries.Points.AddXY(snapshot.Date, snapshot.NAV);
                     }
 
                     chartSandbox.Series.Add(CashSeries);

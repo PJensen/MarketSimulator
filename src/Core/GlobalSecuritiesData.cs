@@ -45,6 +45,16 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="security"></param>
+        /// <returns></returns>
+        public List<MarketData> this[string security]
+        {
+            get { return BackingStore[security]; }
+        }
+
+        /// <summary>
         /// indexer
         /// </summary>
         /// <param name="security">the security</param>

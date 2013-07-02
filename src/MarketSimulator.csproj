@@ -62,6 +62,8 @@
     </Compile>
     <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\GlobalSecuritiesData.cs" />
+    <Compile Include="Core\Indicators\IndicatorBase.cs" />
+    <Compile Include="Core\Indicators\SMA.cs" />
     <Compile Include="Core\PositionData.cs" />
     <Compile Include="Core\StrategySnapshot.cs" />
     <Compile Include="Core\TradeStringCollection.cs" />
@@ -119,6 +121,7 @@
     </Compile>
     <Compile Include="Interfaces\ISnappable.cs" />
     <Compile Include="Interfaces\IStrategyExecutor.cs" />
+    <Compile Include="Interfaces\ITechnical.cs" />
     <Compile Include="Interfaces\ITradeEventListener.cs" />
     <Compile Include="Interfaces\IMarketSignalEventSource.cs" />
     <Compile Include="Interfaces\IStrategyEventReciever.cs" />
@@ -146,7 +149,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="R.cs" />
     <Compile Include="Strategies\PeteStrategy.cs" />
-    <Compile Include="Strategies\RandomStrategy.cs" />
+    <Compile Include="Strategies\SMA50.cs" />
     <Compile Include="Strategies\RSIStrategy.cs" />
     <Compile Include="Strategies\StrategyBase.cs" />
     <Compile Include="Strategies\StrategyResult.cs" />

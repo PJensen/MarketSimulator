@@ -147,7 +147,7 @@ namespace MarketSimulator.Core
                     retVal += SecurityValue(p);
                 }
 
-                return 0;
+                return retVal;
             }
         }
 

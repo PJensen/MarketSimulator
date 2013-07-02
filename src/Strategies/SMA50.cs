@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MarketSimulator.Core;
+using MarketSimulator.Core.Indicators;
+using MarketSimulator.Events;
 
 namespace MarketSimulator.Strategies
 {
     /// <summary>
-    /// RandomStrategy
+    /// SMA50
     /// </summary>
-    public class RandomStrategy : StrategyBase
+    public class SMA50 : StrategyBase
     {
         /// <summary>
-        /// RandomStrategy
+        /// SMA50
         /// </summary>
-        public RandomStrategy()
-            : base("Random Strategy") { }
+        public SMA50()
+            : base("SMA50 Strategy")
+        {
+            AddTechnical("SMA50", new SMA(50));
+        }
 
         /// <summary>
         /// BuySignal
@@ -23,11 +29,17 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            if (R.Random.Next(0, 100) <= 1)
+            double sma50 = ((SMA)GetTechnical("SMA50")).Value;
+            if (Math.Abs(sma50 - 0) > 0.001)
             {
-                return Buy(1);
+                if (eventArgs.MarketData.Close > sma50)
+                {
+                    var cashPerSecurity = eventArgs.StrategyInfo.Cash / eventArgs.SecuritiesData.Count;
+                    var sharesToBuy = (int)(cashPerSecurity / eventArgs.MarketData.Close);
+                    return new BuyEventArgs(eventArgs, sharesToBuy);
+                }
             }
-            return null;        
+            return null;
         }
 
         /// <summary>
@@ -37,21 +49,22 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            if (R.Random.Next(0, 100) <= 1)
+            var sma50 = ((SMA)GetTechnical("SMA50")).Value;
+            if (Math.Abs(sma50 - 0) > 0.001 && eventArgs.MarketData.Close < sma50)
             {
-                return Sell(1);
+                return new SellEventArgs(eventArgs, eventArgs.StrategyInfo.PositionData.SecurityShares(eventArgs.Symbol));
             }
             return null;
         }
     }
 
     /// <summary>
-    /// RandomStrategy
+    /// SMA50
     /// </summary>
     public class RandomStrategy2 : StrategyBase
     {
         /// <summary>
-        /// RandomStrategy
+        /// SMA50
         /// </summary>
         public RandomStrategy2()
             : base("Random Strategy 2") { }
@@ -86,12 +99,12 @@ namespace MarketSimulator.Strategies
     }
 
     /// <summary>
-    /// RandomStrategy
+    /// SMA50
     /// </summary>
     public class BuyOnly : StrategyBase
     {
         /// <summary>
-        /// RandomStrategy
+        /// SMA50
         /// </summary>
         public BuyOnly()
             : base("Buy Only") { }
@@ -105,7 +118,7 @@ namespace MarketSimulator.Strategies
         {
             if (R.Random.Next(0, 10) <= 1)
             {
-                return Buy(R.Random.Next(1,10));
+                return Buy(R.Random.Next(1, 10));
             }
             return null;
         }

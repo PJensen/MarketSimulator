@@ -97,6 +97,11 @@ namespace MarketSimulator.Core
         public long Volume { get; set; }
 
         /// <summary>
+        /// Technicals
+        /// </summary>
+        public Dictionary<string, double> Technicals { get; set; }
+
+        /// <summary>
         /// AsCandleStick
         /// </summary>
         public double[] AsCandleStick

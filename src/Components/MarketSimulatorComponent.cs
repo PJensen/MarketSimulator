@@ -202,6 +202,11 @@ namespace MarketSimulator.Components
             var currentMarketDate = GlobalExecutionSettings.Instance.StartDate;
             var currentMarketTick = 0;
 
+            foreach (var security in SecurityMaster.Keys)
+            {
+                var allMarketData = SecurityMaster[security];
+            }
+
             foreach (var sandbox in Sandboxes)
             {
                 var startDate = SecurityMaster.MinimumDate;
@@ -224,7 +229,9 @@ namespace MarketSimulator.Components
                             continue;
                         }
 
-                        sandbox.Strategy.MarketTick(this, new MarketTickEventArgs(security, tmpMarketData, securitySnap));
+                        sandbox.Strategy.MarketTick(this, 
+                            new MarketTickEventArgs(new StrategySnapshot(sandbox), 
+                                security, tmpMarketData, securitySnap));
 
                         if (nextDate == currentDate && tmpMarketData.HasNext)
                         {

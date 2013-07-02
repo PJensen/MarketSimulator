@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketSimulator.Core;
+using MarketSimulator.Core.Indicators;
 using MarketSimulator.Events;
 using MarketSimulator.Interfaces;
 
@@ -23,6 +24,32 @@ namespace MarketSimulator.Strategies
         public StrategyBase(string name)
         {
             Name = name;
+            TechnicalIndicators = new Dictionary<string, Technical>();
+        }
+
+        /// <summary>
+        /// TechnicalIndicators
+        /// </summary>
+        Dictionary<string, Technical> TechnicalIndicators { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Technical GetTechnical(string key)
+        {
+            return TechnicalIndicators[key];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="technical"></param>
+        public void AddTechnical(string key, Technical technical)
+        {
+            TechnicalIndicators.Add(key, technical);
         }
 
         /// <summary>
@@ -51,6 +78,12 @@ namespace MarketSimulator.Strategies
             // TODO: Determine if strategies should be prevented from buying AND selling in the same tick.
             // if not; determine precedence; for now it's sell first (for liquidity) and purchase 2nd.
             currentMarketTick = e;
+
+            foreach (var technicalIndicator in TechnicalIndicators)
+            {
+                technicalIndicator.Value.MarketTick(e);
+            }
+
             var s = SellSignal(e);
             var b = BuySignal(e);
 
@@ -139,6 +172,8 @@ namespace MarketSimulator.Strategies
             if (MarketTickEvent != null && e != null)
             {
                 MarketTickEvent(this, e);
+
+
             }
         }
 
