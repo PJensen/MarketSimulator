@@ -152,6 +152,9 @@ namespace MarketSimulator.Core
                 NumberOfTrades++;
                 ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
             }
+
+
+            
         }
 
         /// <summary>

@@ -28,27 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.chartStrategy = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.propertyGridStrategy = new System.Windows.Forms.PropertyGrid();
             this.dataGridViewPositions = new System.Windows.Forms.DataGridView();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Symbol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TXType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Shares = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TXPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MadeMoney = new System.Windows.Forms.DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartStrategy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartStrategy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPositions)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,6 +73,23 @@
             this.splitContainer1.SplitterDistance = 323;
             this.splitContainer1.TabIndex = 0;
             // 
+            // chartStrategy
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chartStrategy.ChartAreas.Add(chartArea1);
+            this.chartStrategy.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this.chartStrategy.Legends.Add(legend1);
+            this.chartStrategy.Location = new System.Drawing.Point(0, 0);
+            this.chartStrategy.Name = "chartStrategy";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartStrategy.Series.Add(series1);
+            this.chartStrategy.Size = new System.Drawing.Size(863, 323);
+            this.chartStrategy.TabIndex = 0;
+            this.chartStrategy.Text = "chart1";
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -87,23 +107,6 @@
             this.splitContainer2.SplitterDistance = 287;
             this.splitContainer2.TabIndex = 0;
             // 
-            // chartStrategy
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.chartStrategy.ChartAreas.Add(chartArea3);
-            this.chartStrategy.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend3.Name = "Legend1";
-            this.chartStrategy.Legends.Add(legend3);
-            this.chartStrategy.Location = new System.Drawing.Point(0, 0);
-            this.chartStrategy.Name = "chartStrategy";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartStrategy.Series.Add(series3);
-            this.chartStrategy.Size = new System.Drawing.Size(863, 323);
-            this.chartStrategy.TabIndex = 0;
-            this.chartStrategy.Text = "chart1";
-            // 
             // propertyGridStrategy
             // 
             this.propertyGridStrategy.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -118,15 +121,28 @@
             this.dataGridViewPositions.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridViewPositions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewPositions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Date,
+            this.Symbol,
             this.TXType,
             this.Shares,
             this.TXPrice,
-            this.Cost});
+            this.Cost,
+            this.MadeMoney});
             this.dataGridViewPositions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewPositions.Location = new System.Drawing.Point(0, 0);
             this.dataGridViewPositions.Name = "dataGridViewPositions";
             this.dataGridViewPositions.Size = new System.Drawing.Size(572, 134);
             this.dataGridViewPositions.TabIndex = 1;
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "Date";
+            this.Date.Name = "Date";
+            // 
+            // Symbol
+            // 
+            this.Symbol.HeaderText = "Symbol";
+            this.Symbol.Name = "Symbol";
             // 
             // TXType
             // 
@@ -148,6 +164,11 @@
             this.Cost.HeaderText = "Cost";
             this.Cost.Name = "Cost";
             // 
+            // MadeMoney
+            // 
+            this.MadeMoney.HeaderText = "Made Money";
+            this.MadeMoney.Name = "MadeMoney";
+            // 
             // StrategyView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -161,11 +182,11 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartStrategy)).EndInit();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartStrategy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPositions)).EndInit();
             this.ResumeLayout(false);
 
@@ -178,9 +199,12 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.PropertyGrid propertyGridStrategy;
         private System.Windows.Forms.DataGridView dataGridViewPositions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Symbol;
         private System.Windows.Forms.DataGridViewTextBoxColumn TXType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Shares;
         private System.Windows.Forms.DataGridViewTextBoxColumn TXPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cost;
+        private System.Windows.Forms.DataGridViewImageColumn MadeMoney;
     }
 }

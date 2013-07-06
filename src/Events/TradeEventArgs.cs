@@ -18,7 +18,7 @@ namespace MarketSimulator.Events
         /// </summary>
         /// <param name="tradeType">the trade type</param>
         /// <param name="securitiesData">market data</param>
-        /// <param name="shares">shares quantity</param>
+        /// <param name="Shares">Shares quantity</param>
         public TradeEventArgs(TradeType tradeType, IPosition position, MarketData marketData)
         {
             MarketData = marketData;
@@ -29,10 +29,10 @@ namespace MarketSimulator.Events
         }
 
         /// <summary>
-        /// TradeEventArgs given a market tick and some shares
+        /// TradeEventArgs given a market tick and some Shares
         /// </summary>
         /// <param name="e">market tick</param>
-        /// <param name="shares">shares</param>
+        /// <param name="Shares">Shares</param>
         public TradeEventArgs(TradeType tradeType, MarketTickEventArgs e, int shares)
         {
             TradeType = tradeType;

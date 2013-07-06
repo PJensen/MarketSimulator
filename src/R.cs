@@ -105,7 +105,7 @@ namespace MarketSimulator
         /// <summary>
         /// Convert
         /// </summary>
-        /// <param name="symbol"> </param>
+        /// <param name="Symbol"> </param>
         /// <param name="table"></param>
         /// <returns></returns>
         public static List<MarketData> Convert(string symbol, DataTable table)

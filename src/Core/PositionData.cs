@@ -65,7 +65,7 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
-        /// RemovePosition the shares amount from the position
+        /// RemovePosition the Shares amount from the position
         /// </summary>
         /// <param name="position"></param>
         public bool RemovePosition(IPosition position)
@@ -185,7 +185,7 @@ namespace MarketSimulator.Core
     /// <summary>
     /// Ledger
     /// </summary>
-    public class PositionHistory : Dictionary<DateTime, PositionData>
+    public class PositionHistory : Dictionary<DateTime, IPosition>
     {
         /// <summary>
         /// Ledger

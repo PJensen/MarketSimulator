@@ -99,10 +99,8 @@ namespace MarketSimulator.Strategies
             currentMarketTick = e;
 
             foreach (var technicalIndicator in TechnicalIndicators)
-            {
                 technicalIndicator.Value.MarketTick(e);
-            }
-
+            
             var s = SellSignal(e);
             var b = BuySignal(e);
 
@@ -114,9 +112,9 @@ namespace MarketSimulator.Strategies
         }
 
         /// <summary>
-        /// Buy some shares based on the last tick
+        /// Buy some Shares based on the last tick
         /// </summary>
-        /// <param name="shares"></param>
+        /// <param name="Shares"></param>
         /// <returns></returns>
         protected BuyEventArgs Buy(int shares)
         {
@@ -129,9 +127,9 @@ namespace MarketSimulator.Strategies
         }
 
         /// <summary>
-        /// Sell some shares based on the last tick
+        /// Sell some Shares based on the last tick
         /// </summary>
-        /// <param name="shares"></param>
+        /// <param name="Shares"></param>
         /// <returns></returns>
         protected SellEventArgs Sell(int shares)
         {

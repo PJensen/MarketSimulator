@@ -617,7 +617,7 @@
             this.toolStripButtonAddTicker.Name = "toolStripButtonAddTicker";
             this.toolStripButtonAddTicker.Size = new System.Drawing.Size(84, 22);
             this.toolStripButtonAddTicker.Text = "Add Ticker";
-            this.toolStripButtonAddTicker.ToolTipText = "AddPosition ticker symbol to the security master";
+            this.toolStripButtonAddTicker.ToolTipText = "AddPosition ticker Symbol to the security master";
             this.toolStripButtonAddTicker.Click += new System.EventHandler(this.toolStripButtonAddTicker_Click);
             // 
             // toolStripSeparator7

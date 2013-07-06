@@ -25,6 +25,7 @@ namespace MarketSimulator.Core
             Tick = sandbox.Tick;
             Date = sandbox.Date;
             NAV = sandbox.PositionData.TotalMarketValue + Cash;
+            TotalMarketValue = sandbox.PositionData.TotalMarketValue;
         }
 
         /// <summary>
@@ -46,6 +47,11 @@ namespace MarketSimulator.Core
         /// NAV
         /// </summary>
         public double NAV { get; set; }
+
+        /// <summary>
+        /// TotalMarketValue
+        /// </summary>
+        public double TotalMarketValue { get; private set; }
 
         /// <summary>
         /// The market tick this snapshot represents

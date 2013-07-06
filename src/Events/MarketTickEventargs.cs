@@ -30,7 +30,7 @@ namespace MarketSimulator
         public StrategySnapshot StrategyInfo { get; set; }
 
         /// <summary>
-        /// The symbol this market tick referrs to
+        /// The Symbol this market tick referrs to
         /// </summary>
         public string Symbol { get; private set; }
 

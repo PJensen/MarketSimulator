@@ -15,8 +15,8 @@ namespace MarketSimulator.Core
         /// Position; positons are transient
         /// </summary>
         /// <param name="date"> </param>
-        /// <param name="symbol">the symbol</param>
-        /// <param name="shares">the number of shares</param>
+        /// <param name="Symbol">the Symbol</param>
+        /// <param name="Shares">the number of Shares</param>
         /// <param name="price">the price</param>
         public Position(DateTime date, string symbol, int shares, double price)
             : this()

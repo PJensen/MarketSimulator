@@ -35,7 +35,6 @@ namespace MarketSimulator.Components
             container.Add(this);
 
             InitializeComponent();
-
         }
 
         /// <summary>
@@ -231,9 +230,11 @@ namespace MarketSimulator.Components
                             continue;
                         }
 
-                        sandbox.Strategy.MarketTick(this, 
-                            new MarketTickEventArgs(new StrategySnapshot(sandbox), 
-                                security, tmpMarketData, securitySnap));
+                        // TODO: find a more natural place for StrategyTickHistory.Add(..)
+                        sandbox.StrategyTickHistory.Add(
+                            sandbox.Strategy.MarketTick(this,
+                                new MarketTickEventArgs(new StrategySnapshot(sandbox),
+                                    security, tmpMarketData, securitySnap)));
 
                         if (nextDate == currentDate && tmpMarketData.HasNext)
                         {

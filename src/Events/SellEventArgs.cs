@@ -16,7 +16,7 @@ namespace MarketSimulator.Events
         /// Create a new SellEventArgs with the specified quantity
         /// </summary>
         /// <param name="marketData">The market data</param>
-        /// <param name="shares">The number of shares to purchase</param>
+        /// <param name="Shares">The number of Shares to purchase</param>
         public SellEventArgs(IPosition position, MarketData marketData)
             : base(TradeType.Sell, position, marketData)
         { }
@@ -25,7 +25,7 @@ namespace MarketSimulator.Events
         /// BuyEventArgs
         /// </summary>
         /// <param name="marketTickEventArgs">the market tick event args</param>
-        /// <param name="shares">the number of shares</param>
+        /// <param name="Shares">the number of Shares</param>
         public SellEventArgs(MarketTickEventArgs marketTickEventArgs, int shares)
             : base(TradeType.Sell, marketTickEventArgs, shares)
         { }

@@ -10,7 +10,7 @@ namespace MarketSimulator.Interfaces
         /// <summary>
         /// Retrieve
         /// </summary>
-        /// <param name="symbol"></param>
+        /// <param name="Symbol"></param>
         /// <returns></returns>
         DataTable Retrieve(string symbol, out string message, out bool fail);
     }

@@ -25,7 +25,7 @@ namespace MarketSimulator.Events
         /// BuyEventArgs
         /// </summary>
         /// <param name="marketTickEventArgs">the market tick event args</param>
-        /// <param name="shares">the number of shares</param>
+        /// <param name="Shares">the number of Shares</param>
         public BuyEventArgs(MarketTickEventArgs marketTickEventArgs, int shares)
             : base(TradeType.Buy, marketTickEventArgs, shares)
         { }

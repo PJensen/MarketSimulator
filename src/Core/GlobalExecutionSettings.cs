@@ -119,7 +119,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// AddTicker
         /// </summary>
-        /// <param name="symbol"></param>
+        /// <param name="Symbol"></param>
         /// <returns></returns>
         public bool AddTicker(string symbol)
         {
