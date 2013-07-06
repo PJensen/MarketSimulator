@@ -81,7 +81,7 @@ namespace MarketSimulator.Forms
                 if (buyEvent != null && buyEvent.Shares > 0)
                 {
                     dataGridViewPositions.Rows.Add(buyEvent.Date, buyEvent.Symbol, buyEvent.TradeType, buyEvent.Shares, buyEvent.Price,
-                        buyEvent.Price * buyEvent.Shares, Properties.Resources.table_add);
+                        buyEvent.Price * buyEvent.Shares);
 
                     var buyPoint = new DataPoint(seriesTrades) { Tag = buyEvent, MarkerStyle = MarkerStyle.Triangle, ToolTip = buyEvent.Shares.ToString() };
                     buyPoint.SetValueXY(buyEvent.Date, buyEvent.Shares * buyEvent.Price);
@@ -90,8 +90,9 @@ namespace MarketSimulator.Forms
 
                 if (sellEvent != null && sellEvent.Shares > 0)
                 {
+
                     dataGridViewPositions.Rows.Add(sellEvent.Date, sellEvent.Symbol, sellEvent.TradeType, sellEvent.Shares, sellEvent.Price,
-                        sellEvent.Price * sellEvent.Shares, sellEvent.Cancel ? Properties.Resources.coins_delete : Properties.Resources.coins);
+                        sellEvent.Price * sellEvent.Shares);
 
                     var sellPoint = new DataPoint(seriesTrades) { Tag = sellEvent, MarkerStyle = MarkerStyle.Triangle, ToolTip = sellEvent.Shares.ToString() };
                     sellPoint.SetValueXY(sellEvent.Date, sellEvent.Shares * sellEvent.Price);

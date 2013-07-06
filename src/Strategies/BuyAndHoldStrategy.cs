@@ -57,11 +57,17 @@ namespace MarketSimulator.Strategies
         {
             var numSecurities = eventArgs.SecuritiesData.Keys.Count;
 
-            if (!inMarket.ContainsKey(eventArgs.Symbol))
-                inMarket.Add(eventArgs.Symbol, new BuyHoldTracking() { InMarket = false, Shares = 0, Symbol = eventArgs.Symbol });
-
-            if (inMarket[eventArgs.Symbol].InMarket)
+            if (numSecurities <= 0)
                 return null;
+
+            if (!inMarket.ContainsKey(eventArgs.Symbol))
+            {
+                inMarket.Add(eventArgs.Symbol, new BuyHoldTracking() { InMarket = false, Shares = 0, Symbol = eventArgs.Symbol });
+            }
+            else if (inMarket[eventArgs.Symbol].InMarket)
+            {
+                return null;
+            }
 
             // buy as much as possible; distributing across the index of securities.
             var buyShares = (int)Math.Floor((eventArgs.StrategyInfo.Cash / numSecurities) / eventArgs.MarketData.Close);
@@ -84,12 +90,19 @@ namespace MarketSimulator.Strategies
         /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
         public override SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            if (!inMarket.ContainsKey(eventArgs.Symbol))
+            if (eventArgs.MarketData.HasNext && eventArgs.MarketData.Next.HasNext)
+            {
                 return null;
-            var shares = inMarket[eventArgs.Symbol].Shares;
-            if (inMarket.Remove(eventArgs.Symbol))
-                return Sell(shares);
+            }
+            else
+            {
+                if (inMarket.ContainsKey(eventArgs.Symbol) && inMarket[eventArgs.Symbol].InMarket)
+                {
+                    return Sell(inMarket[eventArgs.Symbol].Shares);
+                }
+            }
             return null;
+
         }
 
         #endregion
