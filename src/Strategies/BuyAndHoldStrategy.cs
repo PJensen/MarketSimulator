@@ -16,7 +16,6 @@ namespace MarketSimulator.Strategies
         /// </summary>
         public BuyAndHoldStrategy()
             : base("Buy And Hold")
-
         {
             Description =
                 "Buy and hold is a long-term investment strategy based on the " +
@@ -32,6 +31,23 @@ namespace MarketSimulator.Strategies
         #region Overrides of StrategyBase
 
         /// <summary>
+        /// AAPL:false
+        /// EMC:true
+        /// etc ...
+        /// </summary>
+        private Dictionary<string, BuyHoldTracking> inMarket = new Dictionary<string, BuyHoldTracking>();
+
+        /// <summary>
+        /// BuyHoldTracking
+        /// </summary>
+        class BuyHoldTracking
+        {
+            public string Symbol { get; set; }
+            public bool InMarket { get; set; }
+            public int Shares { get; set; }
+        }
+
+        /// <summary>
         /// BuySignal; the details of the buy signal are filled in by the concrete
         /// implementations.
         /// </summary>
@@ -39,7 +55,25 @@ namespace MarketSimulator.Strategies
         /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
         public override BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            throw new NotImplementedException();
+            var numSecurities = eventArgs.SecuritiesData.Keys.Count;
+
+            if (!inMarket.ContainsKey(eventArgs.Symbol))
+                inMarket.Add(eventArgs.Symbol, new BuyHoldTracking() { InMarket = false, Shares = 0, Symbol = eventArgs.Symbol });
+
+            if (inMarket[eventArgs.Symbol].InMarket)
+                return null;
+
+            // buy as much as possible; distributing across the index of securities.
+            var buyShares = (int)Math.Floor((eventArgs.StrategyInfo.Cash / numSecurities) / eventArgs.MarketData.Close);
+
+            // if the first tick has already happened; 
+            var retVal = (!inMarket[eventArgs.Symbol].InMarket) ? Buy(buyShares) : null;
+
+            // we are in the market for this security
+            inMarket[eventArgs.Symbol].InMarket = true;
+            inMarket[eventArgs.Symbol].Shares = buyShares;
+
+            return retVal;
         }
 
         /// <summary>
@@ -50,7 +84,12 @@ namespace MarketSimulator.Strategies
         /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
         public override SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            throw new NotImplementedException();
+            if (!inMarket.ContainsKey(eventArgs.Symbol))
+                return null;
+            var shares = inMarket[eventArgs.Symbol].Shares;
+            if (inMarket.Remove(eventArgs.Symbol))
+                return Sell(shares);
+            return null;
         }
 
         #endregion
