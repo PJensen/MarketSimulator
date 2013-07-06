@@ -86,6 +86,19 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
+        /// UpdatePrice
+        /// </summary>
+        /// <param name="security"></param>
+        /// <param name="price"></param>
+        public void UpdatePrice(string security, double price)
+        {
+            if (this[security] == null)
+                return;
+
+            this[security].Price = price;
+        }
+
+        /// <summary>
         /// AddPosition position data
         /// </summary>
         /// <param name="position"></param>
@@ -134,20 +147,14 @@ namespace MarketSimulator.Core
         }
 
         /// <summary>
-        /// TotalMarketValue
+        /// TotalMarketValueAsOf
         /// </summary>
+        /// <returns></returns>
         public double TotalMarketValue
         {
             get
             {
-                double retVal = 0.0d;
-
-                foreach (var p in Positions.Select(f => f.Symbol).Distinct())
-                {
-                    retVal += SecurityValue(p);
-                }
-
-                return retVal;
+                return Positions.Sum(s => s.Price * s.Shares);
             }
         }
 

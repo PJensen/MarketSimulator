@@ -39,35 +39,69 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         private void MultiStrategyView_Load(object sender, EventArgs e)
         {
-            foreach (var sandbox in simulator.Sandboxes)
+            foreach (var security in simulator.SecurityMaster.Keys)
             {
-                var sandboxControl = new StrategyExecutionSandboxControl(sandbox);
-
-                var tmpSandboxPage = new TabPage(sandbox.Name);
-                tmpSandboxPage.Controls.Add(sandboxControl);
-                tabControl.TabPages.Add(tmpSandboxPage);
-
-                chartView.Series.Add(sandboxControl.CashSeries);
+                chartView.Series.Add(new Series(security)
+                                         {
+                                             ChartType = SeriesChartType.Line,
+                                             XAxisType = AxisType.Primary,
+                                             YAxisType = AxisType.Primary,
+                                             XValueType = ChartValueType.Date,
+                                             YValueType = ChartValueType.Double,
+                                         });
             }
 
-            foreach (var security in simulator.SecurityMaster)
+            foreach (var sandbox in simulator.Sandboxes)
             {
-                var tmpSecuritySeries = new Series(security.Key) 
+                chartView.Series.Add(new Series(sandbox.Name)
                 {
                     ChartType = SeriesChartType.Line,
-                    XValueType = ChartValueType.DateTime,
-                    YValueType = ChartValueType.Double,
                     XAxisType = AxisType.Primary,
                     YAxisType = AxisType.Secondary,
-                    Enabled = true,
-                };
+                    XValueType = ChartValueType.Date,
+                    YValueType = ChartValueType.Double,
+                });
+            }
 
-                foreach (var marketTick in security.Value)
+            foreach (var tickDate in simulator.TickDates)
+            {
+                foreach (var marketData in simulator.SecurityMaster[tickDate])
                 {
-                    tmpSecuritySeries.Points.AddXY(marketTick.Date, marketTick.Close);
+                    if (marketData != null)
+                    {
+                        chartView.Series[marketData.Symbol].Points.AddXY(tickDate, marketData.Close);
+                    }
                 }
+            }
 
-                chartView.Series.Add(tmpSecuritySeries);
+            foreach (var sandbox in simulator.Sandboxes)
+            {
+                foreach (var snap in sandbox.StrategySnapshots)
+                {
+                    var tmpDataPoint = new DataPoint()
+                    {
+
+                    };
+
+                    chartView.Series[sandbox.Name].Points.AddXY(snap.Date, snap.NAV);
+                    
+                    if (snap.Cash <= 0)
+                    {
+                        var tmpPoint = chartView.Series[sandbox.Name].Points.LastOrDefault();
+                        if (tmpPoint == null)
+                            continue;
+
+                        tmpPoint.IsEmpty = true;
+                        tmpPoint.SetValueXY(snap.Date, DBNull.Value);
+
+                        chartView.Annotations.Add(new ArrowAnnotation()
+                        {
+                            AnchorDataPoint = tmpPoint,
+                            ArrowSize = 20,
+                            ArrowStyle = ArrowStyle.Simple,
+                        });
+                    }
+                }
             }
         }
     }

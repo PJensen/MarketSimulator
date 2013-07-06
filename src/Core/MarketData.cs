@@ -16,17 +16,6 @@ namespace MarketSimulator.Core
     public class MarketData : IMarketData
     {
         /// <summary>
-        /// Create a new MarketData
-        /// </summary>
-        /// <param name="prev"></param>
-        /// <param name="next"></param>
-        public MarketData(MarketData prev = null, MarketData next = null)
-        {
-            Next = next;
-            Prev = prev;
-        }
-
-        /// <summary>
         /// IsValid
         /// </summary>
         public bool IsValid 
@@ -95,6 +84,11 @@ namespace MarketSimulator.Core
         /// Volume
         /// </summary>
         public long Volume { get; set; }
+
+        /// <summary>
+        /// Symbol
+        /// </summary>
+        public string Symbol { get; set; }
 
         /// <summary>
         /// Technicals

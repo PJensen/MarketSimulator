@@ -9,13 +9,14 @@ namespace MarketSimulator.Core
     /// <summary>
     /// StrategySnapshot
     /// </summary>
-    public class StrategySnapshot
+    public struct StrategySnapshot
     {
         /// <summary>
         /// Create a new StrategySnapshot
         /// </summary>
         /// <param name="cash">given a specific amount of cash</param>
-        public StrategySnapshot(StrategyExecutionSandbox sandbox)
+        public StrategySnapshot(StrategyExecutionSandbox sandbox) 
+            : this()
         {
             ParentSandbox = sandbox;
             PositionData = new PositionData(sandbox.PositionData);

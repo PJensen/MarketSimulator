@@ -63,6 +63,7 @@
     <Compile Include="Core\GlobalExecutionSettings.cs" />
     <Compile Include="Core\GlobalSecuritiesData.cs" />
     <Compile Include="Core\Indicators\IndicatorBase.cs" />
+    <Compile Include="Core\Indicators\ITechnicalValue.cs" />
     <Compile Include="Core\Indicators\SMA.cs" />
     <Compile Include="Core\PositionData.cs" />
     <Compile Include="Core\StrategySnapshot.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Components\MarketSimulatorComponent.Designer.cs">
       <DependentUpon>MarketSimulatorComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Strategies\BuyAndHoldStrategy.cs" />
     <Compile Include="Strategies\CoreStrategy.cs" />
     <Compile Include="Strategies\ElderImpulseStrategy.cs" />
     <Compile Include="Strategies\Issue12Strategy.cs" />
@@ -676,6 +678,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

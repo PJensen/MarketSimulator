@@ -76,9 +76,9 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            if (R.Random.Next(0, 1000) <= 1)
+            if (R.Random.Next(0, 100) <= 1)
             {
-                return Buy(1);
+                return Buy(10);
             }
             return null;
         }
@@ -90,9 +90,9 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            if (R.Random.Next(0, 1000) <= 1)
+            if (R.Random.Next(0, 100) <= 1)
             {
-                return Sell(1);
+                return Sell(10);
             }
             return null;
         }

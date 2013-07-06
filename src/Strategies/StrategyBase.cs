@@ -7,24 +7,43 @@ using MarketSimulator.Core;
 using MarketSimulator.Core.Indicators;
 using MarketSimulator.Events;
 using MarketSimulator.Interfaces;
+using System.Diagnostics;
 
 namespace MarketSimulator.Strategies
 {
     /// <summary>
     /// StrategyBase
     /// </summary>
+    [DebuggerDisplay("{Name},{Description}")]
     public abstract class StrategyBase : IStrategy
     {
+        /// <summary>
+        /// StrategyBase
+        /// </summary>
+        protected StrategyBase()
+        {
+            TechnicalIndicators = new Dictionary<string, Technical>();
+        }
+
         /// <summary>
         /// Creates a new StrategyBase
         /// </summary>
         /// <param name="name">The name of the strategy</param>
-        /// <param name="buySignal">The buy signal</param>
-        /// <param name="sellSignal">The sell signal</param>
-        public StrategyBase(string name)
+        protected StrategyBase(string name)
+            : this()
         {
             Name = name;
-            TechnicalIndicators = new Dictionary<string, Technical>();
+        }
+
+        /// <summary>
+        /// Creates a new StrategyBase
+        /// </summary>
+        /// <param name="name">the name of the strategy</param>
+        /// <param name="desciption">the description of the strategy</param>
+        protected StrategyBase(string name, string desciption)
+            : this(name)
+        {
+            Description = desciption;
         }
 
         /// <summary>
@@ -172,8 +191,6 @@ namespace MarketSimulator.Strategies
             if (MarketTickEvent != null && e != null)
             {
                 MarketTickEvent(this, e);
-
-
             }
         }
 

@@ -43,8 +43,8 @@ namespace MarketSimulator.Forms
             #region AddPosition known strategies
             // eventually they'll be loaded reflectively.
             AddStrategyNode(new SMA50());
-            AddStrategyNode(new RandomStrategy2());
-            AddStrategyNode(new BuyOnly());
+            //AddStrategyNode(new RandomStrategy2());
+            //AddStrategyNode(new BuyOnly());
             #endregion
         }
 

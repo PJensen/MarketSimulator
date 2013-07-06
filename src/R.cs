@@ -105,14 +105,12 @@ namespace MarketSimulator
         /// <summary>
         /// Convert
         /// </summary>
+        /// <param name="symbol"> </param>
         /// <param name="table"></param>
         /// <returns></returns>
-        public static List<MarketData> Convert(DataTable table)
+        public static List<MarketData> Convert(string symbol, DataTable table)
         {
             var retVal = new MarketData[table.Rows.Count];
-
-            if (table == null)
-                return retVal.ToList();
 
             for (var i = 0; i < table.Rows.Count; ++i)
             {
@@ -123,7 +121,8 @@ namespace MarketSimulator
                     High = double.Parse(table.Rows[i]["High"].ToString()),
                     Low = double.Parse(table.Rows[i]["Low"].ToString()),
                     Close = double.Parse(table.Rows[i]["Close"].ToString()),
-                    Volume = long.Parse(table.Rows[i]["Volume"].ToString())
+                    Volume = long.Parse(table.Rows[i]["Volume"].ToString()),
+                    Symbol = symbol
                 };
             }
 

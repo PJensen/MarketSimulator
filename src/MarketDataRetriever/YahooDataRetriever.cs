@@ -38,7 +38,7 @@ namespace MarketSimulator
                 {
                     try
                     {
-                        webClient.DownloadFile(string.Format(@"http://ichart.finance.yahoo.com/table.csv?s=AAPL&d=3&e=17&f=2013&g=d&a=0&b=29&c=1993&ignore=.csv", symbol), dataFileDest);
+                        webClient.DownloadFile(string.Format(@"http://ichart.finance.yahoo.com/table.csv?s={0}&d=3&e=17&f=2013&g=d&a=0&b=29&c=1993&ignore=.csv", symbol), dataFileDest);
                     }
                     catch (Exception ex)
                     {

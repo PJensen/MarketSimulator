@@ -14,6 +14,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Position; positons are transient
         /// </summary>
+        /// <param name="date"> </param>
         /// <param name="symbol">the symbol</param>
         /// <param name="shares">the number of shares</param>
         /// <param name="price">the price</param>

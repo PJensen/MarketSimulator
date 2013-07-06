@@ -91,7 +91,7 @@ namespace MarketSimulator.Components
             // WARNING: individual failures will trigger the failure callback; and, return FALSE.
             foreach (var security in GlobalExecutionSettings.Instance.SecurityMaster)
             {
-                var tmpMarketData = R.Convert(new YahooDataRetriever().Retrieve(security, out message, out fail));
+                var tmpMarketData = R.Convert(security, new YahooDataRetriever().Retrieve(security, out message, out fail));
 
                 if (fail)
                 {
@@ -164,6 +164,11 @@ namespace MarketSimulator.Components
             return Initialized;
         }
 
+        /// <summary>
+        /// TickDates
+        /// </summary>
+        public List<DateTime> TickDates { get; set; }
+
         #region Worker
 
         /// <summary>
@@ -190,6 +195,8 @@ namespace MarketSimulator.Components
                 throw new MarketSimulatorException("MarketTicks was null or empty!");
             }
 
+            TickDates = new List<DateTime>();
+
             #endregion
 
             // This is important because not all securities have the same amount of data.
@@ -201,11 +208,6 @@ namespace MarketSimulator.Components
             var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count - 1);
             var currentMarketDate = GlobalExecutionSettings.Instance.StartDate;
             var currentMarketTick = 0;
-
-            foreach (var security in SecurityMaster.Keys)
-            {
-                var allMarketData = SecurityMaster[security];
-            }
 
             foreach (var sandbox in Sandboxes)
             {
@@ -237,6 +239,8 @@ namespace MarketSimulator.Components
                         {
                             nextDate = tmpMarketData.Next.Date;
                         }
+
+                        sandbox.PositionData.UpdatePrice(security, tmpMarketData.Close);
                     }
 
                     ReportProgress((currentMarketTick / maximumPossibleTicks) * 100, currentDate);
@@ -255,6 +259,7 @@ namespace MarketSimulator.Components
                         currentDate = currentDate.AddDays(1);
                     }
 
+                    TickDates.Add(currentDate);
                     sandbox.SnapshotSandbox(currentDate);
                     currentMarketTick++;
                 }
