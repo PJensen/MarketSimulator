@@ -43,9 +43,21 @@ namespace MarketSimulator.Events
         }
 
         /// <summary>
+        /// field storage for shares.
+        /// </summary>
+        private int shares;
+
+        /// <summary>
         /// Shares
         /// </summary>
-        public int Shares { get; set; }
+        public int Shares
+        {
+            get { return shares; }
+            set 
+            {
+                shares = value; 
+            }
+        }
 
         /// <summary>
         /// Symbol

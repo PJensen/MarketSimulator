@@ -1,5 +1,6 @@
 ﻿using MarketSimulator.Components;
 using MarketSimulator.Core;
+using MarketSimulator.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,13 +38,12 @@ namespace MarketSimulator.Forms
         private void AddLineAnnotation(string series, int firstPoint, int secondPoint)
         {
             LineAnnotation annotation = new LineAnnotation();
-            //annotation.AnchorDataPoint = chartStrategy.Series[series].Points[firstPoint];
             annotation.SetAnchor(chartStrategy.Series[series].Points[firstPoint], chartStrategy.Series[series].Points[secondPoint]);
-            annotation.Height = -2;
-            annotation.Width = -2;
+            annotation.Height = 1;
+            annotation.Width = 1;
             annotation.LineWidth = 1;
-            annotation.StartCap = LineAnchorCapStyle.Arrow;
-            annotation.EndCap = LineAnchorCapStyle.None;
+            annotation.StartCap = LineAnchorCapStyle.Round;
+            annotation.EndCap = LineAnchorCapStyle.Round;
             chartStrategy.Annotations.Add(annotation);
         }
 
@@ -71,39 +71,42 @@ namespace MarketSimulator.Forms
 
             chartStrategy.Series.Add(seriesNAV);
 
-            foreach (var tick in sandbox.StrategyTickHistory)
+            BuyEventArgs lastBuyEvent = null;
+
+            foreach (var tick in sandbox.Strategy.StrategyTickHistory)
             {
                 var snapshot = tick.StrategySnapshot;
                 var positionData = snapshot.PositionData;
                 var buyEvent = tick.BuyEventArgs;
                 var sellEvent = tick.SellEventArgs;
 
+                lastBuyEvent = tick.BuyEventArgs ?? lastBuyEvent;
+
                 if (buyEvent != null && buyEvent.Shares > 0)
                 {
                     dataGridViewPositions.Rows.Add(buyEvent.Date, buyEvent.Symbol, buyEvent.TradeType, buyEvent.Shares, buyEvent.Price,
                         buyEvent.Price * buyEvent.Shares);
-
-                    var buyPoint = new DataPoint(seriesTrades) { Tag = buyEvent, MarkerStyle = MarkerStyle.Triangle, ToolTip = buyEvent.Shares.ToString() };
-                    buyPoint.SetValueXY(buyEvent.Date, buyEvent.Shares * buyEvent.Price);
-                    seriesTrades.Points.Add(buyPoint);
                 }
 
                 if (sellEvent != null && sellEvent.Shares > 0)
                 {
-
                     dataGridViewPositions.Rows.Add(sellEvent.Date, sellEvent.Symbol, sellEvent.TradeType, sellEvent.Shares, sellEvent.Price,
                         sellEvent.Price * sellEvent.Shares);
 
-                    var sellPoint = new DataPoint(seriesTrades) { Tag = sellEvent, MarkerStyle = MarkerStyle.Triangle, ToolTip = sellEvent.Shares.ToString() };
-                    sellPoint.SetValueXY(sellEvent.Date, sellEvent.Shares * sellEvent.Price);
-                    sellPoint.Color = Color.Green;
-                    seriesTrades.Points.Add(sellPoint);
+                    if (buyEvent != null)
+                    {
+                        AddLineAnnotation("NAV", tickDateMap[buyEvent.Date],
+                            tickDateMap[sellEvent.Date]);
+
+                        lastBuyEvent = null;
+                    }
                 }
             }
 
             chartStrategy.Series.Add(seriesTrades);
-
             chartStrategy.UpdateAnnotations();
+
+            R.GUI.ScrollDataGridForward(dataGridViewPositions);
         }
     }
 }

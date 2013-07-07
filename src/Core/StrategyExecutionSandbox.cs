@@ -51,17 +51,13 @@ namespace MarketSimulator.Core
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
             Tick = 0;
 
-            if (StrategyTickHistory == null)
-            {
-                StrategyTickHistory = new List<StrategyMarketTickResult>();
-            }
 
             if (StrategySnapshots == null)
             {
                 StrategySnapshots = new List<StrategySnapshot>();
             }
 
-            StrategyTickHistory.Clear();
+            //StrategyTickHistory.Clear();
             StrategySnapshots.Clear();
         }
 
@@ -122,13 +118,18 @@ namespace MarketSimulator.Core
 
                 return;
             }
+            else if (eventArgs.Cancel)
+            {
+                return;
+            }
 
-            Cash -= totalValue;
+            if (PositionData.AddPosition(eventArgs))
+            {
+                NumberOfTrades++;
+                Cash -= totalValue;
 
-            PositionData.AddPosition(eventArgs);
-
-            NumberOfTrades++;
-            ActiveTradeStrings[eventArgs.Symbol].BuyLine.Add(eventArgs);
+                //ActiveTradeStrings[eventArgs.Symbol].BuyLine.Add(eventArgs);
+            }
         }
 
         /// <summary>
@@ -144,17 +145,15 @@ namespace MarketSimulator.Core
                 return;
             }
 
-            // adding to cash is predicated on safe removal
+            // adding to cash is predicated on safe removal; this really means you 
+            // can't sell more than you have.
             if (PositionData.RemovePosition(eventArgs))
             {
                 Cash += eventArgs.Price * eventArgs.Shares;
 
                 NumberOfTrades++;
-                ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
+                //ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
             }
-
-
-            
         }
 
         /// <summary>
@@ -208,7 +207,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// StrategyTickHistory
         /// </summary>
-        public List<StrategyMarketTickResult> StrategyTickHistory { get; set; }
+        // public List<StrategyMarketTickResult> StrategyTickHistory { get; set; }
 
         /// <summary>
         /// The strategy executor for easy access to data at that seggrated level

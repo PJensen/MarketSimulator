@@ -23,6 +23,7 @@ namespace MarketSimulator.Strategies
         protected StrategyBase()
         {
             TechnicalIndicators = new Dictionary<string, Technical>();
+            StrategyTickHistory = new List<StrategyMarketTickResult>();
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace MarketSimulator.Strategies
         }
 
         /// <summary>
-        /// 
+        /// AddTechnical
         /// </summary>
         /// <param name="key"></param>
         /// <param name="technical"></param>
@@ -104,12 +105,17 @@ namespace MarketSimulator.Strategies
             var s = SellSignal(e);
             var b = BuySignal(e);
 
-            OnSellEvent(s);
-            OnBuyEvent(b);
-            OnMarketTickEvent(e);
+            var thisHistory = new StrategyMarketTickResult(OnMarketTickEvent(e), OnBuyEvent(b), OnSellEvent(s));
 
-            return new StrategyMarketTickResult(e, b, s);
+            StrategyTickHistory.Add(thisHistory);
+
+            return thisHistory;
         }
+
+        /// <summary>
+        /// StrategyTickHistory
+        /// </summary>
+        public List<StrategyMarketTickResult> StrategyTickHistory { get; set; }
 
         /// <summary>
         /// Buy some Shares based on the last tick
@@ -160,36 +166,42 @@ namespace MarketSimulator.Strategies
         /// Buy Event Invocator
         /// </summary>
         /// <param name="e">The buy event arguments</param>
-        protected void OnBuyEvent(BuyEventArgs e)
+        protected BuyEventArgs OnBuyEvent(BuyEventArgs e)
         {
             if (BuyEvent != null && e != null)
             {
                 BuyEvent(this, e);
             }
+
+            return e;
         }
 
         /// <summary>
         /// Sell Event Invocator
         /// </summary>
         /// <param name="e">The sell event argument</param>
-        protected void OnSellEvent(SellEventArgs e)
+        protected SellEventArgs OnSellEvent(SellEventArgs e)
         {
             if (SellEvent != null && e != null)
             {
                 SellEvent(this, e);
             }
+
+            return e;
         }
 
         /// <summary>
         /// Market tick event invocator
         /// </summary>
         /// <param name="e">market tick event args</param>
-        public void OnMarketTickEvent(MarketTickEventArgs e)
+        public MarketTickEventArgs OnMarketTickEvent(MarketTickEventArgs e)
         {
             if (MarketTickEvent != null && e != null)
             {
                 MarketTickEvent(this, e);
             }
+
+            return e;
         }
 
         /// <summary>

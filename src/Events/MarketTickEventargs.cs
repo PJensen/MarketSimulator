@@ -10,7 +10,7 @@ namespace MarketSimulator
     /// <summary>
     /// MarketTickEventArgs
     /// </summary>
-    public class MarketTickEventArgs : MarketEventArgs, MarketSimulator.Events.ITechnicalSnap
+    public class MarketTickEventArgs : MarketEventArgs
     {
         /// <summary>
         /// Create a new instance of <see cref="MarketTickEventArgs"/>
@@ -20,7 +20,7 @@ namespace MarketSimulator
         public MarketTickEventArgs(StrategySnapshot sandbox, string symbol, MarketData marketData, SecuritiesSnap securitiesData)
             : base(securitiesData)
         {
-            MarketData = marketData; Symbol = symbol;
+            MarketData = marketData; 
             StrategyInfo = sandbox;
         }
 
@@ -32,26 +32,11 @@ namespace MarketSimulator
         /// <summary>
         /// The Symbol this market tick referrs to
         /// </summary>
-        public string Symbol { get; private set; }
+        public string Symbol { get { return MarketData.Symbol; } }
 
         /// <summary>
         /// MarketTicks
         /// </summary>
         public MarketData MarketData { get; private set; }
-
-        /// <summary>
-        /// Relative strength index
-        /// </summary>
-        public double RSI { get; set; }
-
-        /// <summary>
-        /// EMA13
-        /// </summary>
-        public double EMA13 { get; set; }
-
-        /// <summary>
-        /// MACDHistogram
-        /// </summary>
-        public double MACDHistogram { get; set; }
     }
 }

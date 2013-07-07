@@ -55,32 +55,39 @@ namespace MarketSimulator.Strategies
         /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
         public override BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
+            if (skipFirst)
+            {
+                skipFirst = false;
+                return null;
+            }
+
             var numSecurities = eventArgs.SecuritiesData.Keys.Count;
+            var security = eventArgs.Symbol;
 
             if (numSecurities <= 0)
                 return null;
 
-            if (!inMarket.ContainsKey(eventArgs.Symbol))
+            var numShares = (int)Math.Floor((eventArgs.StrategyInfo.Cash / numSecurities) / eventArgs.MarketData.Close);
+            var retVal = numShares > 0 ? new BuyEventArgs(eventArgs, numShares) : null;
+
+            if (!inMarket.ContainsKey(security))
             {
-                inMarket.Add(eventArgs.Symbol, new BuyHoldTracking() { InMarket = false, Shares = 0, Symbol = eventArgs.Symbol });
+                inMarket.Add(security, new BuyHoldTracking()
+                {
+                    Shares = numShares,
+                    Symbol = security,
+                    InMarket = true,
+                });
             }
-            else if (inMarket[eventArgs.Symbol].InMarket)
-            {
-                return null;
-            }
-
-            // buy as much as possible; distributing across the index of securities.
-            var buyShares = (int)Math.Floor((eventArgs.StrategyInfo.Cash / numSecurities) / eventArgs.MarketData.Close);
-
-            // if the first tick has already happened; 
-            var retVal = (!inMarket[eventArgs.Symbol].InMarket) ? Buy(buyShares) : null;
-
-            // we are in the market for this security
-            inMarket[eventArgs.Symbol].InMarket = true;
-            inMarket[eventArgs.Symbol].Shares = buyShares;
+            else { retVal = null; }
 
             return retVal;
         }
+
+        /// <summary>
+        /// skipFirst
+        /// </summary>
+        bool skipFirst = true;
 
         /// <summary>
         /// SellSignal; the details of the sell signal are filled in by the concrete

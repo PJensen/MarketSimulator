@@ -102,7 +102,7 @@ namespace MarketSimulator.Core
         /// AddPosition position data
         /// </summary>
         /// <param name="position"></param>
-        public void AddPosition(IPosition position)
+        public bool AddPosition(IPosition position)
         {
             if (this[position] == null)
             {
@@ -112,6 +112,8 @@ namespace MarketSimulator.Core
             {
                 this[position].Shares += position.Shares;
             }
+
+            return true;
         }
 
         /// <summary>

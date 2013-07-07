@@ -158,8 +158,6 @@ namespace MarketSimulator.Components
 
             Initialized = !LoadMarketData(failureAction);
 
-            //message = Initialized ? "OK" : "Failed loading market data.";
-
             return Initialized;
         }
 
@@ -205,17 +203,19 @@ namespace MarketSimulator.Components
             // Thus we use an accumulator to get to (X); but; obviously events simply 
             // stop firing if there is no data - to save time we just continue.
             var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count - 1);
-            var currentMarketDate = GlobalExecutionSettings.Instance.StartDate;
-            var currentMarketTick = 0;
-
+            
             foreach (var sandbox in Sandboxes)
             {
+                var currentMarketTick = 0;
                 var startDate = SecurityMaster.MinimumDate;
                 var endDate = SecurityMaster.MaximumDate;
                 var currentDate = startDate;
 
                 sandbox.Initialize();
 
+                if (currentDate < GlobalExecutionSettings.Instance.StartDate)
+                    currentDate = GlobalExecutionSettings.Instance.StartDate;
+                
                 while (currentDate < endDate)
                 {
                     var securitySnap = SecurityMaster[currentDate];
@@ -229,12 +229,15 @@ namespace MarketSimulator.Components
                         {
                             continue;
                         }
+                        else if (tmpMarketData.Date > GlobalExecutionSettings.Instance.EndDate)
+                        {
+                            continue;
+                        }
 
                         // TODO: find a more natural place for StrategyTickHistory.Add(..)
-                        sandbox.StrategyTickHistory.Add(
-                            sandbox.Strategy.MarketTick(this,
-                                new MarketTickEventArgs(new StrategySnapshot(sandbox),
-                                    security, tmpMarketData, securitySnap)));
+                        sandbox.Strategy.MarketTick(this,
+                            new MarketTickEventArgs(new StrategySnapshot(sandbox),
+                                security, tmpMarketData, securitySnap));
 
                         if (nextDate == currentDate && tmpMarketData.HasNext)
                         {

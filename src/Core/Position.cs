@@ -9,7 +9,7 @@ namespace MarketSimulator.Core
     /// <summary>
     /// Position
     /// </summary>
-    public struct Position : IPosition
+    public class Position : IPosition
     {
         /// <summary>
         /// Position; positons are transient
@@ -19,7 +19,6 @@ namespace MarketSimulator.Core
         /// <param name="Shares">the number of Shares</param>
         /// <param name="price">the price</param>
         public Position(DateTime date, string symbol, int shares, double price)
-            : this()
         {
             Symbol = symbol;
             Shares = shares;
@@ -32,7 +31,6 @@ namespace MarketSimulator.Core
         /// </summary>
         /// <param name="position">position</param>
         public Position(IPosition position)
-            : this()
         {
             Symbol = position.Symbol;
             Shares = position.Shares;

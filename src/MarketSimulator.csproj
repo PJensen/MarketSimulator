@@ -122,7 +122,6 @@
     </Compile>
     <Compile Include="Interfaces\ISnappable.cs" />
     <Compile Include="Interfaces\IStrategyExecutor.cs" />
-    <Compile Include="Interfaces\ITechnical.cs" />
     <Compile Include="Interfaces\ITradeEventListener.cs" />
     <Compile Include="Interfaces\IMarketSignalEventSource.cs" />
     <Compile Include="Interfaces\IStrategyEventReciever.cs" />
