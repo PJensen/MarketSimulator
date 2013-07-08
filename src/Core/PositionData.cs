@@ -109,7 +109,10 @@ namespace MarketSimulator.Core
             get
             {
                 if (!positions.ContainsKey(date))
+                {
                     positions[date] = new List<IPosition>();
+                }
+
                 return positions[date];
             }
         }
@@ -161,6 +164,7 @@ namespace MarketSimulator.Core
         /// <param name="date">the date to update the position for</param>
         /// <param name="security">the security to update</param>
         /// <param name="price">the potentially new price for that date and security</param>
+        /// <returns>true on success</returns>
         public bool UpdatePrice(DateTime date, string security, double price)
         {
             if (this[date, security] == null)
@@ -178,7 +182,7 @@ namespace MarketSimulator.Core
         /// </summary>
         public bool CarryForward(DateTime previousDate, DateTime nextDate)
         {
-            if (positions[previousDate] == null)
+            if (!positions.ContainsKey(previousDate))
             {
                 return false;
             }

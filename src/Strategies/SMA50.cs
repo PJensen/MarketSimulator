@@ -52,7 +52,7 @@ namespace MarketSimulator.Strategies
             var sma50 = ((SMA)GetTechnical("SMA50")).Value;
             if (Math.Abs(sma50 - 0) > 0.001 && eventArgs.MarketData.Close < sma50)
             {
-                return new SellEventArgs(eventArgs, eventArgs.StrategyInfo.PositionData.SecurityShares(eventArgs.Symbol));
+                return new SellEventArgs(eventArgs, eventArgs.StrategyInfo.PositionData.SecurityShares(eventArgs.MarketData.Date, eventArgs.Symbol));
             }
             return null;
         }

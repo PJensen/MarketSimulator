@@ -19,7 +19,7 @@ namespace MarketSimulator.Core
             : this()
         {
             ParentSandbox = sandbox;
-            //PositionData = new PositionData(
+            PositionData = sandbox.PositionData;
             Cash = sandbox.Cash;
             NumberOfTrades = sandbox.NumberOfTrades;
             Tick = sandbox.Tick;
@@ -61,7 +61,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// Positions
         /// </summary>
-        public PositionData PositionData { get; private set; }
+        public PositionData2 PositionData { get; private set; }
 
         /// <summary>
         /// ParentSandbox

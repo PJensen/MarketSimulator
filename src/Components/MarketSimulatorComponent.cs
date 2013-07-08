@@ -244,7 +244,6 @@ namespace MarketSimulator.Components
                             nextDate = tmpMarketData.Next.Date;
                         }
 
-                        // sandbox.PositionData.CarryForward(currentDate, nextDate);
                         sandbox.PositionData.UpdatePrice(tmpMarketData.Date, security, tmpMarketData.Close);
                     }
 

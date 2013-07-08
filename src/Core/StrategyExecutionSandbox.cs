@@ -47,16 +47,12 @@ namespace MarketSimulator.Core
             CashHistory = new List<double>();
             PositionData = new PositionData2();
             PositionHistory = new PositionHistory();
-
+            
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
+            NumberOfTrades = 0;
             Tick = 0;
+            StrategySnapshots = new List<StrategySnapshot>();
 
-            if (StrategySnapshots == null)
-            {
-                StrategySnapshots = new List<StrategySnapshot>();
-            }
-
-            //StrategyTickHistory.Clear();
             StrategySnapshots.Clear();
         }
 
