@@ -180,6 +180,28 @@ namespace MarketSimulator.Core
         /// <summary>
         /// CarryForward
         /// </summary>
+        /// <param name="marketData"></param>
+        /// <returns></returns>
+        public bool CarryForward(MarketData marketData)
+        {
+            var fromDate = marketData.Date;
+            var toDate = marketData.Next.Date;
+            var security = marketData.Symbol;
+
+            var tmpPosition = this[fromDate, security];
+
+            if (tmpPosition != null)
+            {
+                return Add(new Position(tmpPosition) { Date = toDate });
+            }
+
+            return false;
+        }
+
+        
+        /// <summary>
+        /// CarryForward
+        /// </summary>
         public bool CarryForward(DateTime previousDate, DateTime nextDate)
         {
             if (!positions.ContainsKey(previousDate))

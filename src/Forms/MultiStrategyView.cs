@@ -39,69 +39,30 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         private void MultiStrategyView_Load(object sender, EventArgs e)
         {
-            foreach (var security in simulator.SecurityMaster.Keys)
-            {
-                chartView.Series.Add(new Series(security)
-                                         {
-                                             ChartType = SeriesChartType.Line,
-                                             XAxisType = AxisType.Primary,
-                                             YAxisType = AxisType.Primary,
-                                             XValueType = ChartValueType.Date,
-                                             YValueType = ChartValueType.Double,
-                                         });
-            }
+            Dictionary<DateTime, int> tickDateMap = new Dictionary<DateTime, int>();
 
             foreach (var sandbox in simulator.Sandboxes)
             {
-                chartView.Series.Add(new Series(sandbox.Name)
+                var seriesSandbox = new Series(sandbox.Name)
                 {
-                    ChartType = SeriesChartType.Line,
-                    XAxisType = AxisType.Primary,
-                    YAxisType = AxisType.Secondary,
-                    XValueType = ChartValueType.Date,
-                    YValueType = ChartValueType.Double,
-                });
-            }
+                    ChartType = SeriesChartType.Area,
+                    XValueType = ChartValueType.Date 
+                };
 
-            foreach (var tickDate in simulator.TickDates)
-            {
-                foreach (var marketData in simulator.SecurityMaster[tickDate])
-                {
-                    if (marketData != null)
-                    {
-                        chartView.Series[marketData.Symbol].Points.AddXY(tickDate, marketData.Close);
-                    }
-                }
-            }
-
-            foreach (var sandbox in simulator.Sandboxes)
-            {
+                int index = 0;
                 foreach (var snap in sandbox.StrategySnapshots)
                 {
-                    var tmpDataPoint = new DataPoint()
+                    var tmpDataPoint = new DataPoint(seriesSandbox) { Tag = snap };
+                    tmpDataPoint.SetValueXY(snap.Date, snap.NAV);
+                    seriesSandbox.Points.Add(tmpDataPoint);
+
+                    if (!tickDateMap.ContainsKey(snap.Date))
                     {
-
-                    };
-
-                    chartView.Series[sandbox.Name].Points.AddXY(snap.Date, snap.NAV);
-                    
-                    if (snap.Cash <= 0)
-                    {
-                        var tmpPoint = chartView.Series[sandbox.Name].Points.LastOrDefault();
-                        if (tmpPoint == null)
-                            continue;
-
-                        tmpPoint.IsEmpty = true;
-                        tmpPoint.SetValueXY(snap.Date, DBNull.Value);
-
-                        chartView.Annotations.Add(new ArrowAnnotation()
-                        {
-                            AnchorDataPoint = tmpPoint,
-                            ArrowSize = 20,
-                            ArrowStyle = ArrowStyle.Simple,
-                        });
+                        tickDateMap.Add(snap.Date, index++);
                     }
                 }
+
+                chartView.Series.Add(seriesSandbox);
             }
         }
     }

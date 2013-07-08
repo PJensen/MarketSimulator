@@ -98,7 +98,6 @@ namespace MarketSimulator.Core
         public void SnapshotSandbox(DateTime dt)
         {
             StrategySnapshots.Add(new StrategySnapshot(this));
-            //PositionHistory.AddPositions(dt, PositionData);
             CashHistory.Add(Cash);
             Tick++;
         }
@@ -127,6 +126,10 @@ namespace MarketSimulator.Core
                 NumberOfTrades++;
                 Cash -= totalValue;
             }
+            else
+            {
+                eventArgs.Cancel = true;
+            }
         }
 
         /// <summary>
@@ -149,6 +152,10 @@ namespace MarketSimulator.Core
                 Cash += eventArgs.Price * eventArgs.Shares;
 
                 NumberOfTrades++;
+            }
+            else 
+            {
+                eventArgs.Cancel = true;
             }
         }
 

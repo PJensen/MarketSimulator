@@ -9,17 +9,17 @@ using MarketSimulator.Events;
 namespace MarketSimulator.Strategies
 {
     /// <summary>
-    /// SMA50
+    /// SMA50Strategy
     /// </summary>
-    public class SMA50 : StrategyBase
+    public class SMA50Strategy : StrategyBase
     {
         /// <summary>
-        /// SMA50
+        /// SMA50Strategy
         /// </summary>
-        public SMA50()
-            : base("SMA50 Strategy")
+        public SMA50Strategy()
+            : base("SMA50Strategy Strategy")
         {
-            AddTechnical("SMA50", new SMA(50));
+            AddTechnical<SMA50>();
         }
 
         /// <summary>
@@ -29,7 +29,8 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            double sma50 = ((SMA)GetTechnical("SMA50")).Value;
+            var sma50 = GetTechnical<SMA50, double>();
+
             if (Math.Abs(sma50 - 0) > 0.001)
             {
                 if (eventArgs.MarketData.Close > sma50)
@@ -39,6 +40,7 @@ namespace MarketSimulator.Strategies
                     return new BuyEventArgs(eventArgs, sharesToBuy);
                 }
             }
+
             return null;
         }
 
@@ -49,22 +51,24 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            var sma50 = ((SMA)GetTechnical("SMA50")).Value;
+            var sma50 = GetTechnical<SMA50, double>();
+
             if (Math.Abs(sma50 - 0) > 0.001 && eventArgs.MarketData.Close < sma50)
             {
                 return new SellEventArgs(eventArgs, eventArgs.StrategyInfo.PositionData.SecurityShares(eventArgs.MarketData.Date, eventArgs.Symbol));
             }
+
             return null;
         }
     }
 
     /// <summary>
-    /// SMA50
+    /// SMA50Strategy
     /// </summary>
     public class RandomStrategy2 : StrategyBase
     {
         /// <summary>
-        /// SMA50
+        /// SMA50Strategy
         /// </summary>
         public RandomStrategy2()
             : base("Random Strategy 2") { }
@@ -99,12 +103,12 @@ namespace MarketSimulator.Strategies
     }
 
     /// <summary>
-    /// SMA50
+    /// SMA50Strategy
     /// </summary>
     public class BuyOnly : StrategyBase
     {
         /// <summary>
-        /// SMA50
+        /// SMA50Strategy
         /// </summary>
         public BuyOnly()
             : base("Buy Only") { }

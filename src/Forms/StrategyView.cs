@@ -82,7 +82,7 @@ namespace MarketSimulator.Forms
 
                 lastBuyEvent = tick.BuyEventArgs ?? lastBuyEvent;
 
-                if (buyEvent != null && buyEvent.Shares > 0)
+                if (buyEvent != null && buyEvent.Shares > 0 && !buyEvent.Cancel)
                 {
                     dataGridViewPositions.Rows.Add(buyEvent.Date, buyEvent.Symbol, buyEvent.TradeType, buyEvent.Shares, buyEvent.Price,
                         buyEvent.Price * buyEvent.Shares);
@@ -93,7 +93,7 @@ namespace MarketSimulator.Forms
                     dataGridViewPositions.Rows.Add(sellEvent.Date, sellEvent.Symbol, sellEvent.TradeType, sellEvent.Shares, sellEvent.Price,
                         sellEvent.Price * sellEvent.Shares);
 
-                    if (lastBuyEvent != null)
+                    if (lastBuyEvent != null && !lastBuyEvent.Cancel)
                     {
                         AddLineAnnotation("NAV", tickDateMap[lastBuyEvent.Date],
                             tickDateMap[sellEvent.Date]);

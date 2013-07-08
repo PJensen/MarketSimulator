@@ -63,7 +63,14 @@ namespace MarketSimulator.Components
         public void ClearStrategies()
         {
             if (Sandboxes == null)
+            {
                 return;
+            }
+
+            foreach (var sandbox in Sandboxes)
+            {
+                sandbox.Strategy.ClearStrategyData();
+            }
 
             Sandboxes.Clear();
         }
@@ -202,8 +209,15 @@ namespace MarketSimulator.Components
             // CCCCCCCCX
             // Thus we use an accumulator to get to (X); but; obviously events simply 
             // stop firing if there is no data - to save time we just continue.
-            var maximumPossibleTicks = SecurityMaster.Values.Max(l => l.Count - 1);
-            
+            var maximumPossibleTicks = 0;
+            foreach (var s in SecurityMaster)
+            {
+                if (maximumPossibleTicks < s.Value.Count)
+                {
+                    maximumPossibleTicks = s.Value.Count;
+                }
+            }
+
             foreach (var sandbox in Sandboxes)
             {
                 var currentMarketTick = 0;
@@ -215,7 +229,7 @@ namespace MarketSimulator.Components
 
                 if (currentDate < GlobalExecutionSettings.Instance.StartDate)
                     currentDate = GlobalExecutionSettings.Instance.StartDate;
-                
+
                 while (currentDate < endDate)
                 {
                     var securitySnap = SecurityMaster[currentDate];
@@ -247,15 +261,7 @@ namespace MarketSimulator.Components
                         sandbox.PositionData.UpdatePrice(tmpMarketData.Date, security, tmpMarketData.Close);
                     }
 
-                    ReportProgress((currentMarketTick / maximumPossibleTicks) * 100, currentDate);
-
-                    if (CheckCancelled())
-                    {
-                        return;
-                    }
-
-                    
-                    if (currentDate != nextDate && nextDate > currentDate)
+                    if (nextDate > currentDate)
                     {
                         sandbox.PositionData.CarryForward(currentDate, nextDate);
 
@@ -265,6 +271,13 @@ namespace MarketSimulator.Components
                     TickDates.Add(currentDate);
                     sandbox.SnapshotSandbox(currentDate);
                     currentMarketTick++;
+
+                    ReportProgress((currentMarketTick * 1.0 / maximumPossibleTicks) * 100.0d, currentDate);
+
+                    if (CheckCancelled())
+                    {
+                        return;
+                    }
                 }
 
                 if (StrategyFinishedRunningEvent != null)
@@ -306,7 +319,7 @@ namespace MarketSimulator.Components
 
             if (percent > 100)
             {
-                throw new MarketSimulatorException("percent exceeded 100");
+                percent = 100;
             }
 
             if (marketSimulatorWorker.WorkerReportsProgress)

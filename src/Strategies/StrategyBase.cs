@@ -8,6 +8,7 @@ using MarketSimulator.Core.Indicators;
 using MarketSimulator.Events;
 using MarketSimulator.Interfaces;
 using System.Diagnostics;
+using MarketSimulator.Exceptions;
 
 namespace MarketSimulator.Strategies
 {
@@ -63,6 +64,17 @@ namespace MarketSimulator.Strategies
         }
 
         /// <summary>
+        /// GetTechnical
+        /// </summary>
+        /// <typeparam name="T">the technical</typeparam>
+        /// <typeparam name="G">the type of expected return</typeparam>
+        /// <returns></returns>
+        public G GetTechnical<T, G>() where T : Technical, ITechnicalValue<G>
+        {
+            return (GetTechnical(typeof(T).Name) as ITechnicalValue<G>).Value;
+        }
+
+        /// <summary>
         /// AddTechnical
         /// </summary>
         /// <param name="key"></param>
@@ -70,6 +82,15 @@ namespace MarketSimulator.Strategies
         public void AddTechnical(string key, Technical technical)
         {
             TechnicalIndicators.Add(key, technical);
+        }
+
+        /// <summary>
+        /// AddTechnical
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void AddTechnical<T>() where T: Technical
+        {
+            TechnicalIndicators.Add(typeof(T).Name, Activator.CreateInstance<T>() as T);
         }
 
         /// <summary>
@@ -87,6 +108,24 @@ namespace MarketSimulator.Strategies
         /// <param name="eventArgs">incoming market tick event arguments</param>
         /// <returns><c>possibly</c> a buy event; may be null to do hold or do nothing</returns>
         public abstract SellEventArgs SellSignal(MarketTickEventArgs eventArgs);
+
+        /// <summary>
+        /// IsLastTick
+        /// </summary>
+        /// <returns></returns>
+        protected bool IsLastTick
+        {
+            get
+            {
+                if (currentMarketTick == null)
+                {
+                    throw new MarketSimulatorException("Cannot check last tick for null market tick");
+                }
+
+                return currentMarketTick.MarketData.HasNext &&
+                    !currentMarketTick.MarketData.Next.HasNext;
+            }
+        }
 
         /// <summary>
         /// ClearStrategyData
@@ -116,7 +155,7 @@ namespace MarketSimulator.Strategies
 
             foreach (var technicalIndicator in TechnicalIndicators)
                 technicalIndicator.Value.MarketTick(e);
-            
+
             var s = SellSignal(e);
             var b = BuySignal(e);
 

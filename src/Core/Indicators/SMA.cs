@@ -7,6 +7,36 @@ using System.Text;
 namespace MarketSimulator.Core.Indicators
 {
     /// <summary>
+    /// SMA50Strategy
+    /// </summary>
+    public sealed class SMA50 : Core.Indicators.SMA
+    {
+        public SMA50()
+            : base(50)
+        { }
+    }
+
+    /// <summary>
+    /// SMA50Strategy
+    /// </summary>
+    public sealed class SMA150 : Core.Indicators.SMA
+    {
+        public SMA150()
+            : base(150)
+        { }
+    }
+
+    /// <summary>
+    /// SMA300
+    /// </summary>
+    public sealed class SMA300 : Core.Indicators.SMA
+    {
+        public SMA300()
+            : base(300)
+        { }
+    }
+
+    /// <summary>
     /// SMA
     /// </summary>
     [Description("A simple, or arithmetic, moving average that is calculated by adding the closing price of the security for a number of time periods and then dividing this total by the number of time periods.")]
