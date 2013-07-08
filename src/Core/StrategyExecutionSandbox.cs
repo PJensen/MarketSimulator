@@ -44,13 +44,12 @@ namespace MarketSimulator.Core
         public void Initialize()
         {
             MarketTicks = new List<MarketTickEventArgs>();
-            ActiveTradeStrings = new TradeStringCollection();
             CashHistory = new List<double>();
-            PositionData = new PositionData();
+            PositionData = new PositionData2();
+            PositionHistory = new PositionHistory();
 
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
             Tick = 0;
-
 
             if (StrategySnapshots == null)
             {
@@ -100,6 +99,7 @@ namespace MarketSimulator.Core
         public void SnapshotSandbox(DateTime dt)
         {
             StrategySnapshots.Add(new StrategySnapshot(this));
+            //PositionHistory.AddPositions(dt, PositionData);
             CashHistory.Add(Cash);
             Tick++;
         }
@@ -123,12 +123,10 @@ namespace MarketSimulator.Core
                 return;
             }
 
-            if (PositionData.AddPosition(eventArgs))
+            if (PositionData.Add(eventArgs))
             {
                 NumberOfTrades++;
                 Cash -= totalValue;
-
-                //ActiveTradeStrings[eventArgs.Symbol].BuyLine.Add(eventArgs);
             }
         }
 
@@ -147,12 +145,11 @@ namespace MarketSimulator.Core
 
             // adding to cash is predicated on safe removal; this really means you 
             // can't sell more than you have.
-            if (PositionData.RemovePosition(eventArgs))
+            if (PositionData.Remove(eventArgs))
             {
                 Cash += eventArgs.Price * eventArgs.Shares;
 
                 NumberOfTrades++;
-                //ActiveTradeStrings[eventArgs.Symbol].SellLine.Add(eventArgs);
             }
         }
 
@@ -160,6 +157,7 @@ namespace MarketSimulator.Core
         /// Determines if this execution strategy has made money -- yet.
         /// </summary>
         /// <returns><value>true</value> if the strategy has made money</returns>
+        /*
         public bool MadeMoney(string symbol)
         {
             var activeTradeString = ActiveTradeStrings[symbol];
@@ -168,7 +166,7 @@ namespace MarketSimulator.Core
                 - (activeTradeString.LastPurchasedPrice * activeTradeString.TotalSharesAfterExecution);
 
             return mktTotal > 0;
-        }
+        }*/
 
         #endregion
 
@@ -197,7 +195,7 @@ namespace MarketSimulator.Core
         /// <summary>
         /// PositionData
         /// </summary>
-        public PositionData PositionData { get; set; }
+        public PositionData2 PositionData { get; set; }
 
         /// <summary>
         /// StrategySnapshots
@@ -205,9 +203,9 @@ namespace MarketSimulator.Core
         public List<StrategySnapshot> StrategySnapshots { get; set; }
 
         /// <summary>
-        /// StrategyTickHistory
+        /// The position history for this strategy executor
         /// </summary>
-        // public List<StrategyMarketTickResult> StrategyTickHistory { get; set; }
+        public PositionHistory PositionHistory { get; private set; }
 
         /// <summary>
         /// The strategy executor for easy access to data at that seggrated level
@@ -218,11 +216,6 @@ namespace MarketSimulator.Core
         /// The trading strategy that is being executed in this sandbox.
         /// </summary>
         public StrategyBase Strategy { get; private set; }
-
-        /// <summary>
-        /// ActiveTradeString
-        /// </summary>
-        public TradeStringCollection ActiveTradeStrings { get; set; }
 
         /// <summary>
         /// GetMarketData returns the market data for the security at the specified tick

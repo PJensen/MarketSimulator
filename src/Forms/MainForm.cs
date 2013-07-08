@@ -44,6 +44,7 @@ namespace MarketSimulator.Forms
             // eventually they'll be loaded reflectively.
             AddStrategyNode(new SMA50());
             AddStrategyNode(new BuyAndHoldStrategy());
+            AddStrategyNode(new RandomStrategy2());
             #endregion
         }
 

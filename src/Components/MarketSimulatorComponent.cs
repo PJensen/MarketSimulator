@@ -244,7 +244,8 @@ namespace MarketSimulator.Components
                             nextDate = tmpMarketData.Next.Date;
                         }
 
-                        sandbox.PositionData.UpdatePrice(security, tmpMarketData.Close);
+                        // sandbox.PositionData.CarryForward(currentDate, nextDate);
+                        sandbox.PositionData.UpdatePrice(tmpMarketData.Date, security, tmpMarketData.Close);
                     }
 
                     ReportProgress((currentMarketTick / maximumPossibleTicks) * 100, currentDate);
@@ -254,13 +255,12 @@ namespace MarketSimulator.Components
                         return;
                     }
 
+                    
                     if (currentDate != nextDate && nextDate > currentDate)
                     {
+                        sandbox.PositionData.CarryForward(currentDate, nextDate);
+
                         currentDate = nextDate;
-                    }
-                    else
-                    {
-                        currentDate = currentDate.AddDays(1);
                     }
 
                     TickDates.Add(currentDate);

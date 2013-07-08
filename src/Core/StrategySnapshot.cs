@@ -19,13 +19,13 @@ namespace MarketSimulator.Core
             : this()
         {
             ParentSandbox = sandbox;
-            PositionData = new PositionData(sandbox.PositionData);
+            //PositionData = new PositionData(
             Cash = sandbox.Cash;
             NumberOfTrades = sandbox.NumberOfTrades;
             Tick = sandbox.Tick;
             Date = sandbox.Date;
-            NAV = sandbox.PositionData.TotalMarketValue + Cash;
-            TotalMarketValue = sandbox.PositionData.TotalMarketValue;
+            NAV = sandbox.PositionData.TotalMarketValue(Date) + Cash;
+            TotalMarketValue = sandbox.PositionData.TotalMarketValue(Date);
         }
 
         /// <summary>

@@ -66,6 +66,7 @@
     <Compile Include="Core\Indicators\ITechnicalValue.cs" />
     <Compile Include="Core\Indicators\SMA.cs" />
     <Compile Include="Core\PositionData.cs" />
+    <Compile Include="Core\PositionHistory.cs" />
     <Compile Include="Core\StrategySnapshot.cs" />
     <Compile Include="Core\TradeStringCollection.cs" />
     <Compile Include="Events\ITechnicalSnap.cs" />

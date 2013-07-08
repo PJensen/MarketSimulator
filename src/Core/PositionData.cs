@@ -8,6 +8,196 @@ using System.Text;
 namespace MarketSimulator.Core
 {
     /// <summary>
+    /// PositionData2
+    /// </summary>
+    public class PositionData2
+    {
+        /// <summary>
+        /// PositionData2
+        /// </summary>
+        public PositionData2()
+        {
+            positions = new Dictionary<DateTime, List<IPosition>>();
+        }
+
+        /// <summary>
+        /// internal positions backing store
+        /// </summary>
+        private readonly Dictionary<DateTime, List<IPosition>> positions;
+
+        /// <summary>
+        /// indexer
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="security"></param>
+        /// <returns></returns>
+        private IPosition this[DateTime date, string security]
+        {
+            get
+            {
+                // Note: Doesn't matter that this returns null.
+                if (positions.ContainsKey(date))
+                {
+                    return positions[date].FirstOrDefault(p => p.Symbol.Equals(security));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public bool Add(IPosition position)
+        {
+            var tmpPosition = this[position.Date, position.Symbol];
+
+            if (tmpPosition != null)
+            {
+                this[position.Date, position.Symbol].Shares += position.Shares;
+
+                return true;
+            }
+            else
+            {
+                if (!positions.ContainsKey(position.Date))
+                {
+                    positions[position.Date] = new List<IPosition>();
+                }
+
+                positions[position.Date].Add(position);
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// REFACTOR THIS
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public bool Remove(IPosition position)
+        {
+            var tmpPosition = this[position.Date, position.Symbol];
+
+            if (tmpPosition == null)
+            {
+                return false;
+            }
+
+            if (position.Shares <= this[position.Date, position.Symbol].Shares)
+            {
+                this[position.Date, position.Symbol].Shares -= position.Shares;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// indexer
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public IEnumerable<IPosition> this[DateTime date]
+        {
+            get
+            {
+                if (!positions.ContainsKey(date))
+                    positions[date] = new List<IPosition>();
+                return positions[date];
+            }
+        }
+
+        /// <summary>
+        /// TotalMarketValue
+        /// </summary>
+        /// <param name="date">total market value as of date</param>
+        /// <returns>the total market value</returns>
+        public double TotalMarketValue(DateTime date)
+        {
+            return this[date].Sum(p => p.Shares * p.Price);
+        }
+
+        /// <summary>
+        /// Clears all position data
+        /// </summary>
+        public void Clear()
+        {
+            positions.Clear();
+        }
+
+        /// <summary>
+        /// SecurityShares
+        /// </summary>
+        public int SecurityShares(DateTime date, string security)
+        {
+            if (this[date, security] == null)
+                return 0;
+
+            return this[date, security].Shares;
+        }
+
+        /// <summary>
+        /// SecurityValue
+        /// </summary>
+        public double SecurityValue(DateTime date, string security)
+        {
+            if (this[date, security] == null)
+                return 0.0d;
+
+            return this[date, security].Shares *
+                this[date, security].Price;
+        }
+
+        /// <summary>
+        /// UpdatePrice
+        /// </summary>
+        /// <param name="date">the date to update the position for</param>
+        /// <param name="security">the security to update</param>
+        /// <param name="price">the potentially new price for that date and security</param>
+        public bool UpdatePrice(DateTime date, string security, double price)
+        {
+            if (this[date, security] == null)
+            {
+                return false;
+            }
+
+            this[date, security].Price = price;
+
+            return true;
+        }
+
+        /// <summary>
+        /// CarryForward
+        /// </summary>
+        public bool CarryForward(DateTime previousDate, DateTime nextDate)
+        {
+            if (positions[previousDate] == null)
+            {
+                return false;
+            }
+
+            foreach (var position in positions[previousDate].Where(p => p.Shares > 0))
+            {
+                if (!positions.ContainsKey(nextDate))
+                {
+                    positions[nextDate] = new List<IPosition>();
+                }
+
+                Add(new Position(position) { Date = nextDate });
+            }
+
+            return true;
+        }
+    }
+
+    /// <summary>
     /// PositionData
     /// </summary>
     public class PositionData : IEnumerable<IPosition>
@@ -182,17 +372,5 @@ namespace MarketSimulator.Core
         {
             return Positions.GetEnumerator();
         }
-    }
-
-    /// <summary>
-    /// Ledger
-    /// </summary>
-    public class PositionHistory : Dictionary<DateTime, IPosition>
-    {
-        /// <summary>
-        /// Ledger
-        /// </summary>
-        public PositionHistory()
-            : base() { }
     }
 }
