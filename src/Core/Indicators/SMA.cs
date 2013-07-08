@@ -70,5 +70,13 @@ namespace MarketSimulator.Core.Indicators
         }
 
         #endregion
+
+        /// <summary>
+        /// Clear
+        /// </summary>
+        public override void Clear()
+        {
+            values.Clear();
+        }
     }
 }

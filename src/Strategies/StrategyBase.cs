@@ -89,6 +89,21 @@ namespace MarketSimulator.Strategies
         public abstract SellEventArgs SellSignal(MarketTickEventArgs eventArgs);
 
         /// <summary>
+        /// ClearStrategyData
+        /// </summary>
+        public virtual void ClearStrategyData()
+        {
+            StrategyTickHistory.Clear();
+
+            foreach (var technical in TechnicalIndicators)
+            {
+                technical.Value.Clear();
+            }
+
+            currentMarketTick = null;
+        }
+
+        /// <summary>
         /// MarketTick
         /// </summary>
         /// <param name="sender">event sender</param>

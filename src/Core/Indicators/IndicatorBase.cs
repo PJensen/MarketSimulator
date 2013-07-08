@@ -39,6 +39,11 @@ namespace MarketSimulator.Core.Indicators
         public abstract void MarketTick(MarketTickEventArgs mktTickEventArgs);
 
         /// <summary>
+        /// Clear all technical data
+        /// </summary>
+        public abstract void Clear();
+
+        /// <summary>
         /// The name of this techincal indicator
         /// </summary>
         public string Name { get; protected set; }

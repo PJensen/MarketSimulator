@@ -28,9 +28,10 @@ namespace MarketSimulator.Core
                 throw new ArgumentNullException("strategy");
             }
 
-            Initialize();
+            
             StrategyExecutor = strategyExecutor;
             Strategy = strategy;
+            Initialize();
 
             // outer event wiring
             strategy.SellEvent += OnSellEvent;
@@ -54,6 +55,8 @@ namespace MarketSimulator.Core
             StrategySnapshots = new List<StrategySnapshot>();
 
             StrategySnapshots.Clear();
+
+            Strategy.ClearStrategyData();
         }
 
         #region Constants
