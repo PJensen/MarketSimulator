@@ -1,7 +1,10 @@
 ﻿using System;
 namespace MarketSimulator.Interfaces
 {
-    public interface IMarketData
+    /// <summary>
+    /// IMarketData
+    /// </summary>
+    public interface IMarketData : IHasDate
     {
         double Close { get; set; }
         DateTime Date { get; set; }

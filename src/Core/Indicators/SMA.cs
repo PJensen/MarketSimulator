@@ -9,7 +9,8 @@ namespace MarketSimulator.Core.Indicators
     /// <summary>
     /// SMA50Strategy
     /// </summary>
-    public sealed class SMA50 : Core.Indicators.SMA
+    [Category(PriceBased)]
+    public sealed class SMA50 : SMA
     {
         public SMA50()
             : base(50)
@@ -19,7 +20,8 @@ namespace MarketSimulator.Core.Indicators
     /// <summary>
     /// SMA50Strategy
     /// </summary>
-    public sealed class SMA150 : Core.Indicators.SMA
+    [Category(PriceBased)]
+    public sealed class SMA150 : SMA
     {
         public SMA150()
             : base(150)
@@ -29,7 +31,8 @@ namespace MarketSimulator.Core.Indicators
     /// <summary>
     /// SMA300
     /// </summary>
-    public sealed class SMA300 : Core.Indicators.SMA
+    [Category(PriceBased)]
+    public sealed class SMA300 : SMA
     {
         public SMA300()
             : base(300)
@@ -40,7 +43,7 @@ namespace MarketSimulator.Core.Indicators
     /// SMA
     /// </summary>
     [Description("A simple, or arithmetic, moving average that is calculated by adding the closing price of the security for a number of time periods and then dividing this total by the number of time periods.")]
-    [Category("")]
+    [Category(PriceBased)]
     public class SMA : Technical, ITechnicalValue<double>
     {
         /// <summary>
@@ -52,6 +55,11 @@ namespace MarketSimulator.Core.Indicators
         /// The collection of values for the SMA
         /// </summary>
         private readonly Queue<double> values;
+
+        /// <summary>
+        /// historical values for SMA going back to epoch
+        /// </summary>
+        private readonly Dictionary<DateTime, double> historical;
 
         /// <summary>
         /// The value of the SMA
@@ -91,12 +99,19 @@ namespace MarketSimulator.Core.Indicators
         /// <returns></returns>
         public override void MarketTick(MarketTickEventArgs mktTickEventArgs)
         {
+            #region FIFO Closing Price Queue of Period Size
+
             if (values.Count >= _period)
             {
                 values.Dequeue();
             }
 
             values.Enqueue(mktTickEventArgs.MarketData.Close);
+
+            #endregion
+
+            // trap historical value for this tick
+            historical.Add(mktTickEventArgs.MarketData.Date, Value);
         }
 
         #endregion
@@ -107,6 +122,15 @@ namespace MarketSimulator.Core.Indicators
         public override void Clear()
         {
             values.Clear();
+            historical.Clear();
+        }
+
+        /// <summary>
+        /// Historical
+        /// </summary>
+        public Dictionary<DateTime, double> Historical
+        {
+            get { return historical; }
         }
     }
 }

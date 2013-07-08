@@ -12,6 +12,15 @@ namespace MarketSimulator.Core.Indicators
     [DebuggerDisplay("{Name}")]
     public abstract class Technical : IEquatable<string>, IEquatable<Technical>
     {
+        #region Technical Categories
+
+        protected const string OverlayCategory = "Overlays";
+        protected const string BreadthIndicators = "Breadth Indicators";
+        protected const string PriceBased = "Price-based indicators";
+        protected const string VolumeBased = "Volume-based indicators";
+
+        #endregion
+
         /// <summary>
         /// Technical
         /// </summary>
