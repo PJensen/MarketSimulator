@@ -138,6 +138,8 @@ namespace MarketSimulator
                 retVal[i].Next = retVal[i + 1];
             }
 
+
+
             return retVal.ToList();
         }
     }

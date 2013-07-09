@@ -107,56 +107,42 @@ namespace MarketSimulator.Forms
                 chartStrategy.Series.Add(seriesSMA50);
             }
 
-            var lastBuyEvents = new List<BuyEventArgs>();
+
+            var seriesSell = new Series("SELL")
+            {
+                ChartType = SeriesChartType.Point,
+                XValueType = ChartValueType.Date,
+                YAxisType = AxisType.Secondary
+            };
+
+
+            var seriesBuy = new Series("BUY")
+            {
+                ChartType = SeriesChartType.Point,
+                XValueType = ChartValueType.Date,
+                YAxisType = AxisType.Secondary,
+            };
+
+            
 
             foreach (var tick in sandbox.Strategy.StrategyTickHistory)
             {
-                var snapshot = tick.StrategySnapshot;
-                var positionData = snapshot.PositionData;
-                var buyEvent = tick.BuyEventArgs;
-                var sellEvent = tick.SellEventArgs;
+                var b = tick.BuyEventArgs;
+                var s = tick.SellEventArgs;
 
-                if (sellEvent != null && sellEvent.Shares > 0 && !sellEvent.Cancel)
+                if (b != null)
                 {
-                    if (lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).Count() <= 0)
-                        continue;
-
-                    var purchasedMarketValue = 0.0d;
-                    var purchasedShares = 0;
-                    var soldMarketValue = sellEvent.Shares * sellEvent.Price;
-
-                    purchasedMarketValue = lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).Sum(b => b.Price * b.Shares);
-                    purchasedShares = lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).Sum(b => b.Shares);
-
-                    var remainingShares = purchasedShares - sellEvent.Shares;
-                    var tmpBuy = lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).OrderBy(b => b.Date).Last();
-                    var remainingMarketValue = remainingShares * tmpBuy.Price;
-                    var totalProfit = soldMarketValue - ((purchasedMarketValue - remainingMarketValue));
-
-                    foreach (var b in lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)))
-                    {
-                        AddArrowAnnotation("NAV", tickDateMap[b.Date], () => { return Color.Black; });
-                    }
-
-                    lastBuyEvents.Clear();
-
-                    if (remainingShares > 0)
-                    {
-                        lastBuyEvents.Add(new BuyEventArgs(tick.MarketTickEventArgs, remainingShares)
-                        {
-                            Price = tmpBuy.Price,
-                        });
-                    }
-
-                    AddLineAnnotation("NAV", tickDateMap[tmpBuy.Date],
-                        tickDateMap[sellEvent.Date], () => { return totalProfit > 0 ? Color.Green : Color.Red; });
+                    seriesSell.Points.AddXY(b.Date, b.MarketData.Close);
                 }
 
-                if (buyEvent != null && !buyEvent.Cancel && buyEvent.Shares > 0)
+                if (s != null)
                 {
-                    lastBuyEvents.Add(buyEvent);
+                    seriesBuy.Points.AddXY(s.Date, s.MarketData.Close);
                 }
             }
+
+            chartStrategy.Series.Add(seriesSell);
+            chartStrategy.Series.Add(seriesBuy);
 
             /*
             foreach (var tick in sandbox.Strategy.StrategyTickHistory)

@@ -234,6 +234,7 @@ namespace MarketSimulator.Components
                 {
                     var securitySnap = SecurityMaster[currentDate];
                     var nextDate = currentDate;
+                    var okay = false;
 
                     foreach (var security in SecurityMaster.Keys)
                     {
@@ -243,7 +244,13 @@ namespace MarketSimulator.Components
                         {
                             continue;
                         }
-                        else if (tmpMarketData.Date > GlobalExecutionSettings.Instance.EndDate)
+
+                        if (nextDate == currentDate && tmpMarketData.HasNext)
+                        {
+                            nextDate = tmpMarketData.Next.Date;
+                        }
+
+                        if (tmpMarketData.Date > GlobalExecutionSettings.Instance.EndDate)
                         {
                             continue;
                         }
@@ -253,12 +260,9 @@ namespace MarketSimulator.Components
                             new MarketTickEventArgs(new StrategySnapshot(sandbox),
                                 security, tmpMarketData, securitySnap));
 
-                        if (nextDate == currentDate && tmpMarketData.HasNext)
-                        {
-                            nextDate = tmpMarketData.Next.Date;
-                        }
-
                         sandbox.PositionData.UpdatePrice(tmpMarketData.Date, security, tmpMarketData.Close);
+
+                        okay = true;
                     }
 
                     if (nextDate > currentDate)
@@ -267,10 +271,17 @@ namespace MarketSimulator.Components
 
                         currentDate = nextDate;
                     }
+                    else
+                    {
+                        currentDate = currentDate.AddDays(1);
+                    }
 
-                    TickDates.Add(currentDate);
-                    sandbox.SnapshotSandbox(currentDate);
-                    currentMarketTick++;
+                    if (okay)
+                    {
+                        TickDates.Add(currentDate);
+                        sandbox.SnapshotSandbox(currentDate);
+                        currentMarketTick++;
+                    }
 
                     ReportProgress((currentMarketTick * 1.0 / maximumPossibleTicks) * 100.0d, currentDate);
 

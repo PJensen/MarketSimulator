@@ -39,14 +39,14 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         private void MultiStrategyView_Load(object sender, EventArgs e)
         {
-            Dictionary<DateTime, int> tickDateMap = new Dictionary<DateTime, int>();
+            var tickDateMap = new Dictionary<DateTime, int>();
 
             foreach (var sandbox in simulator.Sandboxes)
             {
                 var seriesSandbox = new Series(sandbox.Name)
                 {
-                    ChartType = SeriesChartType.Area,
-                    XValueType = ChartValueType.Date 
+                    ChartType = SeriesChartType.Line,
+                    XValueType = ChartValueType.Date
                 };
 
                 int index = 0;
@@ -63,6 +63,26 @@ namespace MarketSimulator.Forms
                 }
 
                 chartView.Series.Add(seriesSandbox);
+            }
+
+            foreach (var s in simulator.SecurityMaster)
+            {
+                var security = s.Key;
+                var securityData = s.Value;
+
+                var seriesSecurity = new Series(security)
+                {
+                    ChartType = SeriesChartType.Line,
+                    XValueType = ChartValueType.Date,
+                    YAxisType = AxisType.Secondary
+                };
+
+                foreach (var marketData in securityData.Where(m => tickDateMap.ContainsKey(m.Date)))
+                {
+                    seriesSecurity.Points.AddXY(marketData.Date, marketData.Close);
+                }
+
+                chartView.Series.Add(seriesSecurity);
             }
         }
     }

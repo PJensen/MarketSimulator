@@ -192,7 +192,7 @@ namespace MarketSimulator.Forms
             flowLayoutPanelMain.Controls.Clear();
             marketSimulatorComponent.Sandboxes.Sort();
 
-            //flowLayoutPanelMain.Controls.Add(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
+            flowLayoutPanelMain.Controls.Add(new MultiStrategyView(marketSimulatorComponent) { Visible = true, TopLevel = false });
 
             foreach (var sandbox in marketSimulatorComponent.Sandboxes)
             {
@@ -207,8 +207,10 @@ namespace MarketSimulator.Forms
         /// <param name="e">event args</param>
         void marketSimulatorWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            if (toolStripProgressBarMain != null)
+            if (toolStripProgressBarMain != null && e != null)
+            {
                 toolStripProgressBarMain.Value = e.ProgressPercentage;
+            }
 
             SetStatus((e.UserState ?? string.Empty).ToString());
         }
