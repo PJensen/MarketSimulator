@@ -49,6 +49,20 @@ namespace MarketSimulator.Forms
             chartStrategy.Annotations.Add(annotation);
         }
 
+        private void AddArrowAnnotation(string series, int firstPoint, Func<Color> coloring)
+        {
+            LineAnnotation annotation = new LineAnnotation();
+            annotation.AnchorDataPoint = chartStrategy.Series[series].Points[firstPoint];
+            
+            annotation.Height = -2;
+            annotation.Width = 0;
+            annotation.LineWidth = 1;
+            annotation.StartCap = LineAnchorCapStyle.Arrow;
+            annotation.EndCap = LineAnchorCapStyle.None;
+            annotation.LineColor = coloring();
+            chartStrategy.Annotations.Add(annotation);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -118,6 +132,11 @@ namespace MarketSimulator.Forms
                     var tmpBuy = lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).OrderBy(b => b.Date).Last();
                     var remainingMarketValue = remainingShares * tmpBuy.Price;
                     var totalProfit = soldMarketValue - ((purchasedMarketValue - remainingMarketValue));
+
+                    foreach (var b in lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)))
+                    {
+                        AddArrowAnnotation("NAV", tickDateMap[b.Date], () => { return Color.Black; });
+                    }
 
                     lastBuyEvents.Clear();
 
