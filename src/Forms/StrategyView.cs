@@ -1,5 +1,6 @@
 ﻿using MarketSimulator.Components;
 using MarketSimulator.Core;
+using MarketSimulator.Core.Indicators;
 using MarketSimulator.Events;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace MarketSimulator.Forms
         /// </summary>
         /// <param name="series"></param>
         /// <param name="index"></param>
-        private void AddLineAnnotation(string series, int firstPoint, int secondPoint)
+        private void AddLineAnnotation(string series, int firstPoint, int secondPoint, Func<Color> coloring)
         {
             LineAnnotation annotation = new LineAnnotation();
             annotation.SetAnchor(chartStrategy.Series[series].Points[firstPoint], chartStrategy.Series[series].Points[secondPoint]);
@@ -44,6 +45,7 @@ namespace MarketSimulator.Forms
             annotation.LineWidth = 1;
             annotation.StartCap = LineAnchorCapStyle.Round;
             annotation.EndCap = LineAnchorCapStyle.Round;
+            annotation.LineColor = coloring();
             chartStrategy.Annotations.Add(annotation);
         }
 
@@ -71,7 +73,27 @@ namespace MarketSimulator.Forms
 
             chartStrategy.Series.Add(seriesNAV);
 
-            BuyEventArgs lastBuyEvent = null;
+            // TODO: Generalize and refactor if possible.
+            if (sandbox.Strategy.HasTechnical<SMA50, double>())
+            {
+                var sma50Historical = sandbox.Strategy.GetTechnical<SMA50, double>().Historical;
+
+                var seriesSMA50 = new Series("SMA 50")
+                {
+                    ChartType = SeriesChartType.Line,
+                    XValueType = ChartValueType.Date,
+                    YAxisType = AxisType.Secondary
+                };
+
+                foreach (var sma50Tick in sma50Historical)
+                {
+                    seriesSMA50.Points.AddXY(sma50Tick.Key, sma50Tick.Value);
+                }
+
+                chartStrategy.Series.Add(seriesSMA50);
+            }
+
+            var lastBuyEvents = new List<BuyEventArgs>();
 
             foreach (var tick in sandbox.Strategy.StrategyTickHistory)
             {
@@ -79,6 +101,52 @@ namespace MarketSimulator.Forms
                 var positionData = snapshot.PositionData;
                 var buyEvent = tick.BuyEventArgs;
                 var sellEvent = tick.SellEventArgs;
+
+                if (sellEvent != null && sellEvent.Shares > 0 && !sellEvent.Cancel)
+                {
+                    if (lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).Count() <= 0)
+                        continue;
+
+                    var purchasedMarketValue = 0.0d;
+                    var purchasedShares = 0;
+                    var soldMarketValue = sellEvent.Shares * sellEvent.Price;
+
+                    purchasedMarketValue = lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).Sum(b => b.Price * b.Shares);
+                    purchasedShares = lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).Sum(b => b.Shares);
+
+                    var remainingShares = purchasedShares - sellEvent.Shares;
+                    var tmpBuy = lastBuyEvents.Where(b => sellEvent.Symbol.Equals(b.Symbol)).OrderBy(b => b.Date).Last();
+                    var remainingMarketValue = remainingShares * tmpBuy.Price;
+                    var totalProfit = soldMarketValue - ((purchasedMarketValue - remainingMarketValue));
+
+                    lastBuyEvents.Clear();
+
+                    if (remainingShares > 0)
+                    {
+                        lastBuyEvents.Add(new BuyEventArgs(tick.MarketTickEventArgs, remainingShares)
+                        {
+                            Price = tmpBuy.Price,
+                        });
+                    }
+
+                    AddLineAnnotation("NAV", tickDateMap[tmpBuy.Date],
+                        tickDateMap[sellEvent.Date], () => { return totalProfit > 0 ? Color.Green : Color.Red; });
+                }
+
+                if (buyEvent != null && !buyEvent.Cancel && buyEvent.Shares > 0)
+                {
+                    lastBuyEvents.Add(buyEvent);
+                }
+            }
+
+            /*
+            foreach (var tick in sandbox.Strategy.StrategyTickHistory)
+            {
+                var snapshot = tick.StrategySnapshot;
+                var positionData = snapshot.PositionData;
+                var buyEvent = tick.BuyEventArgs;
+                var sellEvent = tick.SellEventArgs;
+
 
                 lastBuyEvent = tick.BuyEventArgs ?? lastBuyEvent;
 
@@ -93,7 +161,7 @@ namespace MarketSimulator.Forms
                     dataGridViewPositions.Rows.Add(sellEvent.Date, sellEvent.Symbol, sellEvent.TradeType, sellEvent.Shares, sellEvent.Price,
                         sellEvent.Price * sellEvent.Shares);
 
-                    if (lastBuyEvent != null && !lastBuyEvent.Cancel)
+                    if (lastBuyEvent != null && !lastBuyEvent.Cancel && lastBuyEvent.Symbol.Equals(buyEvent.Symbol))
                     {
                         AddLineAnnotation("NAV", tickDateMap[lastBuyEvent.Date],
                             tickDateMap[sellEvent.Date]);
@@ -101,7 +169,7 @@ namespace MarketSimulator.Forms
                         lastBuyEvent = null;
                     }
                 }
-            }
+            }*/
 
             chartStrategy.Series.Add(seriesTrades);
             chartStrategy.UpdateAnnotations();

@@ -22,6 +22,13 @@ namespace MarketSimulator.Events
         { }
 
         /// <summary>
+        /// BuyEventArgs copy ctor
+        /// </summary>
+        /// <param name="buyEvent">buy event</param>
+        public BuyEventArgs(BuyEventArgs buyEvent)
+            : base(TradeType.Buy, buyEvent, buyEvent.MarketData) { }
+
+        /// <summary>
         /// BuyEventArgs
         /// </summary>
         /// <param name="marketTickEventArgs">the market tick event args</param>

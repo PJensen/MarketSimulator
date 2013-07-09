@@ -29,7 +29,7 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.BuyEventArgs BuySignal(MarketTickEventArgs eventArgs)
         {
-            var sma50 = GetTechnical<SMA50, double>();
+            var sma50 = GetTechnicalValue<SMA50, double>();
 
             if (Math.Abs(sma50 - 0) > 0.001)
             {
@@ -51,7 +51,7 @@ namespace MarketSimulator.Strategies
         /// <returns></returns>
         public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
         {
-            var sma50 = GetTechnical<SMA50, double>();
+            var sma50 = GetTechnicalValue<SMA50, double>();
 
             if (Math.Abs(sma50 - 0) > 0.001 && eventArgs.MarketData.Close < sma50)
             {

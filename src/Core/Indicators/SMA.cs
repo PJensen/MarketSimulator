@@ -10,7 +10,7 @@ namespace MarketSimulator.Core.Indicators
     /// SMA50Strategy
     /// </summary>
     [Category(PriceBased)]
-    public sealed class SMA50 : SMA
+    public sealed class SMA50 : SMA, ITechnicalValue<double>
     {
         public SMA50()
             : base(50)
@@ -21,7 +21,7 @@ namespace MarketSimulator.Core.Indicators
     /// SMA50Strategy
     /// </summary>
     [Category(PriceBased)]
-    public sealed class SMA150 : SMA
+    public sealed class SMA150 : SMA, ITechnicalValue<double>
     {
         public SMA150()
             : base(150)
@@ -32,7 +32,7 @@ namespace MarketSimulator.Core.Indicators
     /// SMA300
     /// </summary>
     [Category(PriceBased)]
-    public sealed class SMA300 : SMA
+    public sealed class SMA300 : SMA, ITechnicalValue<double>
     {
         public SMA300()
             : base(300)
@@ -81,6 +81,7 @@ namespace MarketSimulator.Core.Indicators
         {
             _period = period;
             values = new Queue<double>(_period);
+            historical = new Dictionary<DateTime, double>();
         }
 
         /// <summary>
@@ -99,6 +100,9 @@ namespace MarketSimulator.Core.Indicators
         /// <returns></returns>
         public override void MarketTick(MarketTickEventArgs mktTickEventArgs)
         {
+            if (historical.ContainsKey(mktTickEventArgs.MarketData.Date))
+                return;
+
             #region FIFO Closing Price Queue of Period Size
 
             if (values.Count >= _period)
@@ -111,6 +115,7 @@ namespace MarketSimulator.Core.Indicators
             #endregion
 
             // trap historical value for this tick
+
             historical.Add(mktTickEventArgs.MarketData.Date, Value);
         }
 

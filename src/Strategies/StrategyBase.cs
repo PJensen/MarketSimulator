@@ -58,20 +58,50 @@ namespace MarketSimulator.Strategies
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Technical GetTechnical(string key)
+        public Technical GetTechnicalByName(string key)
         {
-            return TechnicalIndicators[key];
+            if (TechnicalIndicators.ContainsKey(key))
+                return TechnicalIndicators[key];
+            return null;
         }
 
         /// <summary>
-        /// GetTechnical
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public ITechnicalValue<G> GetTechnical<T,G>()
+        {
+            return (GetTechnicalByName(typeof(T).Name) as ITechnicalValue<G>);
+        }
+
+        /// <summary>
+        /// HasTechnical returns true is the technical exists
+        /// </summary>
+        /// <typeparam name="T">The explicit type of technical</typeparam>
+        /// <typeparam name="G">The explicit value type of the technical</typeparam>
+        /// <returns>true if it exists for this strategy</returns>
+        public bool HasTechnical<T, G>() where T: class
+        {
+            try
+            {
+                return GetTechnical<T, G>() != null;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// GetTechnicalValue
         /// </summary>
         /// <typeparam name="T">the technical</typeparam>
         /// <typeparam name="G">the type of expected return</typeparam>
         /// <returns></returns>
-        public G GetTechnical<T, G>() where T : Technical, ITechnicalValue<G>
+        public G GetTechnicalValue<T, G>() where T : Technical, ITechnicalValue<G>
         {
-            return (GetTechnical(typeof(T).Name) as ITechnicalValue<G>).Value;
+            return (GetTechnicalByName(typeof(T).Name) as ITechnicalValue<G>).Value;
         }
 
         /// <summary>
