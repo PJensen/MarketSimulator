@@ -64,26 +64,6 @@ namespace MarketSimulator.Forms
 
                 chartView.Series.Add(seriesSandbox);
             }
-
-            foreach (var s in simulator.SecurityMaster)
-            {
-                var security = s.Key;
-                var securityData = s.Value;
-
-                var seriesSecurity = new Series(security)
-                {
-                    ChartType = SeriesChartType.Line,
-                    XValueType = ChartValueType.Date,
-                    YAxisType = AxisType.Secondary
-                };
-
-                foreach (var marketData in securityData.Where(m => tickDateMap.ContainsKey(m.Date)))
-                {
-                    seriesSecurity.Points.AddXY(marketData.Date, marketData.Close);
-                }
-
-                chartView.Series.Add(seriesSecurity);
-            }
         }
     }
 }

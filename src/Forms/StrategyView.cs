@@ -107,14 +107,12 @@ namespace MarketSimulator.Forms
                 chartStrategy.Series.Add(seriesSMA50);
             }
 
-
             var seriesSell = new Series("SELL")
             {
                 ChartType = SeriesChartType.Point,
                 XValueType = ChartValueType.Date,
                 YAxisType = AxisType.Secondary
             };
-
 
             var seriesBuy = new Series("BUY")
             {
@@ -124,20 +122,19 @@ namespace MarketSimulator.Forms
             };
 
             
-
             foreach (var tick in sandbox.Strategy.StrategyTickHistory)
             {
                 var b = tick.BuyEventArgs;
                 var s = tick.SellEventArgs;
 
-                if (b != null)
+                if (b != null && !b.Cancel)
                 {
-                    seriesSell.Points.AddXY(b.Date, b.MarketData.Close);
+                    seriesBuy.Points.AddXY(b.Date, b.MarketData.Close * b.Shares);
                 }
 
-                if (s != null)
+                if (s != null && !s.Cancel)
                 {
-                    seriesBuy.Points.AddXY(s.Date, s.MarketData.Close);
+                    seriesSell.Points.AddXY(s.Date, s.MarketData.Close * s.Shares);
                 }
             }
 

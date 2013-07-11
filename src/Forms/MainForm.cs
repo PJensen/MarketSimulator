@@ -45,6 +45,7 @@ namespace MarketSimulator.Forms
             AddStrategyNode(new SMA50Strategy());
             AddStrategyNode(new BuyAndHoldStrategy());
             AddStrategyNode(new RandomStrategy2());
+            AddStrategyNode(new MomentumStrategy());
             #endregion
         }
 

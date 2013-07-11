@@ -12,6 +12,20 @@ namespace MarketSimulator.Events
     public class StrategyMarketTickResult : MarketSimulatorEventArgs
     {
         /// <summary>
+        /// Oddball constructor
+        /// </summary>
+        /// <param name="s">Some strategy market tick</param>
+        public StrategyMarketTickResult(StrategyMarketTickResult s)
+        {
+            MarketTickEventArgs = MarketTickEventArgs ?? s.MarketTickEventArgs;
+            BuyEventArgs = BuyEventArgs ?? s.BuyEventArgs;
+            SellEventArgs = SellEventArgs ?? s.SellEventArgs;
+
+            // always set this
+            StrategySnapshot = s.StrategySnapshot;
+        }
+
+        /// <summary>
         /// StrategyMarketTickResult
         /// </summary>
         /// <param name="e">market tick</param>
