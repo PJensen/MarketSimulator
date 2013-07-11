@@ -8,6 +8,7 @@ MarketSimulator
 - Can operate over a set of securities or on a single security.
 - Sandboxed design allows for testing (and comparing) multiple strategies concurrently.
 
+![Multi-Strategy View](https://raw.github.com/PJensen/MarketSimulator/master/screenshots/MarketDataSimulator-3.png)
 ![Main Screen](https://raw.github.com/PJensen/MarketSimulator/master/screenshots/MarketDataSimulator-2.png)
 ![Main Screen](https://raw.github.com/PJensen/MarketSimulator/master/screenshots/MarketDataSimulator-1.png)
 
