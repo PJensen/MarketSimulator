@@ -48,8 +48,10 @@ namespace MarketSimulator.Core
             CashHistory = new List<double>();
             PositionData = new PositionData2();
             PositionHistory = new PositionHistory();
-            
+
             Cash = GlobalExecutionSettings.Instance.StartingBalance;
+            StartingCash = Cash;
+
             NumberOfTrades = 0;
             Tick = 0;
             StrategySnapshots = new List<StrategySnapshot>();
@@ -192,6 +194,11 @@ namespace MarketSimulator.Core
         /// The current cash position
         /// </summary>
         public double Cash { get; set; }
+
+        /// <summary>
+        /// StartingCash
+        /// </summary>
+        public double StartingCash { get; private set; }
 
         /// <summary>
         /// Date0p

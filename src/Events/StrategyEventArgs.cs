@@ -1,4 +1,5 @@
-﻿using MarketSimulator.Strategies;
+﻿using MarketSimulator.Core;
+using MarketSimulator.Strategies;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
-﻿using MarketSimulator.Events;
+﻿using MarketSimulator.Core;
+using MarketSimulator.Events;
 using MarketSimulator.Strategies;
 using System;
 namespace MarketSimulator.Interfaces

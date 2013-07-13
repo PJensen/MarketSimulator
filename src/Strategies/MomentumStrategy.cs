@@ -9,8 +9,8 @@ namespace MarketSimulator.Strategies
     public class MomentumStrategy : StrategyBase
     {
         public MomentumStrategy()
-            : base("Momentum")
-        { }
+            : base("Momentum") { }
+
         public class Consecutive
         {
             /// <summary>
@@ -170,18 +170,14 @@ namespace MarketSimulator.Strategies
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgs"></param>
+        /// <returns></returns>
         public override Events.SellEventArgs SellSignal(MarketTickEventArgs eventArgs)
-        {           
-            string symbol = eventArgs.Symbol;
-            int maxSharesBuy = (int)(eventArgs.StrategyInfo.Cash / eventArgs.MarketData.Close);
-            int maxSharesSell = eventArgs.StrategyInfo.PositionData.SecurityShares(eventArgs.MarketData.Date, symbol);
-
-            if (this[symbol].DownDays > this[symbol].StreakAverage)
-            {
-                return Sell(this[symbol].Streak);
-            }
-
-            return null;
+        {
+            return Signals.SellWhenNAVDoubledForSecurity(eventArgs);
         }
     }
 }

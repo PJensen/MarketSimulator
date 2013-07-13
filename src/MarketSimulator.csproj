@@ -128,7 +128,7 @@
     <Compile Include="Interfaces\IMarketSignalEventSource.cs" />
     <Compile Include="Interfaces\IStrategyEventReciever.cs" />
     <Compile Include="Events\MarketTickEventargs.cs" />
-    <Compile Include="Core\Signals.cs" />
+    <Compile Include="Core\Signals\Signals.cs" />
     <Compile Include="Components\MarketSimulatorComponent.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -151,8 +151,8 @@
     <Compile Include="Strategies\MomentumStrategy.cs" />
     <Compile Include="Strategies\RandomStrategy.cs" />
     <Compile Include="Strategies\SMA50.cs" />
-    <Compile Include="Strategies\StrategyBase.cs" />
-    <Compile Include="Strategies\StrategyResult.cs" />
+    <Compile Include="Core\StrategyBase.cs" />
+    <Compile Include="Core\StrategyResult.cs" />
     <Compile Include="Core\StrategyExecutionSandbox.cs" />
     <Compile Include="Util\CSVParser.cs" />
     <Compile Include="Util\CSVStream.cs" />

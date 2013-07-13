@@ -18,6 +18,7 @@ namespace MarketSimulator.Core
         public StrategySnapshot(StrategyExecutionSandbox sandbox) 
             : this()
         {
+            
             ParentSandbox = sandbox;
             PositionData = sandbox.PositionData;
             Cash = sandbox.Cash;
@@ -27,6 +28,8 @@ namespace MarketSimulator.Core
             NAV = sandbox.PositionData.TotalMarketValue(Date) + Cash;
             TotalMarketValue = sandbox.PositionData.TotalMarketValue(Date);
         }
+
+      
 
         /// <summary>
         /// The number of trades
