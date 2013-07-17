@@ -70,22 +70,36 @@ namespace MarketSimulator.Forms
         /// <param name="e"></param>
         private void StrategyView_Load(object sender, EventArgs e)
         {
+
             propertyGridStrategy.SelectedObject = sandbox;
 
             var seriesNAV = new Series("NAV") { ChartType = SeriesChartType.Line, XValueType = ChartValueType.Date };
-            var seriesTrades = new Series("Trades") { ChartType = SeriesChartType.Line, XValueType = ChartValueType.Date };
+            var seriesTrades = new Series("Trades") { ChartType = SeriesChartType.Line, XValueType = ChartValueType.Date, YAxisType = AxisType.Secondary };
+            var seriesCash = new Series("Cash") { ChartType = SeriesChartType.Line, XValueType = ChartValueType.Date };
+
 
             int index = 0;
             Dictionary<DateTime, int> tickDateMap = new Dictionary<DateTime, int>();
             foreach (var snap in sandbox.StrategySnapshots)
             {
                 var tmpDataPoint = new DataPoint(seriesNAV) { Tag = snap };
-                tmpDataPoint.SetValueXY(snap.Date, snap.NAV);
+                tmpDataPoint.SetValueXY(snap.Date, snap.TotalMarketValue);
+
+                var tmpDataPointCash = new DataPoint(seriesCash) { Tag = snap};
+                tmpDataPointCash.SetValueXY(snap.Date, snap.Cash);
+
+                var tmpDataPointTrades = new DataPoint(seriesTrades) { Tag = snap };
+                tmpDataPointTrades.SetValueXY(snap.Date, snap.NumberOfTrades);
+
                 seriesNAV.Points.Add(tmpDataPoint);
+                seriesCash.Points.Add(tmpDataPointCash);
+                seriesTrades.Points.Add(tmpDataPointTrades);
                 tickDateMap.Add(snap.Date, index++);
             }
 
             chartStrategy.Series.Add(seriesNAV);
+            chartStrategy.Series.Add(seriesCash);
+            chartStrategy.Series.Add(seriesTrades);
 
             // TODO: Generalize and refactor if possible.
             if (sandbox.Strategy.HasTechnical<SMA50, double>())
@@ -130,16 +144,18 @@ namespace MarketSimulator.Forms
                 if (b != null && !b.Cancel)
                 {
                     seriesBuy.Points.AddXY(b.Date, b.MarketData.Close * b.Shares);
+                    dataGridViewPositions.Rows.Add(b.Date, b.Symbol, "Buy", b.Shares, b.Price, b.Shares * b.Price);
                 }
 
                 if (s != null && !s.Cancel)
                 {
                     seriesSell.Points.AddXY(s.Date, s.MarketData.Close * s.Shares);
+                    dataGridViewPositions.Rows.Add(s.Date, s.Symbol, "Sell", s.Shares, s.Price, s.Shares * s.Price);
                 }
             }
 
-            chartStrategy.Series.Add(seriesSell);
-            chartStrategy.Series.Add(seriesBuy);
+           // chartStrategy.Series.Add(seriesSell);
+           // chartStrategy.Series.Add(seriesBuy);
 
             /*
             foreach (var tick in sandbox.Strategy.StrategyTickHistory)
@@ -173,7 +189,7 @@ namespace MarketSimulator.Forms
                 }
             }*/
 
-            chartStrategy.Series.Add(seriesTrades);
+            //chartStrategy.Series.Add(seriesTrades);
             chartStrategy.UpdateAnnotations();
 
             R.GUI.ScrollDataGridForward(dataGridViewPositions);

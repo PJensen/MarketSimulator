@@ -41,6 +41,27 @@ namespace MarketSimulator.Forms
         {
             var tickDateMap = new Dictionary<DateTime, int>();
 
+            foreach (var security in simulator.SecurityMaster)
+            {
+                var marketData = security.Value;
+
+                var seriesData = new Series(security.Key)
+                {
+                    ChartType = SeriesChartType.Line,
+                    XValueType = ChartValueType.Date,
+                    YAxisType = AxisType.Secondary
+                };
+
+                foreach (var m in marketData.Where(d => d.Date > Properties.Settings.Default.StartDate && d.Date < Properties.Settings.Default.EndDate))
+                {
+                    var tmpDataPoint = new DataPoint(seriesData) { Tag = m };
+                    tmpDataPoint.SetValueXY(m.Date, m.Close);
+                    seriesData.Points.Add(tmpDataPoint);
+                }
+
+                chartView.Series.Add(seriesData);
+            }
+
             foreach (var sandbox in simulator.Sandboxes)
             {
                 var seriesSandbox = new Series(sandbox.Name)
